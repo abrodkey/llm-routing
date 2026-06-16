@@ -526,9 +526,9 @@ async function load(){
   const lastUpdated=fmt(d.generated_at.slice(0,10));
   $('#freshness').innerHTML=`<span class="dot"></span><span>Auto-refreshed daily · Data last updated <b>${lastUpdated}</b></span>`;
   const salesDateBit=salesSrc.snapshot_date?' (snapshot '+fmt(salesSrc.snapshot_date)+')':'';
-  $('#meta').innerHTML=
-    `<span><span class="ds-prefix">Data Sources:</span> AA ${d.sources.aa.rows_pulled} · Epoch ${d.sources.epoch.rows_pulled} · OpenRouter ${d.sources.openrouter.rows_pulled} · Arena ${arenaN}/${MODELS.length}${arenaDate?' (board '+fmt(arenaDate)+')':''} · salesevals ${salesN}/${MODELS.length}${salesDateBit}</span>`+
-    (radar?`<span class="warn">🛰 ${radar} new model(s) flagged</span>`:'');
+  // Radar lives on the SAME line as Data Sources (one logical span; wraps within itself if needed).
+  const radarBit=radar?` · <span class="warn">🛰 ${radar} new model(s) flagged</span>`:'';
+  $('#meta').innerHTML=`<span><span class="ds-prefix">Data Sources:</span> AA ${d.sources.aa.rows_pulled} · Epoch ${d.sources.epoch.rows_pulled} · OpenRouter ${d.sources.openrouter.rows_pulled} · Arena ${arenaN}/${MODELS.length}${arenaDate?' (board '+fmt(arenaDate)+')':''} · salesevals ${salesN}/${MODELS.length}${salesDateBit}${radarBit}</span>`;
   readState(); render();
 }
 
