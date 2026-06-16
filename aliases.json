@@ -1,0 +1,247 @@
+{
+  "_comment": "Canonical model slug -> source-specific names. The build script joins on these. Add a new model here whenever it appears in any source (the new-model radar in build.py will flag candidates). Keep one row per canonical model + reasoning-effort variant we care about.",
+  "_schema": {
+    "canonical": "stable slug we use in models.json",
+    "display": "label shown on the dashboard",
+    "aa_name": "exact 'name' field from Artificial Analysis API",
+    "epoch_name": "approximate 'Model' field in Epoch CSV (case-insensitive substring match)",
+    "arena_name": "exact model_name from LMArena leaderboard-dataset (verified 2026-06-15; null/absent if ranked >100)",
+    "openrouter_slug": "exact 'id' from OpenRouter /models (for price spread + capability auto-detect)",
+    "provider_key": "key into providers.json for direct price + train/no-train overlay",
+    "vectara_name": "exact 'Model' from Vectara hallucination-leaderboard README (HF-style owner/repo; null if not yet tested)",
+    "salesevals_name": "exact 'model' string from salesevals.com leaderboard (null if not tested)"
+  },
+  "models": [
+    {
+      "canonical": "claude-opus-4.8",
+      "display": "Claude Opus 4.8",
+      "aa_name": "Claude Opus 4.8 (Adaptive Reasoning, Max Effort)",
+      "epoch_name": "Claude Opus 4.8",
+      "arena_name": "claude-opus-4-8-thinking",
+      "openrouter_slug": "anthropic/claude-opus-4.8",
+      "provider_key": "anthropic-opus-4.8",
+      "vectara_name": null,
+      "salesevals_name": "Claude Opus 4.8 (max)"
+    },
+    {
+      "canonical": "claude-sonnet-4.6-reasoning",
+      "display": "Claude Sonnet 4.6 (Reasoning)",
+      "aa_name": "Claude Sonnet 4.6 (Adaptive Reasoning, Max Effort)",
+      "epoch_name": "Claude Sonnet 4.6",
+      "arena_name": "claude-sonnet-4-6",
+      "openrouter_slug": "anthropic/claude-sonnet-4.6",
+      "provider_key": "anthropic-sonnet-4.6",
+      "vectara_name": "anthropic/claude-sonnet-4-6",
+      "salesevals_name": "Claude Sonnet 4.6"
+    },
+    {
+      "canonical": "claude-sonnet-4.6-fast",
+      "display": "Claude Sonnet 4.6 (Non-reasoning)",
+      "aa_name": "Claude Sonnet 4.6 (Non-reasoning, High Effort)",
+      "epoch_name": "Claude Sonnet 4.6",
+      "arena_name": "claude-sonnet-4-6",
+      "openrouter_slug": "anthropic/claude-sonnet-4.6",
+      "provider_key": "anthropic-sonnet-4.6",
+      "vectara_name": "anthropic/claude-sonnet-4-6",
+      "salesevals_name": "Claude Sonnet 4.6"
+    },
+    {
+      "canonical": "claude-haiku-4.5",
+      "display": "Claude Haiku 4.5",
+      "aa_name": "Claude 4.5 Haiku (Reasoning)",
+      "epoch_name": "Claude Haiku 4.5",
+      "arena_name": "claude-haiku-4-5",
+      "openrouter_slug": "anthropic/claude-haiku-4.5",
+      "provider_key": "anthropic-haiku-4.5",
+      "vectara_name": "anthropic/claude-haiku-4-5-20251001",
+      "salesevals_name": null
+    },
+    {
+      "canonical": "gpt-5.5",
+      "display": "GPT-5.5 (high)",
+      "aa_name": "GPT-5.5 (high)",
+      "epoch_name": "GPT-5.5",
+      "arena_name": "gpt-5.5-high",
+      "openrouter_slug": "openai/gpt-5.5",
+      "provider_key": "openai-gpt-5.5",
+      "vectara_name": "openai/gpt-5.5",
+      "salesevals_name": "GPT-5.5 (high)"
+    },
+    {
+      "canonical": "gpt-5.5-fast",
+      "display": "GPT-5.5 Instant",
+      "aa_name": "GPT-5.5 Instant (May 2026)",
+      "epoch_name": "GPT-5.5",
+      "arena_name": "gpt-5.5-instant",
+      "openrouter_slug": "openai/gpt-5.5",
+      "provider_key": "openai-gpt-5.5",
+      "vectara_name": "openai/gpt-5.5",
+      "salesevals_name": null
+    },
+    {
+      "canonical": "gpt-5.4",
+      "display": "GPT-5.4 (xhigh)",
+      "aa_name": "GPT-5.4 (xhigh)",
+      "epoch_name": "GPT-5.4",
+      "arena_name": "gpt-5.4-high",
+      "openrouter_slug": "openai/gpt-5.4",
+      "provider_key": "openai-gpt-5.4",
+      "vectara_name": "openai/gpt-5.4-2026-03-05",
+      "salesevals_name": "GPT-5.4 (xhigh)"
+    },
+    {
+      "canonical": "gpt-5.4-mini",
+      "display": "GPT-5.4 mini",
+      "aa_name": "GPT-5.4 mini (xhigh)",
+      "epoch_name": "GPT-5.4 Mini",
+      "arena_name": "gpt-5.4-mini-high",
+      "openrouter_slug": "openai/gpt-5.4-mini",
+      "provider_key": "openai-gpt-5.4-mini",
+      "vectara_name": "openai/gpt-5.4-mini-2026-03-17",
+      "salesevals_name": null
+    },
+    {
+      "canonical": "gpt-5.4-nano",
+      "display": "GPT-5.4 nano",
+      "aa_name": "GPT-5.4 nano (xhigh)",
+      "epoch_name": "GPT-5.4 Nano",
+      "arena_name": "gpt-5.4-nano",
+      "openrouter_slug": "openai/gpt-5.4-nano",
+      "provider_key": "openai-gpt-5.4-nano",
+      "vectara_name": "openai/gpt-5.4-nano-2026-03-17",
+      "salesevals_name": null
+    },
+    {
+      "canonical": "gemini-3.5-flash",
+      "display": "Gemini 3.5 Flash",
+      "aa_name": "Gemini 3.5 Flash (high)",
+      "epoch_name": "Gemini 3.5 Flash",
+      "arena_name": "gemini-3.5-flash",
+      "openrouter_slug": "google/gemini-3.5-flash",
+      "provider_key": "google-gemini-3.5-flash",
+      "vectara_name": null,
+      "salesevals_name": null
+    },
+    {
+      "canonical": "gemini-3.1-pro",
+      "display": "Gemini 3.1 Pro",
+      "aa_name": "Gemini 3.1 Pro Preview",
+      "epoch_name": "Gemini 3.1 Pro",
+      "arena_name": "gemini-3.1-pro-preview",
+      "openrouter_slug": "google/gemini-3.1-pro-preview",
+      "provider_key": "google-gemini-3.1-pro",
+      "vectara_name": "google/gemini-3.1-pro-preview",
+      "salesevals_name": "Gemini 3.1 Pro Preview"
+    },
+    {
+      "canonical": "kimi-k2.6",
+      "display": "Kimi K2.6",
+      "aa_name": "Kimi K2.6",
+      "epoch_name": "Kimi K2.6",
+      "arena_name": "kimi-k2.6",
+      "openrouter_slug": "moonshotai/kimi-k2.6",
+      "provider_key": "moonshot-kimi-k2.6",
+      "vectara_name": "moonshotai/kimi-k2.6",
+      "salesevals_name": null
+    },
+    {
+      "canonical": "deepseek-v4-pro",
+      "display": "DeepSeek V4 Pro",
+      "aa_name": "DeepSeek V4 Pro (Reasoning, Max Effort)",
+      "epoch_name": "DeepSeek V4 Pro",
+      "arena_name": "deepseek-v4-pro-thinking",
+      "openrouter_slug": "deepseek/deepseek-v4-pro",
+      "provider_key": "deepseek-v4-pro",
+      "vectara_name": "deepseek-ai/DeepSeek-V4-Pro",
+      "salesevals_name": "DeepSeek V4 Pro"
+    },
+    {
+      "canonical": "deepseek-v4-flash",
+      "display": "DeepSeek V4 Flash",
+      "aa_name": "DeepSeek V4 Flash (Reasoning, Max Effort)",
+      "epoch_name": "DeepSeek V4 Flash",
+      "arena_name": "deepseek-v4-flash-thinking",
+      "openrouter_slug": "deepseek/deepseek-v4-flash",
+      "provider_key": "deepseek-v4-flash",
+      "vectara_name": null,
+      "salesevals_name": null
+    },
+    {
+      "canonical": "qwen-3.6-max",
+      "display": "Qwen3.6 Max",
+      "aa_name": "Qwen3.6 Max Preview",
+      "epoch_name": "Qwen 3.6",
+      "arena_name": "qwen3.6-max-preview",
+      "openrouter_slug": "qwen/qwen3-max",
+      "provider_key": "alibaba-qwen-3.6-max",
+      "vectara_name": null,
+      "salesevals_name": null
+    },
+    {
+      "canonical": "glm-5.1",
+      "display": "GLM-5.1",
+      "aa_name": "GLM-5.1 (Reasoning)",
+      "epoch_name": "GLM-5.1",
+      "arena_name": "glm-5.1",
+      "openrouter_slug": "z-ai/glm-5.1",
+      "provider_key": "zhipu-glm-5.1",
+      "vectara_name": null,
+      "salesevals_name": null
+    },
+    {
+      "canonical": "gpt-5.4-high",
+      "display": "GPT-5.4 (high)",
+      "aa_name": "GPT-5.4 (high)",
+      "epoch_name": "GPT-5.4",
+      "arena_name": "gpt-5.4-high",
+      "openrouter_slug": "openai/gpt-5.4",
+      "vectara_name": "openai/gpt-5.4-2026-03-05",
+      "salesevals_name": "GPT-5.4 (high)",
+      "provider_key": "openai-gpt-5.4"
+    },
+    {
+      "canonical": "gpt-5.5-xhigh",
+      "display": "GPT-5.5 (xhigh)",
+      "aa_name": "GPT-5.5 (xhigh)",
+      "epoch_name": "GPT-5.5",
+      "arena_name": "gpt-5.5-xhigh",
+      "openrouter_slug": "openai/gpt-5.5",
+      "vectara_name": "openai/gpt-5.5",
+      "salesevals_name": "GPT-5.5 (xhigh)",
+      "provider_key": "openai-gpt-5.5"
+    },
+    {
+      "canonical": "gpt-5.5-none",
+      "display": "GPT-5.5 (none)",
+      "aa_name": "GPT-5.5 (Non-reasoning)",
+      "epoch_name": "GPT-5.5",
+      "arena_name": "gpt-5.5",
+      "openrouter_slug": "openai/gpt-5.5",
+      "vectara_name": "openai/gpt-5.5",
+      "salesevals_name": "GPT-5.5 (none)",
+      "provider_key": "openai-gpt-5.5"
+    },
+    {
+      "canonical": "claude-opus-4.7-max",
+      "display": "Claude Opus 4.7 (max)",
+      "aa_name": "Claude Opus 4.7 (Adaptive Reasoning, Max Effort)",
+      "epoch_name": "Claude Opus 4.7",
+      "arena_name": "claude-opus-4-7-thinking",
+      "openrouter_slug": "anthropic/claude-opus-4.7",
+      "vectara_name": null,
+      "salesevals_name": "Claude Opus 4.7 (max)",
+      "provider_key": "anthropic-opus-4.7"
+    },
+    {
+      "canonical": "claude-fable-5-high",
+      "display": "Claude Fable 5 (high)",
+      "aa_name": "Claude Fable 5 (high)",
+      "epoch_name": "Claude Fable 5",
+      "arena_name": "claude-fable-5",
+      "openrouter_slug": "anthropic/claude-fable-5",
+      "vectara_name": null,
+      "salesevals_name": "Claude Fable 5 (high)",
+      "provider_key": "anthropic-fable-5"
+    }
+  ]
+}

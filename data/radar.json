@@ -1,0 +1,26 @@
+{
+  "threshold": 45,
+  "candidates": [
+    {
+      "base": "Qwen3.7 Plus",
+      "creator": "Alibaba",
+      "max_intel": 53.3,
+      "release_date": "2026-06-01",
+      "newer_than_our": "2026-04-20"
+    },
+    {
+      "base": "Qwen3.7 Max",
+      "creator": "Alibaba",
+      "max_intel": 56.6,
+      "release_date": "2026-05-19",
+      "newer_than_our": "2026-04-20"
+    },
+    {
+      "base": "Qwen3.6 27B",
+      "creator": "Alibaba",
+      "max_intel": 45.8,
+      "release_date": "2026-04-22",
+      "newer_than_our": "2026-04-20"
+    }
+  ]
+}

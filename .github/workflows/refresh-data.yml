@@ -1,0 +1,77 @@
+name: Daily data refresh + verify
+
+# Runs daily at 06:00 UTC. Re-pulls every source (AA, Epoch, OpenRouter, LMArena, Vectara),
+# regenerates models.json, runs sanity checks (fail loud on schema breaks), and runs the
+# new-model radar. Commits only if anything changed (no-op runs leave git history alone).
+# Opens a GitHub issue when the radar finds untracked models above the intelligence threshold.
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:  # allow manual trigger from the Actions tab
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install pyarrow (for LMArena parquet)
+        run: pip install --quiet pyarrow
+
+      - name: Build models.json
+        env:
+          AA_API_KEY: ${{ secrets.AA_API_KEY }}
+          # Epoch, OpenRouter, and LMArena are all public APIs — no secrets needed.
+        run: python3 build.py
+
+      - name: Diff summary
+        run: |
+          git diff --stat || true
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add models.json data/radar.json
+          if git diff --cached --quiet; then
+            echo "No changes — skipping commit."
+          else
+            git commit -m "data: daily refresh ($(date -u +%Y-%m-%d))"
+            git push
+          fi
+
+      - name: New-model radar → GitHub issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          COUNT=$(python3 -c "import json;print(len(json.load(open('data/radar.json'))['candidates']))")
+          if [ "$COUNT" = "0" ]; then
+            echo "Radar clear — no new models."
+            exit 0
+          fi
+          # Skip if an open radar issue already exists (avoid monthly dupes).
+          EXISTING=$(gh issue list --label new-model-radar --state open --json number --jq 'length')
+          if [ "$EXISTING" != "0" ]; then
+            echo "Open radar issue already exists; skipping."
+            exit 0
+          fi
+          gh label create new-model-radar --color FBCA04 --description "New models to add to aliases.json" 2>/dev/null || true
+          BODY=$(python3 -c "
+          import json
+          d=json.load(open('data/radar.json'))
+          print(f\"The monthly refresh found models above intel {d['threshold']} from tracked creators, newer than what's in \`aliases.json\`:\n\")
+          for c in d['candidates']:
+              print(f\"- **{c['base']}** ({c['creator']}) — intel {c['max_intel']}, released {c['release_date']} (newer than our {c.get('newer_than_our')})\")
+          print('\n_To add: update \`aliases.json\` + \`providers.json\`, then run \`python3 build.py\`._')
+          ")
+          gh issue create --title "🛰 New-model radar: $COUNT candidate(s) to add" \
+            --label new-model-radar --body "$BODY"

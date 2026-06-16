@@ -1,0 +1,5790 @@
+{
+  "generated_at": "2026-06-16T13:49:35+00:00",
+  "sources": {
+    "aa": {
+      "url": "https://artificialanalysis.ai/api/v2/data/llms/models",
+      "rows_pulled": 535
+    },
+    "epoch": {
+      "url": "https://epoch.ai/data/all_ai_models.csv",
+      "rows_pulled": 3537
+    },
+    "openrouter": {
+      "url": "https://openrouter.ai/api/v1/models",
+      "rows_pulled": 337,
+      "usage_ranked": 337
+    },
+    "arena": {
+      "source": "lmarena-ai/leaderboard-dataset",
+      "rows_pulled": 134,
+      "configured": true
+    },
+    "arena_categories": {
+      "models": 366,
+      "categories": [
+        "overall",
+        "chinese",
+        "coding",
+        "creative_writing",
+        "english",
+        "expert",
+        "french",
+        "german",
+        "hard_prompts",
+        "hard_prompts_english",
+        "industry_business_and_management_and_financial_operations",
+        "industry_entertainment_and_sports_and_media",
+        "industry_legal_and_government",
+        "industry_life_and_physical_and_social_science",
+        "industry_mathematical",
+        "industry_medicine_and_healthcare",
+        "industry_software_and_it_services",
+        "industry_writing_and_literature_and_language",
+        "instruction_following",
+        "japanese",
+        "korean",
+        "longer_query",
+        "math",
+        "multi_turn",
+        "russian",
+        "spanish"
+      ]
+    },
+    "salesevals": {
+      "source": "salesevals.com",
+      "configs": 24,
+      "snapshot_date": "2026-06-15",
+      "data_date": "2026-06-09"
+    },
+    "hallucination": {
+      "source": "vectara/hallucination-leaderboard",
+      "rows_pulled": 105
+    },
+    "providers": {
+      "file": "providers.json",
+      "rows": 16
+    }
+  },
+  "radar": [
+    {
+      "base": "Qwen3.7 Plus",
+      "creator": "Alibaba",
+      "max_intel": 53.3,
+      "release_date": "2026-06-01",
+      "newer_than_our": "2026-04-20"
+    },
+    {
+      "base": "Qwen3.7 Max",
+      "creator": "Alibaba",
+      "max_intel": 56.6,
+      "release_date": "2026-05-19",
+      "newer_than_our": "2026-04-20"
+    },
+    {
+      "base": "Qwen3.6 27B",
+      "creator": "Alibaba",
+      "max_intel": 45.8,
+      "release_date": "2026-04-22",
+      "newer_than_our": "2026-04-20"
+    }
+  ],
+  "task_buckets": [
+    "research",
+    "data_synthesis",
+    "web_research",
+    "chat",
+    "coding",
+    "math",
+    "writing_email",
+    "business",
+    "expert",
+    "healthcare",
+    "legal",
+    "software_engineering",
+    "sales_coaching"
+  ],
+  "arena_category_for_task": {
+    "chat": "multi_turn",
+    "writing_email": "creative_writing",
+    "research": "hard_prompts_english",
+    "data_synthesis": "instruction_following",
+    "coding": "coding",
+    "math": "math",
+    "legal": "industry_legal_and_government",
+    "healthcare": "industry_medicine_and_healthcare",
+    "business": "industry_business_and_management_and_financial_operations",
+    "software_engineering": "industry_software_and_it_services",
+    "expert": "expert"
+  },
+  "arena_only_tasks": [
+    "business",
+    "expert",
+    "healthcare",
+    "legal",
+    "software_engineering"
+  ],
+  "salesevals_only_tasks": [
+    "sales_coaching"
+  ],
+  "models": [
+    {
+      "canonical": "claude-opus-4.8",
+      "display": "Claude Opus 4.8",
+      "warnings": [
+        "Epoch match not found for 'Claude Opus 4.8'"
+      ],
+      "intelligence_index": 61.4,
+      "coding_index": 56.7,
+      "math_index": null,
+      "output_tok_per_sec": 61.103,
+      "ttft_seconds": 27.351,
+      "task_scores": {
+        "research": {
+          "score": 68.8,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 77.1,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 76.4,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 61.8,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 56.7,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 61.8,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 5.0,
+        "direct_output_per_1m": 25.0,
+        "committed_input_per_1m": 3.9,
+        "committed_output_per_1m": 19.5,
+        "committed_assumptions": "Illustrative: list \u00d7 0.78 (~22% off, midpoint of Anthropic 15-30% enterprise band; needs ~$500K+ annual commit). Bedrock provisioned-throughput is hourly capacity ($40-200/hr) \u2014 only beats on-demand above ~50% sustained utilization.",
+        "aa_blended_per_1m": 10.938,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 10.0
+      },
+      "intel_per_dollar": 6.14,
+      "openrouter": {
+        "slug": "anthropic/claude-opus-4.8",
+        "context_length": 1000000,
+        "max_output": 128000,
+        "cached_read_per_1m": 0.5,
+        "spread": {
+          "host_count": 6,
+          "input_min": 5.0,
+          "input_median": 5.0,
+          "input_max": 5.0,
+          "output_min": 25.0,
+          "output_median": 25.0,
+          "output_max": 25.0,
+          "cheapest_provider": "Google",
+          "cheapest_in": 5.0,
+          "cheapest_out": 25.0,
+          "cheapest_uptime_1d": 99.85,
+          "best_uptime_1d": 99.97
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 99.85,
+        "best_uptime_1d": 99.97
+      },
+      "usage_rank": 13,
+      "hallucination": null,
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": false,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "Anthropic",
+        "country": null,
+        "open_weights": null,
+        "accessibility": null,
+        "release_date": "2026-05-28"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": "API inputs/outputs not used for training by default (commercial terms).",
+        "us_hosted_option": true,
+        "context_tokens": 200000
+      },
+      "arena": {
+        "name": "claude-opus-4-8-thinking",
+        "elo_overall_sc": 1485.7,
+        "elo_overall_raw": 1464.2,
+        "elo_coding": 1558.6,
+        "sc_delta": -21.5,
+        "votes": 9190,
+        "rank": 9,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1462.7,
+          "rank": 20,
+          "votes": 8944,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1484.8,
+          "rank": 36,
+          "votes": 375,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1517.2,
+          "rank": 25,
+          "votes": 2367,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1459.6,
+          "rank": 11,
+          "votes": 1647,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1466.0,
+          "rank": 18,
+          "votes": 4352,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1488.7,
+          "rank": 16,
+          "votes": 853,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1524.0,
+          "rank": 1,
+          "votes": 307,
+          "total_in_cat": 251
+        },
+        "hard_prompts": {
+          "rating": 1480.3,
+          "rank": 29,
+          "votes": 5790,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1505.9,
+          "rank": 17,
+          "votes": 2845,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1484.1,
+          "rank": 18,
+          "votes": 1620,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1427.4,
+          "rank": 31,
+          "votes": 2004,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1484.9,
+          "rank": 8,
+          "votes": 700,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1478.5,
+          "rank": 18,
+          "votes": 1469,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1490.7,
+          "rank": 11,
+          "votes": 464,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1478.1,
+          "rank": 12,
+          "votes": 711,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1496.1,
+          "rank": 28,
+          "votes": 3419,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1451.1,
+          "rank": 12,
+          "votes": 2276,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1429.4,
+          "rank": 77,
+          "votes": 2907,
+          "total_in_cat": 366
+        },
+        "longer_query": {
+          "rating": 1459.2,
+          "rank": 48,
+          "votes": 3860,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1490.0,
+          "rank": 8,
+          "votes": 458,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1482.8,
+          "rank": 8,
+          "votes": 1586,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1491.7,
+          "rank": 8,
+          "votes": 1071,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1447.5,
+          "rank": 36,
+          "votes": 255,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": {
+        "score": 87.7,
+        "cost_per_call": 0.15,
+        "rank": 15,
+        "n": 30,
+        "total_in_test": 24
+      },
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "claude-sonnet-4.6-reasoning",
+      "display": "Claude Sonnet 4.6 (Reasoning)",
+      "warnings": [],
+      "intelligence_index": 51.7,
+      "coding_index": 50.9,
+      "math_index": null,
+      "output_tok_per_sec": 74.626,
+      "ttft_seconds": 91.901,
+      "task_scores": {
+        "research": {
+          "score": 58.8,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 72.0,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 64.4,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 54.1,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 50.9,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 54.1,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 3.0,
+        "direct_output_per_1m": 15.0,
+        "committed_input_per_1m": 2.34,
+        "committed_output_per_1m": 11.7,
+        "committed_assumptions": "Illustrative: list \u00d7 0.78 (~22% off enterprise band, ~$500K+ commit). Batch API = 50% off for async.",
+        "aa_blended_per_1m": 6.563,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 6.0
+      },
+      "intel_per_dollar": 8.62,
+      "openrouter": {
+        "slug": "anthropic/claude-sonnet-4.6",
+        "context_length": 1000000,
+        "max_output": 128000,
+        "cached_read_per_1m": 0.3,
+        "spread": {
+          "host_count": 8,
+          "input_min": 3.0,
+          "input_median": 3.0,
+          "input_max": 3.0,
+          "output_min": 15.0,
+          "output_median": 15.0,
+          "output_max": 15.0,
+          "cheapest_provider": "Amazon Bedrock",
+          "cheapest_in": 3.0,
+          "cheapest_out": 15.0,
+          "cheapest_uptime_1d": 99.98,
+          "best_uptime_1d": 99.98
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 99.98,
+        "best_uptime_1d": 99.98
+      },
+      "usage_rank": 94,
+      "hallucination": {
+        "hallucination_rate": 10.6,
+        "factual_consistency": 89.4,
+        "answer_rate": 99.9
+      },
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": false,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "Anthropic",
+        "country": "United States of America",
+        "open_weights": "No",
+        "accessibility": "API access",
+        "release_date": "2026-02-17"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": null,
+        "us_hosted_option": true,
+        "context_tokens": 200000
+      },
+      "arena": {
+        "name": "claude-sonnet-4-6",
+        "elo_overall_sc": 1470.7,
+        "elo_overall_raw": null,
+        "elo_coding": 1556.6,
+        "sc_delta": null,
+        "votes": 35722,
+        "rank": 24,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1448.6,
+          "rank": 38,
+          "votes": 35093,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1482.3,
+          "rank": 37,
+          "votes": 1699,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1509.8,
+          "rank": 36,
+          "votes": 8066,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1432.8,
+          "rank": 33,
+          "votes": 5676,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1460.9,
+          "rank": 32,
+          "votes": 16672,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1473.4,
+          "rank": 41,
+          "votes": 2250,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1462.7,
+          "rank": 32,
+          "votes": 1018,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1428.9,
+          "rank": 48,
+          "votes": 570,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1465.0,
+          "rank": 58,
+          "votes": 22036,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1474.9,
+          "rank": 62,
+          "votes": 9560,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1444.7,
+          "rank": 63,
+          "votes": 5282,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1429.5,
+          "rank": 28,
+          "votes": 5800,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1483.4,
+          "rank": 33,
+          "votes": 1862,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1464.6,
+          "rank": 59,
+          "votes": 4178,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1443.8,
+          "rank": 39,
+          "votes": 1301,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1449.4,
+          "rank": 55,
+          "votes": 2628,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1489.7,
+          "rank": 45,
+          "votes": 12802,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1435.5,
+          "rank": 34,
+          "votes": 6729,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1443.9,
+          "rank": 49,
+          "votes": 9732,
+          "total_in_cat": 366
+        },
+        "japanese": {
+          "rating": 1394.7,
+          "rank": 48,
+          "votes": 277,
+          "total_in_cat": 235
+        },
+        "korean": {
+          "rating": 1416.0,
+          "rank": 26,
+          "votes": 517,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1461.9,
+          "rank": 39,
+          "votes": 12330,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1456.6,
+          "rank": 29,
+          "votes": 2121,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1465.6,
+          "rank": 35,
+          "votes": 4877,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1435.7,
+          "rank": 41,
+          "votes": 3914,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1397.9,
+          "rank": 39,
+          "votes": 583,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": {
+        "score": 87.3,
+        "cost_per_call": 0.1,
+        "rank": 19,
+        "n": 30,
+        "total_in_test": 24
+      },
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "claude-sonnet-4.6-fast",
+      "display": "Claude Sonnet 4.6 (Non-reasoning)",
+      "warnings": [],
+      "intelligence_index": 44.4,
+      "coding_index": 46.4,
+      "math_index": null,
+      "output_tok_per_sec": 49.951,
+      "ttft_seconds": 1.113,
+      "task_scores": {
+        "research": {
+          "score": 46.6,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 60.5,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 62.9,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 42.8,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 46.4,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 42.8,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 3.0,
+        "direct_output_per_1m": 15.0,
+        "committed_input_per_1m": 2.34,
+        "committed_output_per_1m": 11.7,
+        "committed_assumptions": "Illustrative: list \u00d7 0.78 (~22% off enterprise band, ~$500K+ commit). Batch API = 50% off for async.",
+        "aa_blended_per_1m": 6.563,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 6.0
+      },
+      "intel_per_dollar": 7.4,
+      "openrouter": {
+        "slug": "anthropic/claude-sonnet-4.6",
+        "context_length": 1000000,
+        "max_output": 128000,
+        "cached_read_per_1m": 0.3,
+        "spread": {
+          "host_count": 8,
+          "input_min": 3.0,
+          "input_median": 3.0,
+          "input_max": 3.0,
+          "output_min": 15.0,
+          "output_median": 15.0,
+          "output_max": 15.0,
+          "cheapest_provider": "Amazon Bedrock",
+          "cheapest_in": 3.0,
+          "cheapest_out": 15.0,
+          "cheapest_uptime_1d": 99.98,
+          "best_uptime_1d": 99.98
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 99.98,
+        "best_uptime_1d": 99.98
+      },
+      "usage_rank": 94,
+      "hallucination": {
+        "hallucination_rate": 10.6,
+        "factual_consistency": 89.4,
+        "answer_rate": 99.9
+      },
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": false,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "Anthropic",
+        "country": "United States of America",
+        "open_weights": "No",
+        "accessibility": "API access",
+        "release_date": "2026-02-17"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": null,
+        "us_hosted_option": true,
+        "context_tokens": 200000
+      },
+      "arena": {
+        "name": "claude-sonnet-4-6",
+        "elo_overall_sc": 1470.7,
+        "elo_overall_raw": null,
+        "elo_coding": 1556.6,
+        "sc_delta": null,
+        "votes": 35722,
+        "rank": 24,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1448.6,
+          "rank": 38,
+          "votes": 35093,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1482.3,
+          "rank": 37,
+          "votes": 1699,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1509.8,
+          "rank": 36,
+          "votes": 8066,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1432.8,
+          "rank": 33,
+          "votes": 5676,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1460.9,
+          "rank": 32,
+          "votes": 16672,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1473.4,
+          "rank": 41,
+          "votes": 2250,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1462.7,
+          "rank": 32,
+          "votes": 1018,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1428.9,
+          "rank": 48,
+          "votes": 570,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1465.0,
+          "rank": 58,
+          "votes": 22036,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1474.9,
+          "rank": 62,
+          "votes": 9560,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1444.7,
+          "rank": 63,
+          "votes": 5282,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1429.5,
+          "rank": 28,
+          "votes": 5800,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1483.4,
+          "rank": 33,
+          "votes": 1862,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1464.6,
+          "rank": 59,
+          "votes": 4178,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1443.8,
+          "rank": 39,
+          "votes": 1301,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1449.4,
+          "rank": 55,
+          "votes": 2628,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1489.7,
+          "rank": 45,
+          "votes": 12802,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1435.5,
+          "rank": 34,
+          "votes": 6729,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1443.9,
+          "rank": 49,
+          "votes": 9732,
+          "total_in_cat": 366
+        },
+        "japanese": {
+          "rating": 1394.7,
+          "rank": 48,
+          "votes": 277,
+          "total_in_cat": 235
+        },
+        "korean": {
+          "rating": 1416.0,
+          "rank": 26,
+          "votes": 517,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1461.9,
+          "rank": 39,
+          "votes": 12330,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1456.6,
+          "rank": 29,
+          "votes": 2121,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1465.6,
+          "rank": 35,
+          "votes": 4877,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1435.7,
+          "rank": 41,
+          "votes": 3914,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1397.9,
+          "rank": 39,
+          "votes": 583,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": {
+        "score": 87.3,
+        "cost_per_call": 0.1,
+        "rank": 19,
+        "n": 30,
+        "total_in_test": 24
+      },
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "claude-haiku-4.5",
+      "display": "Claude Haiku 4.5",
+      "warnings": [],
+      "intelligence_index": 37.1,
+      "coding_index": 32.6,
+      "math_index": 83.7,
+      "output_tok_per_sec": 129.573,
+      "ttft_seconds": 8.759,
+      "task_scores": {
+        "research": {
+          "score": 51.0,
+          "metrics_used": [
+            "gpqa",
+            "mmlu_pro",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 65.8,
+          "metrics_used": [
+            "gpqa",
+            "mmlu_pro",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 41.0,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 45.7,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 47.0,
+          "metrics_used": [
+            "artificial_analysis_coding_index",
+            "livecodebench"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": 83.7,
+          "metrics_used": [
+            "artificial_analysis_math_index",
+            "aime_25"
+          ],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 45.7,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 1.0,
+        "direct_output_per_1m": 5.0,
+        "committed_input_per_1m": 0.78,
+        "committed_output_per_1m": 3.9,
+        "committed_assumptions": "Illustrative: list \u00d7 0.78 (~22% off enterprise band). At Haiku's low list, batch (50% off) usually beats a committed discount.",
+        "aa_blended_per_1m": 2.188,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 2.0
+      },
+      "intel_per_dollar": 18.55,
+      "openrouter": {
+        "slug": "anthropic/claude-haiku-4.5",
+        "context_length": 200000,
+        "max_output": 64000,
+        "cached_read_per_1m": 0.1,
+        "spread": {
+          "host_count": 5,
+          "input_min": 1.0,
+          "input_median": 1.0,
+          "input_max": 1.0,
+          "output_min": 5.0,
+          "output_median": 5.0,
+          "output_max": 5.0,
+          "cheapest_provider": "Amazon Bedrock",
+          "cheapest_in": 1.0,
+          "cheapest_out": 5.0,
+          "cheapest_uptime_1d": 100,
+          "best_uptime_1d": 100
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 100,
+        "best_uptime_1d": 100
+      },
+      "usage_rank": 158,
+      "hallucination": {
+        "hallucination_rate": 9.8,
+        "factual_consistency": 90.2,
+        "answer_rate": 99.5
+      },
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": false,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "Anthropic",
+        "country": "United States of America",
+        "open_weights": "No",
+        "accessibility": "API access",
+        "release_date": "2025-10-15"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": null,
+        "us_hosted_option": true,
+        "context_tokens": 200000
+      },
+      "arena": null,
+      "arena_categories": {},
+      "salesevals": null,
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "gpt-5.5",
+      "display": "GPT-5.5 (high)",
+      "warnings": [],
+      "intelligence_index": 58.9,
+      "coding_index": 58.5,
+      "math_index": null,
+      "output_tok_per_sec": 52.26,
+      "ttft_seconds": 21.365,
+      "task_scores": {
+        "research": {
+          "score": 68.1,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 82.4,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 76.4,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 65.3,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 58.5,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 65.3,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 5.0,
+        "direct_output_per_1m": 30.0,
+        "committed_input_per_1m": 3.4,
+        "committed_output_per_1m": 20.4,
+        "committed_assumptions": "Illustrative: list \u00d7 0.68 (~32% off, midpoint of OpenAI 25-40% negotiated band). Azure PTU ~$2,448/PTU-mo; breakeven vs PAYG ~150-200M tokens/mo at 50%+ utilization.",
+        "aa_blended_per_1m": 11.25,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 11.25
+      },
+      "intel_per_dollar": 5.24,
+      "openrouter": {
+        "slug": "openai/gpt-5.5",
+        "context_length": 1050000,
+        "max_output": 128000,
+        "cached_read_per_1m": 0.5,
+        "spread": {
+          "host_count": 3,
+          "input_min": 5.0,
+          "input_median": 5.0,
+          "input_max": 5.5,
+          "output_min": 30.0,
+          "output_median": 30.0,
+          "output_max": 33.0,
+          "cheapest_provider": "OpenAI",
+          "cheapest_in": 5.0,
+          "cheapest_out": 30.0,
+          "cheapest_uptime_1d": 97.27,
+          "best_uptime_1d": 100
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 97.27,
+        "best_uptime_1d": 100
+      },
+      "usage_rank": 42,
+      "hallucination": {
+        "hallucination_rate": 9.3,
+        "factual_consistency": 90.7,
+        "answer_rate": 100.0
+      },
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": false,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "OpenAI",
+        "country": "United States of America",
+        "open_weights": "No",
+        "accessibility": "API access",
+        "release_date": "2026-04-23"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": "API data not used for training; Azure OpenAI is the enterprise no-train route.",
+        "us_hosted_option": true,
+        "context_tokens": 400000
+      },
+      "arena": {
+        "name": "gpt-5.5-high",
+        "elo_overall_sc": 1480.7,
+        "elo_overall_raw": 1467.6,
+        "elo_coding": null,
+        "sc_delta": -13.1,
+        "votes": 24620,
+        "rank": 10,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1467.6,
+          "rank": 15,
+          "votes": 24620,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1532.1,
+          "rank": 6,
+          "votes": 1196,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1494.9,
+          "rank": 15,
+          "votes": 6702,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1442.3,
+          "rank": 19,
+          "votes": 3388,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1467.0,
+          "rank": 17,
+          "votes": 11850,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1512.9,
+          "rank": 6,
+          "votes": 2210,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1483.8,
+          "rank": 14,
+          "votes": 905,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1435.1,
+          "rank": 41,
+          "votes": 293,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1484.9,
+          "rank": 9,
+          "votes": 15805,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1506.5,
+          "rank": 13,
+          "votes": 7261,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1509.8,
+          "rank": 8,
+          "votes": 3998,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1444.8,
+          "rank": 14,
+          "votes": 5398,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1478.8,
+          "rank": 15,
+          "votes": 1901,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1480.3,
+          "rank": 15,
+          "votes": 4011,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1486.5,
+          "rank": 12,
+          "votes": 1426,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1451.1,
+          "rank": 51,
+          "votes": 1871,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1489.6,
+          "rank": 14,
+          "votes": 9625,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1453.6,
+          "rank": 10,
+          "votes": 5374,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1476.8,
+          "rank": 10,
+          "votes": 8081,
+          "total_in_cat": 366
+        },
+        "japanese": {
+          "rating": 1515.4,
+          "rank": 1,
+          "votes": 214,
+          "total_in_cat": 235
+        },
+        "korean": {
+          "rating": 1493.9,
+          "rank": 1,
+          "votes": 314,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1482.2,
+          "rank": 9,
+          "votes": 10529,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1477.4,
+          "rank": 15,
+          "votes": 1386,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1474.1,
+          "rank": 29,
+          "votes": 3301,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1468.0,
+          "rank": 20,
+          "votes": 2005,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1448.9,
+          "rank": 34,
+          "votes": 667,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": {
+        "score": 90.1,
+        "cost_per_call": 0.18,
+        "rank": 7,
+        "n": 30,
+        "total_in_test": 24
+      },
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "gpt-5.5-fast",
+      "display": "GPT-5.5 Instant",
+      "warnings": [],
+      "intelligence_index": 41.8,
+      "coding_index": 45.1,
+      "math_index": null,
+      "output_tok_per_sec": 0,
+      "ttft_seconds": 0,
+      "task_scores": {
+        "research": {
+          "score": 52.4,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 78.0,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 45.9,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 56.6,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 45.1,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 56.6,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 5.0,
+        "direct_output_per_1m": 30.0,
+        "committed_input_per_1m": 3.4,
+        "committed_output_per_1m": 20.4,
+        "committed_assumptions": "Illustrative: list \u00d7 0.68 (~32% off, midpoint of OpenAI 25-40% negotiated band). Azure PTU ~$2,448/PTU-mo; breakeven vs PAYG ~150-200M tokens/mo at 50%+ utilization.",
+        "aa_blended_per_1m": 11.25,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 11.25
+      },
+      "intel_per_dollar": 3.72,
+      "openrouter": {
+        "slug": "openai/gpt-5.5",
+        "context_length": 1050000,
+        "max_output": 128000,
+        "cached_read_per_1m": 0.5,
+        "spread": {
+          "host_count": 3,
+          "input_min": 5.0,
+          "input_median": 5.0,
+          "input_max": 5.5,
+          "output_min": 30.0,
+          "output_median": 30.0,
+          "output_max": 33.0,
+          "cheapest_provider": "OpenAI",
+          "cheapest_in": 5.0,
+          "cheapest_out": 30.0,
+          "cheapest_uptime_1d": 97.27,
+          "best_uptime_1d": 100
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 97.27,
+        "best_uptime_1d": 100
+      },
+      "usage_rank": 42,
+      "hallucination": {
+        "hallucination_rate": 9.3,
+        "factual_consistency": 90.7,
+        "answer_rate": 100.0
+      },
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": false,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "OpenAI",
+        "country": "United States of America",
+        "open_weights": "No",
+        "accessibility": "API access",
+        "release_date": "2026-05-05"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": "API data not used for training; Azure OpenAI is the enterprise no-train route.",
+        "us_hosted_option": true,
+        "context_tokens": 400000
+      },
+      "arena": {
+        "name": "gpt-5.5-instant",
+        "elo_overall_sc": 1472.2,
+        "elo_overall_raw": 1472.8,
+        "elo_coding": null,
+        "sc_delta": 0.6,
+        "votes": 26225,
+        "rank": 23,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1418.8,
+          "rank": 81,
+          "votes": 26225,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1460.8,
+          "rank": 71,
+          "votes": 1479,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1433.4,
+          "rank": 88,
+          "votes": 7645,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1417.8,
+          "rank": 41,
+          "votes": 4243,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1417.9,
+          "rank": 99,
+          "votes": 12579,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1414.7,
+          "rank": 96,
+          "votes": 2515,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1426.0,
+          "rank": 83,
+          "votes": 1022,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1406.7,
+          "rank": 75,
+          "votes": 425,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1425.9,
+          "rank": 83,
+          "votes": 17688,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1422.7,
+          "rank": 97,
+          "votes": 8889,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1409.3,
+          "rank": 81,
+          "votes": 5447,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1405.1,
+          "rank": 51,
+          "votes": 5619,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1421.5,
+          "rank": 87,
+          "votes": 2177,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1427.1,
+          "rank": 92,
+          "votes": 4241,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1414.2,
+          "rank": 96,
+          "votes": 1557,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1414.8,
+          "rank": 101,
+          "votes": 1991,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1432.1,
+          "rank": 93,
+          "votes": 10773,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1423.3,
+          "rank": 42,
+          "votes": 6419,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1406.7,
+          "rank": 70,
+          "votes": 9239,
+          "total_in_cat": 366
+        },
+        "japanese": {
+          "rating": 1409.6,
+          "rank": 32,
+          "votes": 250,
+          "total_in_cat": 235
+        },
+        "korean": {
+          "rating": 1395.3,
+          "rank": 44,
+          "votes": 417,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1421.3,
+          "rank": 71,
+          "votes": 11885,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1423.5,
+          "rank": 75,
+          "votes": 1470,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1433.9,
+          "rank": 60,
+          "votes": 4909,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1428.4,
+          "rank": 51,
+          "votes": 2897,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1425.3,
+          "rank": 61,
+          "votes": 771,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": null,
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "gpt-5.4",
+      "display": "GPT-5.4 (xhigh)",
+      "warnings": [],
+      "intelligence_index": 56.8,
+      "coding_index": 57.2,
+      "math_index": null,
+      "output_tok_per_sec": 100.31,
+      "ttft_seconds": 210.779,
+      "task_scores": {
+        "research": {
+          "score": 66.8,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 83.0,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 72.4,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 65.4,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 57.2,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 65.4,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 2.5,
+        "direct_output_per_1m": 15.0,
+        "committed_input_per_1m": 1.7,
+        "committed_output_per_1m": 10.2,
+        "committed_assumptions": "Illustrative: list \u00d7 0.68 (~32% off negotiated band). Azure PTU for sustained workloads.",
+        "aa_blended_per_1m": 5.625,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 5.625
+      },
+      "intel_per_dollar": 10.1,
+      "openrouter": {
+        "slug": "openai/gpt-5.4",
+        "context_length": 1050000,
+        "max_output": 128000,
+        "cached_read_per_1m": 0.25,
+        "spread": {
+          "host_count": 2,
+          "input_min": 2.5,
+          "input_median": 2.5,
+          "input_max": 2.5,
+          "output_min": 15.0,
+          "output_median": 15.0,
+          "output_max": 15.0,
+          "cheapest_provider": "OpenAI",
+          "cheapest_in": 2.5,
+          "cheapest_out": 15.0,
+          "cheapest_uptime_1d": 97.89,
+          "best_uptime_1d": 99.38
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 97.89,
+        "best_uptime_1d": 99.38
+      },
+      "usage_rank": 79,
+      "hallucination": {
+        "hallucination_rate": 7.0,
+        "factual_consistency": 93.0,
+        "answer_rate": 99.9
+      },
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": false,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "OpenAI",
+        "country": "United States of America",
+        "open_weights": "No",
+        "accessibility": "API access",
+        "release_date": "2026-03-05"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": null,
+        "us_hosted_option": true,
+        "context_tokens": 400000
+      },
+      "arena": {
+        "name": "gpt-5.4-high",
+        "elo_overall_sc": 1479.0,
+        "elo_overall_raw": 1470.9,
+        "elo_coding": null,
+        "sc_delta": -8.1,
+        "votes": 37120,
+        "rank": 11,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1470.9,
+          "rank": 11,
+          "votes": 37120,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1521.1,
+          "rank": 13,
+          "votes": 1981,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1495.3,
+          "rank": 14,
+          "votes": 9742,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1442.2,
+          "rank": 22,
+          "votes": 5966,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1470.4,
+          "rank": 16,
+          "votes": 17386,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1513.5,
+          "rank": 5,
+          "votes": 3217,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1493.8,
+          "rank": 11,
+          "votes": 1272,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1481.2,
+          "rank": 9,
+          "votes": 595,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1488.1,
+          "rank": 6,
+          "votes": 23486,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1506.6,
+          "rank": 12,
+          "votes": 10190,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1493.9,
+          "rank": 6,
+          "votes": 5866,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1442.8,
+          "rank": 15,
+          "votes": 7462,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1484.6,
+          "rank": 9,
+          "votes": 2885,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1478.8,
+          "rank": 17,
+          "votes": 6048,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1494.6,
+          "rank": 6,
+          "votes": 1379,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1459.6,
+          "rank": 33,
+          "votes": 2720,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1512.4,
+          "rank": 14,
+          "votes": 13498,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1461.5,
+          "rank": 14,
+          "votes": 8976,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1472.9,
+          "rank": 11,
+          "votes": 11981,
+          "total_in_cat": 366
+        },
+        "japanese": {
+          "rating": 1488.7,
+          "rank": 6,
+          "votes": 329,
+          "total_in_cat": 235
+        },
+        "korean": {
+          "rating": 1440.4,
+          "rank": 11,
+          "votes": 615,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1494.0,
+          "rank": 19,
+          "votes": 13634,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1496.3,
+          "rank": 5,
+          "votes": 1498,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1481.9,
+          "rank": 10,
+          "votes": 6867,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1486.4,
+          "rank": 9,
+          "votes": 4127,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1453.7,
+          "rank": 27,
+          "votes": 1199,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": {
+        "score": 90.9,
+        "cost_per_call": 0.07,
+        "rank": 5,
+        "n": 30,
+        "total_in_test": 24
+      },
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "gpt-5.4-mini",
+      "display": "GPT-5.4 mini",
+      "warnings": [],
+      "intelligence_index": 48.9,
+      "coding_index": 51.5,
+      "math_index": null,
+      "output_tok_per_sec": 176.487,
+      "ttft_seconds": 10.741,
+      "task_scores": {
+        "research": {
+          "score": 57.0,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 80.4,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 67.8,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 61.1,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 51.5,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 61.1,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 0.75,
+        "direct_output_per_1m": 4.5,
+        "committed_input_per_1m": 0.51,
+        "committed_output_per_1m": 3.06,
+        "committed_assumptions": "Illustrative: list \u00d7 0.68 (~32% off negotiated band).",
+        "aa_blended_per_1m": 1.688,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 1.6875
+      },
+      "intel_per_dollar": 28.98,
+      "openrouter": {
+        "slug": "openai/gpt-5.4-mini",
+        "context_length": 400000,
+        "max_output": 128000,
+        "cached_read_per_1m": 0.075,
+        "spread": {
+          "host_count": 2,
+          "input_min": 0.75,
+          "input_median": 0.75,
+          "input_max": 0.75,
+          "output_min": 4.5,
+          "output_median": 4.5,
+          "output_max": 4.5,
+          "cheapest_provider": "OpenAI",
+          "cheapest_in": 0.75,
+          "cheapest_out": 4.5,
+          "cheapest_uptime_1d": 93.72,
+          "best_uptime_1d": 99.93
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 93.72,
+        "best_uptime_1d": 99.93
+      },
+      "usage_rank": 71,
+      "hallucination": {
+        "hallucination_rate": 5.5,
+        "factual_consistency": 94.5,
+        "answer_rate": 100.0
+      },
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": true,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "OpenAI",
+        "country": "United States of America",
+        "open_weights": "No",
+        "accessibility": "API access",
+        "release_date": "2026-03-17"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": null,
+        "us_hosted_option": true,
+        "context_tokens": 400000
+      },
+      "arena": {
+        "name": "gpt-5.4-mini-high",
+        "elo_overall_sc": 1448.5,
+        "elo_overall_raw": 1466.5,
+        "elo_coding": 1399.3,
+        "sc_delta": 18.0,
+        "votes": 35690,
+        "rank": 48,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1412.5,
+          "rank": 96,
+          "votes": 35690,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1453.7,
+          "rank": 85,
+          "votes": 1913,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1438.9,
+          "rank": 77,
+          "votes": 9551,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1367.0,
+          "rank": 105,
+          "votes": 5738,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1413.5,
+          "rank": 106,
+          "votes": 16969,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1439.0,
+          "rank": 60,
+          "votes": 3198,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1427.4,
+          "rank": 81,
+          "votes": 1153,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1403.9,
+          "rank": 81,
+          "votes": 460,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1426.6,
+          "rank": 81,
+          "votes": 23086,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1423.1,
+          "rank": 94,
+          "votes": 11514,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1417.6,
+          "rank": 69,
+          "votes": 7195,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1372.9,
+          "rank": 99,
+          "votes": 7373,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1416.2,
+          "rank": 98,
+          "votes": 2722,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1419.3,
+          "rank": 104,
+          "votes": 5890,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1434.5,
+          "rank": 62,
+          "votes": 1949,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1396.2,
+          "rank": 121,
+          "votes": 2620,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1437.3,
+          "rank": 84,
+          "votes": 13921,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1391.4,
+          "rank": 87,
+          "votes": 8589,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1403.1,
+          "rank": 78,
+          "votes": 11816,
+          "total_in_cat": 366
+        },
+        "japanese": {
+          "rating": 1384.9,
+          "rank": 54,
+          "votes": 233,
+          "total_in_cat": 235
+        },
+        "korean": {
+          "rating": 1367.5,
+          "rank": 70,
+          "votes": 540,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1407.5,
+          "rank": 97,
+          "votes": 14655,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1420.9,
+          "rank": 81,
+          "votes": 2048,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1434.0,
+          "rank": 59,
+          "votes": 6741,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1420.4,
+          "rank": 65,
+          "votes": 3839,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1407.8,
+          "rank": 93,
+          "votes": 1016,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": null,
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "gpt-5.4-nano",
+      "display": "GPT-5.4 nano",
+      "warnings": [],
+      "intelligence_index": 44,
+      "coding_index": 43.9,
+      "math_index": null,
+      "output_tok_per_sec": 154.929,
+      "ttft_seconds": 4.123,
+      "task_scores": {
+        "research": {
+          "score": 54.1,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 78.8,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 59.2,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 60.0,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 43.9,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 60.0,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 0.2,
+        "direct_output_per_1m": 1.25,
+        "committed_input_per_1m": 0.136,
+        "committed_output_per_1m": 0.85,
+        "committed_assumptions": "Illustrative: list \u00d7 0.68 (~32% off negotiated band). At this floor, list is already near-marginal-cost; negotiation leverage is low.",
+        "aa_blended_per_1m": 0.463,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 0.4625
+      },
+      "intel_per_dollar": 95.14,
+      "openrouter": {
+        "slug": "openai/gpt-5.4-nano",
+        "context_length": 400000,
+        "max_output": 128000,
+        "cached_read_per_1m": 0.02,
+        "spread": {
+          "host_count": 2,
+          "input_min": 0.2,
+          "input_median": 0.2,
+          "input_max": 0.2,
+          "output_min": 1.25,
+          "output_median": 1.25,
+          "output_max": 1.25,
+          "cheapest_provider": "Azure",
+          "cheapest_in": 0.2,
+          "cheapest_out": 1.25,
+          "cheapest_uptime_1d": 99.99,
+          "best_uptime_1d": 99.99
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 99.99,
+        "best_uptime_1d": 99.99
+      },
+      "usage_rank": 70,
+      "hallucination": {
+        "hallucination_rate": 3.1,
+        "factual_consistency": 96.9,
+        "answer_rate": 100.0
+      },
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": true,
+        "multilingual_tier": 2,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "OpenAI",
+        "country": "United States of America",
+        "open_weights": "No",
+        "accessibility": "API access",
+        "release_date": "2026-03-17"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": null,
+        "us_hosted_option": true,
+        "context_tokens": 400000
+      },
+      "arena": null,
+      "arena_categories": {},
+      "salesevals": null,
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "gemini-3.5-flash",
+      "display": "Gemini 3.5 Flash",
+      "warnings": [
+        "Epoch match not found for 'Gemini 3.5 Flash'"
+      ],
+      "intelligence_index": 55.3,
+      "coding_index": 45,
+      "math_index": null,
+      "output_tok_per_sec": 200.977,
+      "ttft_seconds": 14.904,
+      "task_scores": {
+        "research": {
+          "score": 66.6,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 84.3,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 68.1,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 65.8,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 45.0,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 65.8,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 1.5,
+        "direct_output_per_1m": 9.0,
+        "committed_input_per_1m": 1.13,
+        "committed_output_per_1m": 6.75,
+        "committed_assumptions": "Illustrative: list \u00d7 0.75 (~25% off, midpoint of Vertex provisioned-throughput 15-40% band at high utilization).",
+        "aa_blended_per_1m": 3.375,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 3.375
+      },
+      "intel_per_dollar": 16.39,
+      "openrouter": {
+        "slug": "google/gemini-3.5-flash",
+        "context_length": 1048576,
+        "max_output": 65536,
+        "cached_read_per_1m": 0.15,
+        "spread": {
+          "host_count": 2,
+          "input_min": 1.5,
+          "input_median": 1.5,
+          "input_max": 1.5,
+          "output_min": 9.0,
+          "output_median": 9.0,
+          "output_max": 9.0,
+          "cheapest_provider": "Google AI Studio",
+          "cheapest_in": 1.5,
+          "cheapest_out": 9.0,
+          "cheapest_uptime_1d": 99.68,
+          "best_uptime_1d": 99.68
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 99.68,
+        "best_uptime_1d": 99.68
+      },
+      "usage_rank": 16,
+      "hallucination": null,
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": true,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "Google",
+        "country": null,
+        "open_weights": null,
+        "accessibility": null,
+        "release_date": "2026-05-19"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": "Vertex AI / paid tier: inputs not used for training. Free-tier AI Studio: trains.",
+        "us_hosted_option": true,
+        "context_tokens": 1000000
+      },
+      "arena": {
+        "name": "gemini-3.5-flash",
+        "elo_overall_sc": 1476.8,
+        "elo_overall_raw": 1461.9,
+        "elo_coding": 1505.6,
+        "sc_delta": -14.9,
+        "votes": 10113,
+        "rank": 13,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1445.2,
+          "rank": 48,
+          "votes": 9967,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1517.5,
+          "rank": 15,
+          "votes": 576,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1505.0,
+          "rank": 45,
+          "votes": 2909,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1469.1,
+          "rank": 8,
+          "votes": 1523,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1459.7,
+          "rank": 37,
+          "votes": 4845,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1509.2,
+          "rank": 7,
+          "votes": 1027,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1461.8,
+          "rank": 33,
+          "votes": 342,
+          "total_in_cat": 251
+        },
+        "hard_prompts": {
+          "rating": 1461.6,
+          "rank": 63,
+          "votes": 6687,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1479.0,
+          "rank": 54,
+          "votes": 3375,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1456.7,
+          "rank": 19,
+          "votes": 2084,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1454.2,
+          "rank": 9,
+          "votes": 2049,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1480.7,
+          "rank": 12,
+          "votes": 788,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1497.2,
+          "rank": 6,
+          "votes": 1636,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1513.2,
+          "rank": 3,
+          "votes": 638,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1488.0,
+          "rank": 9,
+          "votes": 746,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1484.2,
+          "rank": 53,
+          "votes": 4083,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1444.9,
+          "rank": 18,
+          "votes": 2281,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1452.6,
+          "rank": 33,
+          "votes": 3353,
+          "total_in_cat": 366
+        },
+        "korean": {
+          "rating": 1480.0,
+          "rank": 2,
+          "votes": 206,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1480.2,
+          "rank": 13,
+          "votes": 4298,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1521.3,
+          "rank": 1,
+          "votes": 582,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1489.2,
+          "rank": 6,
+          "votes": 1835,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1496.3,
+          "rank": 5,
+          "votes": 1039,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1470.2,
+          "rank": 9,
+          "votes": 371,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": null,
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "gemini-3.1-pro",
+      "display": "Gemini 3.1 Pro",
+      "warnings": [],
+      "intelligence_index": 57.2,
+      "coding_index": 55.5,
+      "math_index": null,
+      "output_tok_per_sec": 126.696,
+      "ttft_seconds": 21.233,
+      "task_scores": {
+        "research": {
+          "score": 69.4,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 85.6,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 74.7,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 67.2,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 55.5,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 67.2,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 2.0,
+        "direct_output_per_1m": 12.0,
+        "committed_input_per_1m": 1.5,
+        "committed_output_per_1m": 9.0,
+        "committed_assumptions": "Illustrative: list \u00d7 0.75 (~25% off Vertex PT band).",
+        "aa_blended_per_1m": 4.5,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 4.5
+      },
+      "intel_per_dollar": 12.71,
+      "openrouter": {
+        "slug": "google/gemini-3.1-pro-preview",
+        "context_length": 1048576,
+        "max_output": 65536,
+        "cached_read_per_1m": 0.2,
+        "spread": {
+          "host_count": 2,
+          "input_min": 2.0,
+          "input_median": 2.0,
+          "input_max": 2.0,
+          "output_min": 12.0,
+          "output_median": 12.0,
+          "output_max": 12.0,
+          "cheapest_provider": "Google AI Studio",
+          "cheapest_in": 2.0,
+          "cheapest_out": 12.0,
+          "cheapest_uptime_1d": 97.75,
+          "best_uptime_1d": 97.87
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 97.75,
+        "best_uptime_1d": 97.87
+      },
+      "usage_rank": 93,
+      "hallucination": {
+        "hallucination_rate": 10.4,
+        "factual_consistency": 89.6,
+        "answer_rate": 99.4
+      },
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": true,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "Google",
+        "country": "United States of America",
+        "open_weights": "No",
+        "accessibility": "API access",
+        "release_date": "2026-02-19"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": null,
+        "us_hosted_option": true,
+        "context_tokens": 1000000
+      },
+      "arena": {
+        "name": "gemini-3.1-pro-preview",
+        "elo_overall_sc": 1487.1,
+        "elo_overall_raw": 1473.0,
+        "elo_coding": 1489.9,
+        "sc_delta": -14.1,
+        "votes": 55403,
+        "rank": 7,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1445.9,
+          "rank": 46,
+          "votes": 54605,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1478.3,
+          "rank": 43,
+          "votes": 2023,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1486.7,
+          "rank": 76,
+          "votes": 12663,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1411.5,
+          "rank": 78,
+          "votes": 6953,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1457.5,
+          "rank": 41,
+          "votes": 25678,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1478.1,
+          "rank": 36,
+          "votes": 3542,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1496.8,
+          "rank": 23,
+          "votes": 999,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1496.1,
+          "rank": 4,
+          "votes": 904,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1463.3,
+          "rank": 61,
+          "votes": 34260,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1478.4,
+          "rank": 56,
+          "votes": 15045,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1460.2,
+          "rank": 37,
+          "votes": 8570,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1417.3,
+          "rank": 57,
+          "votes": 9249,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1478.4,
+          "rank": 36,
+          "votes": 3111,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1460.0,
+          "rank": 61,
+          "votes": 6875,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1427.1,
+          "rank": 50,
+          "votes": 2015,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1467.4,
+          "rank": 60,
+          "votes": 2923,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1478.7,
+          "rank": 64,
+          "votes": 20134,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1415.9,
+          "rank": 80,
+          "votes": 10866,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1447.4,
+          "rank": 42,
+          "votes": 15500,
+          "total_in_cat": 366
+        },
+        "japanese": {
+          "rating": 1505.4,
+          "rank": 4,
+          "votes": 459,
+          "total_in_cat": 235
+        },
+        "korean": {
+          "rating": 1391.1,
+          "rank": 4,
+          "votes": 255,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1444.7,
+          "rank": 76,
+          "votes": 19355,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1453.5,
+          "rank": 37,
+          "votes": 2267,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1458.2,
+          "rank": 44,
+          "votes": 7402,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1473.8,
+          "rank": 13,
+          "votes": 4348,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1463.8,
+          "rank": 17,
+          "votes": 985,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": {
+        "score": 80.4,
+        "cost_per_call": 0.03,
+        "rank": 24,
+        "n": 30,
+        "total_in_test": 24
+      },
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "kimi-k2.6",
+      "display": "Kimi K2.6",
+      "warnings": [],
+      "intelligence_index": 53.9,
+      "coding_index": 47.1,
+      "math_index": null,
+      "output_tok_per_sec": 48.87,
+      "ttft_seconds": 1.052,
+      "task_scores": {
+        "research": {
+          "score": 63.5,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 83.5,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 69.9,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 64.9,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 47.1,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 64.9,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 0.6,
+        "direct_output_per_1m": 2.5,
+        "committed_input_per_1m": null,
+        "committed_output_per_1m": null,
+        "committed_assumptions": "Open weights -> 'committed' = US-host committed tier (Together/Fireworks) or self-host GPU. Practical floor = OpenRouter cheapest-host (see openrouter.spread). Direct Moonshot API has no published committed tier.",
+        "aa_blended_per_1m": 1.712,
+        "prompt_caching_discount_pct": null,
+        "batch_api_discount_pct": null,
+        "promo_note": null,
+        "direct_blended_3_to_1": 1.075
+      },
+      "intel_per_dollar": 50.14,
+      "openrouter": {
+        "slug": "moonshotai/kimi-k2.6",
+        "context_length": 262144,
+        "max_output": 262142,
+        "cached_read_per_1m": 0.34,
+        "spread": {
+          "host_count": 20,
+          "input_min": 0.68,
+          "input_median": 0.8037,
+          "input_max": 1.2,
+          "output_min": 3.4,
+          "output_median": 3.55,
+          "output_max": 4.655,
+          "cheapest_provider": "Io Net",
+          "cheapest_in": 0.68,
+          "cheapest_out": 3.41,
+          "cheapest_uptime_1d": 97.92,
+          "best_uptime_1d": 99.88
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 97.92,
+        "best_uptime_1d": 99.88
+      },
+      "usage_rank": 53,
+      "hallucination": {
+        "hallucination_rate": 10.8,
+        "factual_consistency": 89.2,
+        "answer_rate": 99.7
+      },
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": true,
+        "multilingual_tier": 2,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "Moonshot",
+        "country": "China",
+        "open_weights": "Yes",
+        "accessibility": "Open weights (unrestricted)",
+        "release_date": "2026-04-20"
+      },
+      "policy": {
+        "train_policy": "unknown",
+        "policy_note": "China-origin; Moonshot hosted API train policy unclear. Open weights (unrestricted) per Epoch -> self-host or run via US providers (Together, Fireworks, Groq) under their no-train terms.",
+        "us_hosted_option": true,
+        "context_tokens": 200000
+      },
+      "arena": {
+        "name": "kimi-k2.6",
+        "elo_overall_sc": 1461.8,
+        "elo_overall_raw": null,
+        "elo_coding": 1522.3,
+        "sc_delta": null,
+        "votes": 22595,
+        "rank": 31,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1432.0,
+          "rank": 79,
+          "votes": 22246,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1484.4,
+          "rank": 36,
+          "votes": 802,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1495.1,
+          "rank": 65,
+          "votes": 5543,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1423.7,
+          "rank": 61,
+          "votes": 2708,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1441.2,
+          "rank": 79,
+          "votes": 10137,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1472.1,
+          "rank": 43,
+          "votes": 1453,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1466.7,
+          "rank": 26,
+          "votes": 840,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1444.1,
+          "rank": 27,
+          "votes": 409,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1449.0,
+          "rank": 87,
+          "votes": 14297,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1464.6,
+          "rank": 74,
+          "votes": 6443,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1450.6,
+          "rank": 48,
+          "votes": 3715,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1415.7,
+          "rank": 61,
+          "votes": 3752,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1437.9,
+          "rank": 62,
+          "votes": 1191,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1473.9,
+          "rank": 49,
+          "votes": 2994,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1480.4,
+          "rank": 16,
+          "votes": 1228,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1476.6,
+          "rank": 52,
+          "votes": 1206,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1476.6,
+          "rank": 69,
+          "votes": 8644,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1419.6,
+          "rank": 67,
+          "votes": 4678,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1423.4,
+          "rank": 86,
+          "votes": 6697,
+          "total_in_cat": 366
+        },
+        "japanese": {
+          "rating": 1440.0,
+          "rank": 18,
+          "votes": 217,
+          "total_in_cat": 235
+        },
+        "korean": {
+          "rating": 1424.5,
+          "rank": 20,
+          "votes": 419,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1442.4,
+          "rank": 79,
+          "votes": 8601,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1456.0,
+          "rank": 34,
+          "votes": 939,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1443.1,
+          "rank": 64,
+          "votes": 3172,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1447.9,
+          "rank": 28,
+          "votes": 2483,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1460.5,
+          "rank": 18,
+          "votes": 775,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": null,
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "deepseek-v4-pro",
+      "display": "DeepSeek V4 Pro",
+      "warnings": [
+        "Epoch match not found for 'DeepSeek V4 Pro'"
+      ],
+      "intelligence_index": 51.5,
+      "coding_index": 47.5,
+      "math_index": null,
+      "output_tok_per_sec": 57.612,
+      "ttft_seconds": 1.154,
+      "task_scores": {
+        "research": {
+          "score": 62.3,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 82.6,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 71.2,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 64.0,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 47.5,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 64.0,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 0.435,
+        "direct_output_per_1m": 0.87,
+        "committed_input_per_1m": null,
+        "committed_output_per_1m": null,
+        "committed_assumptions": "Open weights -> committed = US-host tier or self-host. Practical floor = OpenRouter cheapest-host. NOTE: direct rate reflects a 75% promo that expired 2026-05-31; list may now be ~$1.74/$3.48 \u2014 re-verify.",
+        "aa_blended_per_1m": 0.544,
+        "prompt_caching_discount_pct": null,
+        "batch_api_discount_pct": null,
+        "promo_note": "Direct API rate reflects a 75% promo that expired 2026-05-31; re-verify. List may now be ~$1.74 / $3.48.",
+        "direct_blended_3_to_1": 0.5437
+      },
+      "intel_per_dollar": 94.71,
+      "openrouter": {
+        "slug": "deepseek/deepseek-v4-pro",
+        "context_length": 1048576,
+        "max_output": 384000,
+        "cached_read_per_1m": 0.0036,
+        "spread": {
+          "host_count": 16,
+          "input_min": 0.435,
+          "input_median": 1.604,
+          "input_max": 1.8,
+          "output_min": 0.87,
+          "output_median": 3.2,
+          "output_max": 3.796,
+          "cheapest_provider": "DeepSeek",
+          "cheapest_in": 0.435,
+          "cheapest_out": 0.87,
+          "cheapest_uptime_1d": 99.98,
+          "best_uptime_1d": 99.98
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 99.98,
+        "best_uptime_1d": 99.98
+      },
+      "usage_rank": 43,
+      "hallucination": {
+        "hallucination_rate": 8.6,
+        "factual_consistency": 91.4,
+        "answer_rate": 97.2
+      },
+      "capabilities": {
+        "vision": false,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": true,
+        "multilingual_tier": 2,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "DeepSeek",
+        "country": null,
+        "open_weights": null,
+        "accessibility": null,
+        "release_date": "2026-04-24"
+      },
+      "policy": {
+        "train_policy": "trains-by-default",
+        "policy_note": "DeepSeek API may use inputs for training per published terms. For enterprise: run via Fireworks/Together (US-hosted, no-train).",
+        "us_hosted_option": true,
+        "context_tokens": 128000
+      },
+      "arena": {
+        "name": "deepseek-v4-pro-thinking",
+        "elo_overall_sc": 1456.6,
+        "elo_overall_raw": null,
+        "elo_coding": 1461.7,
+        "sc_delta": null,
+        "votes": 23617,
+        "rank": 37,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1430.3,
+          "rank": 83,
+          "votes": 23232,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1485.8,
+          "rank": 34,
+          "votes": 1199,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1480.0,
+          "rank": 84,
+          "votes": 6172,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1428.1,
+          "rank": 51,
+          "votes": 3043,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1440.0,
+          "rank": 80,
+          "votes": 10660,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1445.6,
+          "rank": 49,
+          "votes": 2046,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1427.7,
+          "rank": 79,
+          "votes": 861,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1441.4,
+          "rank": 30,
+          "votes": 357,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1448.7,
+          "rank": 89,
+          "votes": 15381,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1461.2,
+          "rank": 82,
+          "votes": 6937,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1433.9,
+          "rank": 74,
+          "votes": 3974,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1416.3,
+          "rank": 60,
+          "votes": 4360,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1432.6,
+          "rank": 67,
+          "votes": 1347,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1456.2,
+          "rank": 70,
+          "votes": 2963,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1454.6,
+          "rank": 33,
+          "votes": 1209,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1451.0,
+          "rank": 69,
+          "votes": 1202,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1463.7,
+          "rank": 85,
+          "votes": 9116,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1426.9,
+          "rank": 58,
+          "votes": 5075,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1434.6,
+          "rank": 67,
+          "votes": 7247,
+          "total_in_cat": 366
+        },
+        "japanese": {
+          "rating": 1417.6,
+          "rank": 26,
+          "votes": 183,
+          "total_in_cat": 235
+        },
+        "korean": {
+          "rating": 1416.7,
+          "rank": 24,
+          "votes": 360,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1440.2,
+          "rank": 86,
+          "votes": 9429,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1457.5,
+          "rank": 30,
+          "votes": 917,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1445.4,
+          "rank": 60,
+          "votes": 3320,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1423.6,
+          "rank": 67,
+          "votes": 2058,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1438.2,
+          "rank": 49,
+          "votes": 721,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": {
+        "score": 85.1,
+        "cost_per_call": 0.0047,
+        "rank": 23,
+        "n": 30,
+        "total_in_test": 24
+      },
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "deepseek-v4-flash",
+      "display": "DeepSeek V4 Flash",
+      "warnings": [
+        "Epoch match not found for 'DeepSeek V4 Flash'"
+      ],
+      "intelligence_index": 46.5,
+      "coding_index": 38.7,
+      "math_index": null,
+      "output_tok_per_sec": 99.523,
+      "ttft_seconds": 1.002,
+      "task_scores": {
+        "research": {
+          "score": 60.8,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 84.3,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 65.3,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 62.8,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 38.7,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 62.8,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 0.14,
+        "direct_output_per_1m": 0.28,
+        "committed_input_per_1m": null,
+        "committed_output_per_1m": null,
+        "committed_assumptions": "Open weights -> committed = US-host tier or self-host. Practical floor = OpenRouter cheapest-host.",
+        "aa_blended_per_1m": 0.175,
+        "prompt_caching_discount_pct": null,
+        "batch_api_discount_pct": null,
+        "promo_note": null,
+        "direct_blended_3_to_1": 0.175
+      },
+      "intel_per_dollar": 265.71,
+      "openrouter": {
+        "slug": "deepseek/deepseek-v4-flash",
+        "context_length": 1048576,
+        "max_output": 65536,
+        "cached_read_per_1m": 0.02,
+        "spread": {
+          "host_count": 17,
+          "input_min": 0.098,
+          "input_median": 0.139,
+          "input_max": 0.17,
+          "output_min": 0.196,
+          "output_median": 0.28,
+          "output_max": 0.35,
+          "cheapest_provider": "GMICloud",
+          "cheapest_in": 0.098,
+          "cheapest_out": 0.196,
+          "cheapest_uptime_1d": 97.84,
+          "best_uptime_1d": 99.93
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 97.84,
+        "best_uptime_1d": 99.93
+      },
+      "usage_rank": 44,
+      "hallucination": null,
+      "capabilities": {
+        "vision": false,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": true,
+        "multilingual_tier": 2,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "DeepSeek",
+        "country": null,
+        "open_weights": null,
+        "accessibility": null,
+        "release_date": "2026-04-24"
+      },
+      "policy": {
+        "train_policy": "trains-by-default",
+        "policy_note": null,
+        "us_hosted_option": true,
+        "context_tokens": 128000
+      },
+      "arena": {
+        "name": "deepseek-v4-flash-thinking",
+        "elo_overall_sc": 1436.1,
+        "elo_overall_raw": null,
+        "elo_coding": null,
+        "sc_delta": null,
+        "votes": 24641,
+        "rank": 62,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1427.6,
+          "rank": 87,
+          "votes": 24208,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1458.9,
+          "rank": 55,
+          "votes": 919,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1435.9,
+          "rank": 83,
+          "votes": 7129,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1399.7,
+          "rank": 66,
+          "votes": 3875,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1429.3,
+          "rank": 81,
+          "votes": 11382,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1434.1,
+          "rank": 68,
+          "votes": 2340,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1441.0,
+          "rank": 62,
+          "votes": 853,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1415.3,
+          "rank": 68,
+          "votes": 364,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1449.5,
+          "rank": 83,
+          "votes": 15945,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1431.7,
+          "rank": 83,
+          "votes": 7883,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1410.8,
+          "rank": 80,
+          "votes": 5020,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1393.4,
+          "rank": 72,
+          "votes": 5091,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1445.3,
+          "rank": 59,
+          "votes": 1410,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1453.9,
+          "rank": 72,
+          "votes": 3259,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1426.9,
+          "rank": 77,
+          "votes": 1364,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1436.3,
+          "rank": 74,
+          "votes": 1739,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1465.5,
+          "rank": 84,
+          "votes": 9586,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1407.7,
+          "rank": 64,
+          "votes": 5902,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1424.9,
+          "rank": 83,
+          "votes": 7691,
+          "total_in_cat": 366
+        },
+        "japanese": {
+          "rating": 1407.7,
+          "rank": 35,
+          "votes": 217,
+          "total_in_cat": 235
+        },
+        "korean": {
+          "rating": 1360.7,
+          "rank": 81,
+          "votes": 432,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1441.8,
+          "rank": 83,
+          "votes": 9998,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1419.1,
+          "rank": 84,
+          "votes": 1311,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1414.9,
+          "rank": 90,
+          "votes": 3535,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1407.5,
+          "rank": 77,
+          "votes": 2140,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1422.9,
+          "rank": 65,
+          "votes": 662,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": null,
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "qwen-3.6-max",
+      "display": "Qwen3.6 Max",
+      "warnings": [],
+      "intelligence_index": 51.8,
+      "coding_index": 44.9,
+      "math_index": null,
+      "output_tok_per_sec": 38.521,
+      "ttft_seconds": 2.177,
+      "task_scores": {
+        "research": {
+          "score": 58.8,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 82.7,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 69.9,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 64.2,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 44.9,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 64.2,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 1.3,
+        "direct_output_per_1m": 7.8,
+        "committed_input_per_1m": null,
+        "committed_output_per_1m": null,
+        "committed_assumptions": "Open weights -> committed = US-host tier or self-host. Practical floor = OpenRouter cheapest-host.",
+        "aa_blended_per_1m": 2.925,
+        "prompt_caching_discount_pct": null,
+        "batch_api_discount_pct": null,
+        "promo_note": null,
+        "direct_blended_3_to_1": 2.925
+      },
+      "intel_per_dollar": 17.71,
+      "openrouter": {
+        "slug": "qwen/qwen3-max",
+        "context_length": 262144,
+        "max_output": 32768,
+        "cached_read_per_1m": 0.156,
+        "spread": {
+          "host_count": 1,
+          "input_min": 0.78,
+          "input_median": 0.78,
+          "input_max": 0.78,
+          "output_min": 3.9,
+          "output_median": 3.9,
+          "output_max": 3.9,
+          "cheapest_provider": "Alibaba",
+          "cheapest_in": 0.78,
+          "cheapest_out": 3.9,
+          "cheapest_uptime_1d": 100,
+          "best_uptime_1d": 100
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 100,
+        "best_uptime_1d": 100
+      },
+      "usage_rank": 177,
+      "hallucination": null,
+      "capabilities": {
+        "vision": false,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": true,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "Alibaba",
+        "country": "",
+        "open_weights": "Yes",
+        "accessibility": "Open weights (restricted use)",
+        "release_date": "2026-04-20"
+      },
+      "policy": {
+        "train_policy": "unknown",
+        "policy_note": "China-origin; Qwen 3.6-27B open weights (restricted use) per Epoch. Available via OpenRouter and US hosts.",
+        "us_hosted_option": true,
+        "context_tokens": 1000000
+      },
+      "arena": {
+        "name": "qwen3.6-max-preview",
+        "elo_overall_sc": 1460.2,
+        "elo_overall_raw": null,
+        "elo_coding": 1484.0,
+        "sc_delta": null,
+        "votes": 5188,
+        "rank": 33,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1427.2,
+          "rank": 88,
+          "votes": 5178,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1486.5,
+          "rank": 32,
+          "votes": 311,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1467.1,
+          "rank": 40,
+          "votes": 1544,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1434.2,
+          "rank": 32,
+          "votes": 727,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1450.6,
+          "rank": 59,
+          "votes": 2378,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1475.7,
+          "rank": 27,
+          "votes": 518,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1456.0,
+          "rank": 45,
+          "votes": 209,
+          "total_in_cat": 251
+        },
+        "hard_prompts": {
+          "rating": 1428.9,
+          "rank": 109,
+          "votes": 3378,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1454.0,
+          "rank": 42,
+          "votes": 1624,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1427.9,
+          "rank": 52,
+          "votes": 1012,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1426.5,
+          "rank": 26,
+          "votes": 944,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1454.9,
+          "rank": 32,
+          "votes": 379,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1465.2,
+          "rank": 26,
+          "votes": 873,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1474.3,
+          "rank": 19,
+          "votes": 335,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1464.3,
+          "rank": 26,
+          "votes": 360,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1452.0,
+          "rank": 98,
+          "votes": 2149,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1445.5,
+          "rank": 25,
+          "votes": 1124,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1406.2,
+          "rank": 110,
+          "votes": 1757,
+          "total_in_cat": 366
+        },
+        "longer_query": {
+          "rating": 1414.2,
+          "rank": 110,
+          "votes": 2119,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1465.9,
+          "rank": 23,
+          "votes": 355,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1454.0,
+          "rank": 35,
+          "votes": 882,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1446.6,
+          "rank": 31,
+          "votes": 540,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1449.6,
+          "rank": 32,
+          "votes": 247,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": null,
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "glm-5.1",
+      "display": "GLM-5.1",
+      "warnings": [],
+      "intelligence_index": 51.4,
+      "coding_index": 43.4,
+      "math_index": null,
+      "output_tok_per_sec": 73.492,
+      "ttft_seconds": 0.886,
+      "task_scores": {
+        "research": {
+          "score": 57.4,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 81.5,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 70.4,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 63.8,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 43.4,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 63.8,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 1.4,
+        "direct_output_per_1m": 4.4,
+        "committed_input_per_1m": null,
+        "committed_output_per_1m": null,
+        "committed_assumptions": "Open weights -> committed = US-host tier or self-host. Practical floor = OpenRouter cheapest-host. NOTE: us_hosted_option currently false \u2014 verify a US no-train host before recommending for compliance-sensitive use.",
+        "aa_blended_per_1m": 2.15,
+        "prompt_caching_discount_pct": null,
+        "batch_api_discount_pct": null,
+        "promo_note": null,
+        "direct_blended_3_to_1": 2.15
+      },
+      "intel_per_dollar": 23.91,
+      "openrouter": {
+        "slug": "z-ai/glm-5.1",
+        "context_length": 202752,
+        "max_output": null,
+        "cached_read_per_1m": 0.182,
+        "spread": {
+          "host_count": 19,
+          "input_min": 0.98,
+          "input_median": 1.38,
+          "input_max": 1.75,
+          "output_min": 3.08,
+          "output_median": 4.4,
+          "output_max": 5.5,
+          "cheapest_provider": "GMICloud",
+          "cheapest_in": 0.98,
+          "cheapest_out": 3.08,
+          "cheapest_uptime_1d": 52.2,
+          "best_uptime_1d": 99.96
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 52.2,
+        "best_uptime_1d": 99.96
+      },
+      "usage_rank": 56,
+      "hallucination": null,
+      "capabilities": {
+        "vision": false,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": true,
+        "multilingual_tier": 2,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "Z.ai (Zhipu)",
+        "country": "China",
+        "open_weights": "",
+        "accessibility": "",
+        "release_date": "2026-04-07"
+      },
+      "policy": {
+        "train_policy": "unknown",
+        "policy_note": "China-origin; verify Zhipu API train policy.",
+        "us_hosted_option": false,
+        "context_tokens": 128000
+      },
+      "arena": {
+        "name": "glm-5.1",
+        "elo_overall_sc": 1475.2,
+        "elo_overall_raw": 1466.1,
+        "elo_coding": 1531.8,
+        "sc_delta": -9.1,
+        "votes": 15954,
+        "rank": 15,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1429.0,
+          "rank": 85,
+          "votes": 15747,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1517.5,
+          "rank": 16,
+          "votes": 991,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1474.8,
+          "rank": 91,
+          "votes": 3965,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1462.8,
+          "rank": 10,
+          "votes": 2545,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1435.4,
+          "rank": 88,
+          "votes": 7598,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1486.6,
+          "rank": 21,
+          "votes": 1425,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1476.5,
+          "rank": 17,
+          "votes": 548,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1463.4,
+          "rank": 15,
+          "votes": 221,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1449.4,
+          "rank": 84,
+          "votes": 10284,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1452.7,
+          "rank": 93,
+          "votes": 4758,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1417.5,
+          "rank": 92,
+          "votes": 2848,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1428.5,
+          "rank": 30,
+          "votes": 2656,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1469.4,
+          "rank": 24,
+          "votes": 1153,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1453.5,
+          "rank": 76,
+          "votes": 2240,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1468.8,
+          "rank": 24,
+          "votes": 932,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1470.8,
+          "rank": 17,
+          "votes": 1142,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1450.7,
+          "rank": 99,
+          "votes": 6113,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1434.2,
+          "rank": 38,
+          "votes": 3251,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1415.3,
+          "rank": 100,
+          "votes": 4832,
+          "total_in_cat": 366
+        },
+        "korean": {
+          "rating": 1416.0,
+          "rank": 25,
+          "votes": 312,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1436.6,
+          "rank": 93,
+          "votes": 6258,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1468.7,
+          "rank": 21,
+          "votes": 957,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1439.1,
+          "rank": 72,
+          "votes": 2282,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1410.7,
+          "rank": 75,
+          "votes": 1561,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1454.9,
+          "rank": 25,
+          "votes": 570,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": null,
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "gpt-5.4-high",
+      "display": "GPT-5.4 (high)",
+      "warnings": [
+        "AA match not found for 'GPT-5.4 (high)'"
+      ],
+      "intelligence_index": null,
+      "coding_index": null,
+      "math_index": null,
+      "output_tok_per_sec": null,
+      "ttft_seconds": null,
+      "task_scores": {
+        "research": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 2.5,
+        "direct_output_per_1m": 15.0,
+        "committed_input_per_1m": 1.7,
+        "committed_output_per_1m": 10.2,
+        "committed_assumptions": "Illustrative: list \u00d7 0.68 (~32% off negotiated band). Azure PTU for sustained workloads.",
+        "aa_blended_per_1m": null,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 5.625
+      },
+      "openrouter": {
+        "slug": "openai/gpt-5.4",
+        "context_length": 1050000,
+        "max_output": 128000,
+        "cached_read_per_1m": 0.25,
+        "spread": {
+          "host_count": 2,
+          "input_min": 2.5,
+          "input_median": 2.5,
+          "input_max": 2.5,
+          "output_min": 15.0,
+          "output_median": 15.0,
+          "output_max": 15.0,
+          "cheapest_provider": "OpenAI",
+          "cheapest_in": 2.5,
+          "cheapest_out": 15.0,
+          "cheapest_uptime_1d": 97.89,
+          "best_uptime_1d": 99.38
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 97.89,
+        "best_uptime_1d": 99.38
+      },
+      "usage_rank": 79,
+      "hallucination": null,
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": false,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "OpenAI",
+        "country": "United States of America",
+        "open_weights": "No",
+        "accessibility": "API access",
+        "release_date": "2026-03-17"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": null,
+        "us_hosted_option": true,
+        "context_tokens": 400000
+      },
+      "arena": {
+        "name": "gpt-5.4-high",
+        "elo_overall_sc": 1479.0,
+        "elo_overall_raw": 1470.9,
+        "elo_coding": null,
+        "sc_delta": -8.1,
+        "votes": 37120,
+        "rank": 11,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1470.9,
+          "rank": 11,
+          "votes": 37120,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1521.1,
+          "rank": 13,
+          "votes": 1981,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1495.3,
+          "rank": 14,
+          "votes": 9742,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1442.2,
+          "rank": 22,
+          "votes": 5966,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1470.4,
+          "rank": 16,
+          "votes": 17386,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1513.5,
+          "rank": 5,
+          "votes": 3217,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1493.8,
+          "rank": 11,
+          "votes": 1272,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1481.2,
+          "rank": 9,
+          "votes": 595,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1488.1,
+          "rank": 6,
+          "votes": 23486,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1506.6,
+          "rank": 12,
+          "votes": 10190,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1493.9,
+          "rank": 6,
+          "votes": 5866,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1442.8,
+          "rank": 15,
+          "votes": 7462,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1484.6,
+          "rank": 9,
+          "votes": 2885,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1478.8,
+          "rank": 17,
+          "votes": 6048,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1494.6,
+          "rank": 6,
+          "votes": 1379,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1459.6,
+          "rank": 33,
+          "votes": 2720,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1512.4,
+          "rank": 14,
+          "votes": 13498,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1461.5,
+          "rank": 14,
+          "votes": 8976,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1472.9,
+          "rank": 11,
+          "votes": 11981,
+          "total_in_cat": 366
+        },
+        "japanese": {
+          "rating": 1488.7,
+          "rank": 6,
+          "votes": 329,
+          "total_in_cat": 235
+        },
+        "korean": {
+          "rating": 1440.4,
+          "rank": 11,
+          "votes": 615,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1494.0,
+          "rank": 19,
+          "votes": 13634,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1496.3,
+          "rank": 5,
+          "votes": 1498,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1481.9,
+          "rank": 10,
+          "votes": 6867,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1486.4,
+          "rank": 9,
+          "votes": 4127,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1453.7,
+          "rank": 27,
+          "votes": 1199,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": {
+        "score": 91.3,
+        "cost_per_call": 0.07,
+        "rank": 2,
+        "n": 30,
+        "total_in_test": 24
+      },
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "gpt-5.5-xhigh",
+      "display": "GPT-5.5 (xhigh)",
+      "warnings": [],
+      "intelligence_index": 60.2,
+      "coding_index": 59.1,
+      "math_index": null,
+      "output_tok_per_sec": 61.128,
+      "ttft_seconds": 76.061,
+      "task_scores": {
+        "research": {
+          "score": 68.9,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 84.7,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 77.2,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 68.0,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 59.1,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 68.0,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 5.0,
+        "direct_output_per_1m": 30.0,
+        "committed_input_per_1m": 3.4,
+        "committed_output_per_1m": 20.4,
+        "committed_assumptions": "Illustrative: list \u00d7 0.68 (~32% off, midpoint of OpenAI 25-40% negotiated band). Azure PTU ~$2,448/PTU-mo; breakeven vs PAYG ~150-200M tokens/mo at 50%+ utilization.",
+        "aa_blended_per_1m": 11.25,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 11.25
+      },
+      "intel_per_dollar": 5.35,
+      "openrouter": {
+        "slug": "openai/gpt-5.5",
+        "context_length": 1050000,
+        "max_output": 128000,
+        "cached_read_per_1m": 0.5,
+        "spread": {
+          "host_count": 3,
+          "input_min": 5.0,
+          "input_median": 5.0,
+          "input_max": 5.5,
+          "output_min": 30.0,
+          "output_median": 30.0,
+          "output_max": 33.0,
+          "cheapest_provider": "OpenAI",
+          "cheapest_in": 5.0,
+          "cheapest_out": 30.0,
+          "cheapest_uptime_1d": 97.27,
+          "best_uptime_1d": 100
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 97.27,
+        "best_uptime_1d": 100
+      },
+      "usage_rank": 42,
+      "hallucination": null,
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": false,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "OpenAI",
+        "country": "United States of America",
+        "open_weights": "No",
+        "accessibility": "API access",
+        "release_date": "2026-04-23"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": "API data not used for training; Azure OpenAI is the enterprise no-train route.",
+        "us_hosted_option": true,
+        "context_tokens": 400000
+      },
+      "arena": null,
+      "arena_categories": {},
+      "salesevals": {
+        "score": 91.6,
+        "cost_per_call": 0.18,
+        "rank": 1,
+        "n": 30,
+        "total_in_test": 24
+      },
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "gpt-5.5-none",
+      "display": "GPT-5.5 (none)",
+      "warnings": [],
+      "intelligence_index": 40.9,
+      "coding_index": 48.6,
+      "math_index": null,
+      "output_tok_per_sec": 54.777,
+      "ttft_seconds": 0.881,
+      "task_scores": {
+        "research": {
+          "score": 44.7,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 61.5,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 59.3,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 43.5,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 48.6,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 43.5,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 5.0,
+        "direct_output_per_1m": 30.0,
+        "committed_input_per_1m": 3.4,
+        "committed_output_per_1m": 20.4,
+        "committed_assumptions": "Illustrative: list \u00d7 0.68 (~32% off, midpoint of OpenAI 25-40% negotiated band). Azure PTU ~$2,448/PTU-mo; breakeven vs PAYG ~150-200M tokens/mo at 50%+ utilization.",
+        "aa_blended_per_1m": 11.25,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 11.25
+      },
+      "intel_per_dollar": 3.64,
+      "openrouter": {
+        "slug": "openai/gpt-5.5",
+        "context_length": 1050000,
+        "max_output": 128000,
+        "cached_read_per_1m": 0.5,
+        "spread": {
+          "host_count": 3,
+          "input_min": 5.0,
+          "input_median": 5.0,
+          "input_max": 5.5,
+          "output_min": 30.0,
+          "output_median": 30.0,
+          "output_max": 33.0,
+          "cheapest_provider": "OpenAI",
+          "cheapest_in": 5.0,
+          "cheapest_out": 30.0,
+          "cheapest_uptime_1d": 97.27,
+          "best_uptime_1d": 100
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 97.27,
+        "best_uptime_1d": 100
+      },
+      "usage_rank": 42,
+      "hallucination": null,
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": false,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "OpenAI",
+        "country": "United States of America",
+        "open_weights": "No",
+        "accessibility": "API access",
+        "release_date": "2026-04-23"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": "API data not used for training; Azure OpenAI is the enterprise no-train route.",
+        "us_hosted_option": true,
+        "context_tokens": 400000
+      },
+      "arena": {
+        "name": "gpt-5.5",
+        "elo_overall_sc": 1473.8,
+        "elo_overall_raw": 1472.0,
+        "elo_coding": null,
+        "sc_delta": -1.8,
+        "votes": 25255,
+        "rank": 18,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1461.9,
+          "rank": 19,
+          "votes": 25255,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1516.1,
+          "rank": 14,
+          "votes": 834,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1474.5,
+          "rank": 32,
+          "votes": 7056,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1441.0,
+          "rank": 21,
+          "votes": 3455,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1460.5,
+          "rank": 21,
+          "votes": 12152,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1495.2,
+          "rank": 13,
+          "votes": 2385,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1496.7,
+          "rank": 8,
+          "votes": 900,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1456.2,
+          "rank": 19,
+          "votes": 329,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1478.5,
+          "rank": 18,
+          "votes": 16527,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1472.9,
+          "rank": 24,
+          "votes": 8328,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1473.8,
+          "rank": 9,
+          "votes": 4897,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1440.6,
+          "rank": 19,
+          "votes": 5566,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1472.2,
+          "rank": 21,
+          "votes": 1979,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1508.6,
+          "rank": 14,
+          "votes": 3300,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1482.1,
+          "rank": 15,
+          "votes": 1445,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1453.8,
+          "rank": 41,
+          "votes": 1872,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1478.8,
+          "rank": 24,
+          "votes": 9885,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1462.9,
+          "rank": 12,
+          "votes": 6240,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1470.6,
+          "rank": 13,
+          "votes": 8497,
+          "total_in_cat": 366
+        },
+        "japanese": {
+          "rating": 1474.2,
+          "rank": 10,
+          "votes": 168,
+          "total_in_cat": 235
+        },
+        "korean": {
+          "rating": 1423.0,
+          "rank": 22,
+          "votes": 345,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1472.3,
+          "rank": 22,
+          "votes": 11046,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1473.5,
+          "rank": 19,
+          "votes": 1409,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1466.4,
+          "rank": 20,
+          "votes": 4395,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1472.2,
+          "rank": 15,
+          "votes": 2662,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1458.1,
+          "rank": 24,
+          "votes": 761,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": {
+        "score": 91.3,
+        "cost_per_call": 0.17,
+        "rank": 3,
+        "n": 30,
+        "total_in_test": 24
+      },
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "claude-opus-4.7-max",
+      "display": "Claude Opus 4.7 (max)",
+      "warnings": [],
+      "intelligence_index": 57.3,
+      "coding_index": 52.5,
+      "math_index": null,
+      "output_tok_per_sec": 46.926,
+      "ttft_seconds": 17.525,
+      "task_scores": {
+        "research": {
+          "score": 65.5,
+          "metrics_used": [
+            "gpqa",
+            "hle"
+          ],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": 75.0,
+          "metrics_used": [
+            "gpqa",
+            "ifbench"
+          ],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": 70.1,
+          "metrics_used": [
+            "tau2",
+            "terminalbench_hard"
+          ],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": 58.0,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": 52.5,
+          "metrics_used": [
+            "artificial_analysis_coding_index"
+          ],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": 58.0,
+          "metrics_used": [
+            "ifbench",
+            "artificial_analysis_intelligence_index"
+          ],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 5.0,
+        "direct_output_per_1m": 25.0,
+        "committed_input_per_1m": 3.9,
+        "committed_output_per_1m": 19.5,
+        "committed_assumptions": "Same enterprise band as Opus 4.8 (~22% off list). 4.7 is the prior flagship.",
+        "aa_blended_per_1m": 10.938,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": null,
+        "direct_blended_3_to_1": 10.0
+      },
+      "intel_per_dollar": 5.73,
+      "openrouter": {
+        "slug": "anthropic/claude-opus-4.7",
+        "context_length": 1000000,
+        "max_output": 128000,
+        "cached_read_per_1m": 0.5,
+        "spread": null
+      },
+      "reliability": null,
+      "usage_rank": 54,
+      "hallucination": null,
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": false,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "Anthropic",
+        "country": "United States of America",
+        "open_weights": "No",
+        "accessibility": "API access",
+        "release_date": "2026-04-16"
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": null,
+        "us_hosted_option": true,
+        "context_tokens": 200000
+      },
+      "arena": {
+        "name": "claude-opus-4-7-thinking",
+        "elo_overall_sc": 1502.1,
+        "elo_overall_raw": 1478.0,
+        "elo_coding": 1580.7,
+        "sc_delta": -24.2,
+        "votes": 28900,
+        "rank": 3,
+        "low_confidence": false,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1437.7,
+          "rank": 71,
+          "votes": 28398,
+          "total_in_cat": 366
+        },
+        "chinese": {
+          "rating": 1472.1,
+          "rank": 48,
+          "votes": 1091,
+          "total_in_cat": 336
+        },
+        "coding": {
+          "rating": 1496.2,
+          "rank": 62,
+          "votes": 7272,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1420.5,
+          "rank": 64,
+          "votes": 3853,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1443.8,
+          "rank": 74,
+          "votes": 13687,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1491.3,
+          "rank": 22,
+          "votes": 2049,
+          "total_in_cat": 315
+        },
+        "french": {
+          "rating": 1501.3,
+          "rank": 4,
+          "votes": 945,
+          "total_in_cat": 251
+        },
+        "german": {
+          "rating": 1500.9,
+          "rank": 3,
+          "votes": 355,
+          "total_in_cat": 271
+        },
+        "hard_prompts": {
+          "rating": 1452.8,
+          "rank": 79,
+          "votes": 18746,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1460.0,
+          "rank": 85,
+          "votes": 8786,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1425.7,
+          "rank": 84,
+          "votes": 4721,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1411.0,
+          "rank": 69,
+          "votes": 5349,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1495.0,
+          "rank": 22,
+          "votes": 1687,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1469.0,
+          "rank": 57,
+          "votes": 3828,
+          "total_in_cat": 364
+        },
+        "industry_mathematical": {
+          "rating": 1442.6,
+          "rank": 40,
+          "votes": 1129,
+          "total_in_cat": 348
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1493.1,
+          "rank": 35,
+          "votes": 1544,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1482.0,
+          "rank": 62,
+          "votes": 10963,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1416.5,
+          "rank": 77,
+          "votes": 6063,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1421.0,
+          "rank": 91,
+          "votes": 8927,
+          "total_in_cat": 366
+        },
+        "japanese": {
+          "rating": 1436.1,
+          "rank": 19,
+          "votes": 229,
+          "total_in_cat": 235
+        },
+        "korean": {
+          "rating": 1441.9,
+          "rank": 10,
+          "votes": 471,
+          "total_in_cat": 240
+        },
+        "longer_query": {
+          "rating": 1450.5,
+          "rank": 64,
+          "votes": 11747,
+          "total_in_cat": 344
+        },
+        "math": {
+          "rating": 1453.9,
+          "rank": 36,
+          "votes": 1140,
+          "total_in_cat": 355
+        },
+        "multi_turn": {
+          "rating": 1447.2,
+          "rank": 58,
+          "votes": 3872,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1449.6,
+          "rank": 42,
+          "votes": 2196,
+          "total_in_cat": 329
+        },
+        "spanish": {
+          "rating": 1481.2,
+          "rank": 4,
+          "votes": 942,
+          "total_in_cat": 253
+        }
+      },
+      "salesevals": {
+        "score": 90.0,
+        "cost_per_call": 0.15,
+        "rank": 8,
+        "n": 30,
+        "total_in_test": 24
+      },
+      "last_verified": "2026-06-15"
+    },
+    {
+      "canonical": "claude-fable-5-high",
+      "display": "Claude Fable 5 (high)",
+      "warnings": [
+        "AA match not found for 'Claude Fable 5 (high)'",
+        "Epoch match not found for 'Claude Fable 5'"
+      ],
+      "intelligence_index": null,
+      "coding_index": null,
+      "math_index": null,
+      "output_tok_per_sec": null,
+      "ttft_seconds": null,
+      "task_scores": {
+        "research": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "data_synthesis": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "web_research": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "chat": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": true
+        },
+        "coding": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "math": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": false
+        },
+        "writing_email": {
+          "score": null,
+          "metrics_used": [],
+          "needs_arena": true
+        }
+      },
+      "cost": {
+        "direct_input_per_1m": 8.0,
+        "direct_output_per_1m": 40.0,
+        "committed_input_per_1m": 6.24,
+        "committed_output_per_1m": 31.2,
+        "committed_assumptions": "ASSUMED pricing \u2014 Fable 5 sits above Opus tier in Arena ranking; awaiting Anthropic confirmation. Re-verify when public docs land.",
+        "aa_blended_per_1m": null,
+        "prompt_caching_discount_pct": 90,
+        "batch_api_discount_pct": 50,
+        "promo_note": "Pricing not yet confirmed; estimates based on Arena-rank-implied positioning.",
+        "direct_blended_3_to_1": 16.0
+      },
+      "openrouter": {
+        "slug": "anthropic/claude-fable-5",
+        "context_length": 1000000,
+        "max_output": 128000,
+        "cached_read_per_1m": 1.0,
+        "spread": null
+      },
+      "reliability": null,
+      "usage_rank": 4,
+      "hallucination": null,
+      "capabilities": {
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
+        "fine_tuning": false,
+        "multilingual_tier": 3,
+        "caps_source": "openrouter+manual"
+      },
+      "provenance": {
+        "provider": "Anthropic",
+        "country": null,
+        "open_weights": null,
+        "accessibility": null,
+        "release_date": null
+      },
+      "policy": {
+        "train_policy": "no-train-default",
+        "policy_note": null,
+        "us_hosted_option": true,
+        "context_tokens": 200000
+      },
+      "arena": {
+        "name": "claude-fable-5",
+        "elo_overall_sc": 1510.4,
+        "elo_overall_raw": 1496.7,
+        "elo_coding": 1665.0,
+        "sc_delta": -13.6,
+        "votes": 2883,
+        "rank": 1,
+        "low_confidence": true,
+        "publish_date": "2026-06-10"
+      },
+      "arena_categories": {
+        "overall": {
+          "rating": 1496.7,
+          "rank": 3,
+          "votes": 2883,
+          "total_in_cat": 366
+        },
+        "coding": {
+          "rating": 1532.1,
+          "rank": 3,
+          "votes": 752,
+          "total_in_cat": 361
+        },
+        "creative_writing": {
+          "rating": 1498.1,
+          "rank": 2,
+          "votes": 529,
+          "total_in_cat": 364
+        },
+        "english": {
+          "rating": 1504.7,
+          "rank": 2,
+          "votes": 1401,
+          "total_in_cat": 366
+        },
+        "expert": {
+          "rating": 1520.5,
+          "rank": 3,
+          "votes": 297,
+          "total_in_cat": 315
+        },
+        "hard_prompts": {
+          "rating": 1513.4,
+          "rank": 3,
+          "votes": 1743,
+          "total_in_cat": 366
+        },
+        "hard_prompts_english": {
+          "rating": 1511.9,
+          "rank": 3,
+          "votes": 874,
+          "total_in_cat": 365
+        },
+        "industry_business_and_management_and_financial_operations": {
+          "rating": 1486.7,
+          "rank": 3,
+          "votes": 582,
+          "total_in_cat": 359
+        },
+        "industry_entertainment_and_sports_and_media": {
+          "rating": 1477.5,
+          "rank": 3,
+          "votes": 683,
+          "total_in_cat": 364
+        },
+        "industry_legal_and_government": {
+          "rating": 1489.9,
+          "rank": 5,
+          "votes": 219,
+          "total_in_cat": 339
+        },
+        "industry_life_and_physical_and_social_science": {
+          "rating": 1498.2,
+          "rank": 4,
+          "votes": 493,
+          "total_in_cat": 364
+        },
+        "industry_medicine_and_healthcare": {
+          "rating": 1493.2,
+          "rank": 5,
+          "votes": 213,
+          "total_in_cat": 336
+        },
+        "industry_software_and_it_services": {
+          "rating": 1517.1,
+          "rank": 3,
+          "votes": 1061,
+          "total_in_cat": 366
+        },
+        "industry_writing_and_literature_and_language": {
+          "rating": 1503.7,
+          "rank": 1,
+          "votes": 759,
+          "total_in_cat": 365
+        },
+        "instruction_following": {
+          "rating": 1516.3,
+          "rank": 2,
+          "votes": 915,
+          "total_in_cat": 366
+        },
+        "longer_query": {
+          "rating": 1517.5,
+          "rank": 2,
+          "votes": 1152,
+          "total_in_cat": 344
+        },
+        "multi_turn": {
+          "rating": 1506.2,
+          "rank": 3,
+          "votes": 447,
+          "total_in_cat": 364
+        },
+        "russian": {
+          "rating": 1497.7,
+          "rank": 3,
+          "votes": 241,
+          "total_in_cat": 329
+        }
+      },
+      "salesevals": {
+        "score": 87.5,
+        "cost_per_call": 0.32,
+        "rank": 17,
+        "n": 50,
+        "total_in_test": 24
+      },
+      "last_verified": "2026-06-15"
+    }
+  ]
+}

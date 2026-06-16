@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LLM Cost-vs-Capability Map · Routing Planner</title>
+<style>
+  :root{
+    --bg:#0b0d10; --panel:#14171c; --panel2:#1c2026; --ink:#e6e8eb; --dim:#9aa1ab; --line:#2a2f37;
+    --accent:#6ee7b7; --accent-dim:#0f2a22; --warn:#fbbf24; --bad:#f87171; --good:#34d399; --info:#60a5fa;
+    --frontier:#f87171; --value:#60a5fa; --cheap:#34d399; --floor:#a78bfa;
+  }
+  *{box-sizing:border-box}
+  html,body{background:var(--bg);color:var(--ink);margin:0;font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;line-height:1.45;font-size:14px}
+  a{color:var(--accent)}
+  button{font-family:inherit}
+
+  header{padding:22px 32px 12px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap}
+  header .ttl h1{margin:0 0 3px;font-size:21px;font-weight:600;letter-spacing:-.01em}
+  header .ttl .meta{color:var(--dim);font-size:11.5px;margin-top:6px;display:flex;gap:14px;flex-wrap:wrap}
+  header .ttl .meta .warn{color:var(--warn)}
+  header .ttl .meta .ds-prefix{color:var(--ink);font-weight:600}
+  /* Freshness badge: prominent "auto-refreshed daily" indicator with live data date. */
+  header .ttl .freshness{display:inline-flex;align-items:center;gap:8px;margin-top:9px;padding:5px 11px;background:var(--accent-dim);border:1px solid var(--accent);border-radius:14px;font-size:12px;color:var(--ink)}
+  header .ttl .freshness .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(110,231,183,.18);animation:pulse 2s ease-in-out infinite}
+  header .ttl .freshness b{color:var(--accent);font-weight:600}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+  header .hdr-act{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  header .hdr-act button{background:var(--panel2);color:var(--dim);border:1px solid var(--line);border-radius:5px;padding:6px 10px;font-size:11.5px;cursor:pointer;white-space:nowrap}
+  header .hdr-act button:hover{color:var(--accent);border-color:var(--accent)}
+  header .hdr-act button.on{background:var(--accent-dim);color:var(--accent);border-color:var(--accent)}
+
+  main{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 80px)}
+  aside{background:var(--panel);border-right:1px solid var(--line);padding:18px 16px;font-size:13px;overflow-y:auto;position:relative}
+
+  /* SIDEBAR SECTIONS — consistent grouping */
+  .sec{margin-bottom:22px}
+  .sec-h{display:flex;align-items:center;gap:7px;margin:0 0 10px;font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--line);padding-bottom:6px}
+  .sec-h .em{font-size:13px}
+  .sec-h .ttl{flex:1;color:var(--ink)}
+  .info-btn{background:none;border:1px solid var(--line);color:var(--dim);width:18px;height:18px;border-radius:50%;font-size:10px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;padding:0;line-height:1}
+  .info-btn:hover{color:var(--accent);border-color:var(--accent)}
+
+  .sec label{display:flex;align-items:center;gap:8px;padding:4px 0;cursor:pointer;user-select:none;font-size:13px}
+  .sec label:hover{color:var(--accent)}
+  .sec input[type=checkbox],.sec input[type=radio]{accent-color:var(--accent)}
+  .sec select{flex:0 0 150px;margin-left:auto;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:5px;padding:5px}
+
+  /* UNIFIED BUTTON STYLES — consistent across sidebar */
+  .btn-row{display:flex;gap:5px;flex-wrap:wrap}
+  .btn{flex:1;min-width:60px;background:var(--panel2);color:var(--dim);border:1px solid var(--line);border-radius:5px;padding:6px 8px;font-size:11px;cursor:pointer;line-height:1.25;text-align:center}
+  .btn:hover{color:var(--accent);border-color:var(--accent)}
+  .btn.sel,.btn.active{background:var(--accent-dim);color:var(--accent);border-color:var(--accent)}
+  .btn-block{display:block;width:100%;text-align:left;margin-top:8px;padding:8px 10px;font-size:12px;background:var(--panel2);color:var(--accent);border:1px dashed var(--accent);border-radius:6px;cursor:pointer}
+  .btn-block:hover{background:var(--accent-dim)}
+
+  .slider-row{margin:9px 0}
+  .slider-row .lab{display:flex;justify-content:space-between;font-size:12px;color:var(--dim)}
+  .slider-row .lab b{color:var(--ink);font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;accent-color:var(--accent)}
+
+  /* WIZARD takeover (replaces sidebar content): pinned to viewport so Back/Cancel always visible.
+     position:fixed instead of absolute -> dodges varying header heights without breaking other layout. */
+  .wiz{position:fixed;left:0;top:0;bottom:0;width:300px;background:var(--panel);border-right:1px solid var(--line);padding:20px 16px;display:none;flex-direction:column;overflow:hidden;z-index:50}
+  .wiz.on{display:flex}
+  .wiz-step{font-size:10.5px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;flex-shrink:0}
+  .wiz-q{font-size:14px;font-weight:600;margin-bottom:12px;flex-shrink:0}
+  .wiz-help{font-size:11.5px;color:var(--dim);margin-bottom:12px;line-height:1.5;flex-shrink:0}
+  .wiz-opts{display:flex;flex-direction:column;gap:7px;flex:1 1 auto;min-height:0;overflow-y:auto;padding-right:4px}
+  .wiz-opts button{text-align:left;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:9px 11px;font-size:12.5px;cursor:pointer;line-height:1.35;flex-shrink:0}
+  .wiz-opts button:hover{border-color:var(--accent);color:var(--accent)}
+  .wiz-opts button .sub{display:block;color:var(--dim);font-size:11px;margin-top:3px}
+  .wiz-nav{display:flex;justify-content:space-between;padding-top:12px;gap:8px;border-top:1px solid var(--line);margin-top:12px;flex-shrink:0;background:var(--panel)}
+  .wiz-nav button{background:var(--panel2);color:var(--dim);border:1px solid var(--line);border-radius:5px;padding:7px 12px;font-size:12px;cursor:pointer}
+  .wiz-nav button:hover{color:var(--accent);border-color:var(--accent)}
+  .wiz-nav button.primary{background:var(--accent);color:#04110b;border-color:var(--accent);font-weight:600}
+
+  /* CONTENT cards */
+  .content{padding:22px 28px;overflow-x:hidden}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:22px}
+  .card h2{margin:0 0 4px;font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+  .card .h-sub{color:var(--dim);font-size:12px;margin-bottom:14px}
+
+  /* ONBOARDING card */
+  .onb{background:linear-gradient(180deg,#152922 0%,var(--panel) 100%);border:1px solid var(--accent);border-radius:10px;padding:16px 20px 18px;margin-bottom:22px;position:relative}
+  .onb.hidden{display:none}
+  .onb h2{margin:0 0 4px;font-size:15px;color:var(--accent)}
+  .onb .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:10px}
+  .onb .step{font-size:12.5px;color:var(--dim);line-height:1.45}
+  .onb .step b{display:block;color:var(--ink);font-size:13px;margin-bottom:2px}
+  .onb .step .n{display:inline-block;width:18px;height:18px;border-radius:50%;background:var(--accent);color:#04110b;text-align:center;font-weight:700;font-size:11px;line-height:18px;margin-right:5px}
+  .onb .dismiss{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--dim);cursor:pointer;font-size:14px}
+  .onb .dismiss:hover{color:var(--accent)}
+
+  /* RECOMMENDER */
+  .rec-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+  .rec-head .floor{flex:1;min-width:200px}
+  .floor-bar{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--dim)}
+  .floor-bar a{cursor:pointer;text-decoration:underline;text-decoration-style:dotted}
+  .recs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .rec{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:13px 14px;position:relative}
+  .rec.win{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+  .rec .rank{position:absolute;top:-9px;left:12px;background:var(--accent);color:#04110b;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px}
+  .rec .name{font-weight:600;font-size:14px;margin-bottom:2px}
+  .rec .big{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;margin:6px 0 2px}
+  .rec .big small{font-size:12px;color:var(--dim);font-weight:400}
+  /* Side-by-side Score | Cost metrics — both get prominent treatment so the score is legible when switching tasks. */
+  .rec-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 6px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .rec-metric .m-lab{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:2px}
+  .rec-metric .m-big{font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1}
+  .rec-metric .m-big small{font-size:11px;color:var(--dim);font-weight:400;margin-left:2px}
+  .rec-metric .m-sub{font-size:10.5px;color:var(--dim);margin-top:3px;line-height:1.3}
+  .rec-metric.q-high .m-big{color:var(--accent)}
+  .rec-metric.q-mid .m-big{color:var(--ink)}
+  .rec-metric.q-low .m-big{color:var(--warn)}
+  .rec-metric.q-none .m-big{color:var(--dim)}
+  .rec .save{font-size:12px;color:var(--good);font-weight:600}
+  .rec .save.none{color:var(--dim)}
+  .rec .chips{margin-top:9px;display:flex;flex-direction:column;gap:4px}
+  .rec .chip{font-size:11px;color:var(--dim)}
+  .rec-empty{color:var(--warn);font-size:13px;padding:8px 0}
+  .arena-note{color:var(--info);font-size:11.5px;margin-top:10px}
+
+  /* SCATTER */
+  svg{width:100%;height:500px;display:block}
+  .axis-label{fill:var(--dim);font-size:11px}
+  .grid-line{stroke:var(--line);stroke-width:1;stroke-dasharray:2,3;opacity:.5}
+  .dot{cursor:pointer;transition:opacity .15s}
+  .dot.dim{opacity:.12}
+  .dot-label{fill:var(--ink);font-size:10px;pointer-events:none}
+  .pareto{fill:none;stroke:var(--accent);stroke-width:1.5;stroke-dasharray:4,3;opacity:.55;cursor:help}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:11.5px;color:var(--dim)}
+  .legend .sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:middle}
+
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th,td{padding:7px 9px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+  th{color:var(--dim);font-weight:500;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;cursor:pointer}
+  th:hover{color:var(--accent)}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  tr.dim{opacity:.3}
+  tr:hover{background:var(--panel2)}
+  .tag{display:inline-block;padding:2px 6px;border-radius:3px;font-size:10px;font-weight:600}
+  .tag.frontier{background:#3a1f23;color:#fca5a5}.tag.value{background:#1c2a40;color:#93c5fd}
+  .tag.cheap{background:#1c3327;color:#6ee7b7}.tag.floor{background:#2a2240;color:#c4b5fd}
+  .tag.ok{background:#1c3327;color:#6ee7b7}.tag.bad{background:#3a1f23;color:#fca5a5}.tag.unk{background:#2a2f37;color:var(--dim)}
+  .yes{color:var(--good)}.no{color:#5b626c}
+
+  /* TOOLTIPS (dot hover) */
+  .tooltip{position:fixed;pointer-events:none;background:#000;border:1px solid var(--line);padding:9px 11px;border-radius:6px;font-size:11.5px;max-width:300px;box-shadow:0 6px 24px rgba(0,0,0,.5);opacity:0;transition:opacity .12s;z-index:100}
+  .tooltip strong{color:var(--accent)}
+  .tooltip .r{display:flex;justify-content:space-between;gap:14px;margin-top:3px}
+  .tooltip .r .l{color:var(--dim)}
+
+  /* POPOVER (ⓘ click) */
+  .pop{position:fixed;background:var(--panel);border:1px solid var(--accent);border-radius:8px;padding:14px 16px 16px;font-size:12.5px;max-width:380px;box-shadow:0 12px 36px rgba(0,0,0,.6);z-index:200;display:none;line-height:1.55}
+  .pop.on{display:block}
+  .pop h4{margin:0 0 6px;font-size:13.5px;color:var(--accent)}
+  .pop p{margin:6px 0;color:var(--ink)}
+  .pop .row{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;border-bottom:1px solid var(--line);padding:4px 0;color:var(--dim)}
+  .pop .row b{color:var(--ink);font-weight:500}
+  .pop .close{position:absolute;top:6px;right:10px;background:none;border:none;color:var(--dim);cursor:pointer;font-size:14px}
+
+  /* QUALITY GUIDE MODAL */
+  .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:300;padding:30px}
+  .modal-bg.on{display:flex}
+  .modal{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;width:760px;max-width:100%;max-height:90vh;overflow:hidden;display:flex;flex-direction:column}
+  .modal-h{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+  .modal-h h3{margin:0;font-size:16px}
+  .modal-h button{background:none;border:none;color:var(--dim);font-size:18px;cursor:pointer}
+  .modal-h button:hover{color:var(--accent)}
+  .tabs{display:flex;border-bottom:1px solid var(--line);background:var(--panel2)}
+  .tabs button{flex:1;background:none;border:none;color:var(--dim);padding:11px 14px;font-size:12px;cursor:pointer;border-bottom:2px solid transparent}
+  .tabs button:hover{color:var(--accent)}
+  .tabs button.on{color:var(--accent);border-bottom-color:var(--accent)}
+  .modal-body{padding:18px 22px 22px;overflow-y:auto}
+  .modal-body h4{margin:14px 0 6px;font-size:13px;color:var(--accent)}
+  .modal-body h4:first-child{margin-top:0}
+  .modal-body p{margin:6px 0;font-size:13px}
+  .modal-body table{font-size:12.5px;margin:8px 0}
+  .modal-body td{padding:6px 10px;white-space:normal;vertical-align:top}
+  .formula{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:12px;color:var(--ink);margin:8px 0;line-height:1.55}
+  .formula .out{color:var(--accent);font-weight:600}
+  .floor-band{padding:8px 10px;border-radius:6px;margin:5px 0;font-size:12.5px;border-left:3px solid}
+  .floor-band b{display:block;color:var(--ink);font-size:13px;margin-bottom:2px}
+  .qwiz-q{margin:14px 0 6px;font-weight:600;font-size:13px}
+  .qwiz-opts{display:flex;flex-direction:column;gap:6px}
+  .qwiz-opts button{text-align:left;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 12px;font-size:12.5px;cursor:pointer}
+  .qwiz-opts button:hover{border-color:var(--accent);color:var(--accent)}
+  .qwiz-opts button.sel{background:var(--accent-dim);color:var(--accent);border-color:var(--accent)}
+  .qwiz-result{background:var(--accent-dim);border:1px solid var(--accent);border-radius:8px;padding:13px 16px;margin-top:14px;font-size:13px}
+  .qwiz-result b{font-size:18px;color:var(--accent)}
+  .qwiz-result button{margin-top:8px;background:var(--accent);color:#04110b;border:none;border-radius:5px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer}
+
+  /* Active filters chip row — shows what's currently narrowing the comparison so the dimmed rows have context */
+  .active-filters{margin:0 0 12px;padding:9px 12px;background:var(--panel2);border:1px solid var(--line);border-radius:6px;font-size:11.5px;line-height:1.8}
+  .active-filters .af-prefix{color:var(--ink);font-weight:600;margin-right:8px}
+  .active-filters .af-none{color:var(--dim)}
+  .af-chip{display:inline-block;padding:2px 8px;margin:2px;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent);border-radius:4px;font-size:11px;font-weight:500;white-space:nowrap}
+  .af-chip.task{background:#1c2a40;color:#93c5fd;border-color:#93c5fd}
+  .findings ul{margin:0;padding-left:18px;color:var(--dim)}
+  .findings li{margin:5px 0}.findings li b{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="ttl">
+    <h1>LLM Cost-vs-Capability Map</h1>
+    <div class="freshness" id="freshness">loading…</div>
+    <div class="meta" id="meta"></div>
+  </div>
+  <div class="hdr-act">
+    <button id="show-onb">📖 How to use</button>
+    <button id="show-costing">💰 Costing</button>
+    <button id="show-scoring">🎯 Scoring</button>
+    <button id="show-quality">📏 Quality floor</button>
+  </div>
+</header>
+
+<main>
+  <aside id="sidebar">
+    <!-- COST MODEL -->
+    <div class="sec" data-sec="cost">
+      <div class="sec-h"><span class="em">💰</span><span class="ttl">Cost model</span><button class="info-btn" data-pop="cost">i</button></div>
+      <div class="btn-row" id="presets">
+        <button class="btn" data-cache="0"  data-batch="0">List</button>
+        <button class="btn" data-cache="50" data-batch="0">Chat</button>
+        <button class="btn" data-cache="80" data-batch="0">Agent loop</button>
+        <button class="btn" data-cache="50" data-batch="100">Bulk</button>
+      </div>
+      <div class="slider-row">
+        <div class="lab"><span>Input cached</span><b id="cacheV">0%</b><button class="info-btn" data-pop="cache" style="margin-left:6px">i</button></div>
+        <input type="range" id="cache" min="0" max="95" value="0">
+      </div>
+      <div class="slider-row">
+        <div class="lab"><span>Calls via batch</span><b id="batchV">0%</b><button class="info-btn" data-pop="batch" style="margin-left:6px">i</button></div>
+        <input type="range" id="batch" min="0" max="100" value="0">
+      </div>
+      <label style="margin-top:6px"><input type="checkbox" id="enterprise"> Enterprise (committed) base <button class="info-btn" data-pop="enterprise" style="margin-left:auto">i</button></label>
+      <button class="btn-block" id="open-wiz">📊 Not sure what to pick? Walk me through it →</button>
+      <style>#open-wiz{display:none}</style>
+    </div>
+
+    <!-- TASK -->
+    <div class="sec" data-sec="task">
+      <div class="sec-h"><span class="em">🎯</span><span class="ttl">Task</span><button class="info-btn" data-pop="task">i</button></div>
+      <div style="font-size:10px;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin:0 0 4px">General</div>
+      <label><input type="radio" name="task" value="overall" checked> Overall intelligence</label>
+      <label><input type="radio" name="task" value="research"> Research</label>
+      <label><input type="radio" name="task" value="data_synthesis"> Data synthesis</label>
+      <label><input type="radio" name="task" value="web_research"> Web research (agentic)</label>
+      <label><input type="radio" name="task" value="chat"> Conversational chat</label>
+      <label><input type="radio" name="task" value="coding"> Coding</label>
+      <label><input type="radio" name="task" value="writing_email"> Email / writing</label>
+      <div style="font-size:10px;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin:14px 0 4px;display:flex;align-items:center;gap:6px">Industry verticals <button class="info-btn" data-pop="verticals" style="width:14px;height:14px;font-size:8px">i</button></div>
+      <label><input type="radio" name="task" value="business"> 💼 Business / RevOps</label>
+      <label><input type="radio" name="task" value="legal"> ⚖️ Legal</label>
+      <label><input type="radio" name="task" value="healthcare"> 🏥 Healthcare</label>
+      <label><input type="radio" name="task" value="software_engineering"> 💻 Software engineering</label>
+      <label><input type="radio" name="task" value="expert"> 🎓 Expert reasoning</label>
+      <label><input type="radio" name="task" value="sales_coaching"> 💬 Sales coaching</label>
+    </div>
+
+    <!-- CONSTRAINTS -->
+    <div class="sec" data-sec="constraints">
+      <div class="sec-h"><span class="em">🚧</span><span class="ttl">Constraints</span><button class="info-btn" data-pop="constraints">i</button></div>
+      <div style="font-size:11px;color:var(--dim);margin-bottom:6px">Capabilities the model must support</div>
+      <label><input type="checkbox" class="cap" value="vision"> Vision required <span class="cap-count" data-cap="vision"></span></label>
+      <label><input type="checkbox" class="cap" value="function_calling"> Function calling <span class="cap-count" data-cap="function_calling"></span></label>
+      <label><input type="checkbox" class="cap" value="structured_output"> Structured output <span class="cap-count" data-cap="structured_output"></span></label>
+      <label><input type="checkbox" class="cap" value="fine_tuning"> Fine-tunable <span class="cap-count" data-cap="fine_tuning"></span></label>
+      <div style="font-size:11px;color:var(--dim);margin:12px 0 6px">Policy &amp; latency</div>
+      <label><input type="checkbox" id="usonly"> US-origin only</label>
+      <label><input type="checkbox" id="notrain"> No-train policy only</label>
+      <label><input type="checkbox" id="ushosted"> US-hosted option</label>
+      <label><input type="checkbox" id="fastchat"> Chat-fast (TTFT &lt; 5s)</label>
+      <div style="font-size:11px;color:var(--dim);margin:12px 0 6px">Reliability &amp; truthfulness <button class="info-btn" data-pop="reliability" style="margin-left:4px">i</button></div>
+      <label>Min uptime (24h, best host)
+        <select id="upfilter"><option value="0">any</option><option value="99">≥ 99%</option><option value="99.9">≥ 99.9%</option></select>
+      </label>
+      <label>Max hallucination rate
+        <select id="hfilter"><option value="100">any</option><option value="10">≤ 10% (good)</option><option value="6">≤ 6% (excellent)</option><option value="4">≤ 4% (best-in-class)</option></select>
+      </label>
+      <div style="font-size:11px;color:var(--dim);margin:12px 0 6px">Pricing tier</div>
+      <label><input type="checkbox" class="tier" value="frontier" checked> <span class="tag frontier">Frontier</span></label>
+      <label><input type="checkbox" class="tier" value="value" checked> <span class="tag value">Value</span></label>
+      <label><input type="checkbox" class="tier" value="cheap" checked> <span class="tag cheap">Cheap-open</span></label>
+      <label><input type="checkbox" class="tier" value="floor" checked> <span class="tag floor">Floor</span></label>
+    </div>
+
+    <!-- WIZARD takeover -->
+    <div class="wiz" id="wiz">
+      <div class="wiz-step">Step <span id="wiz-stepN">1</span> of 3</div>
+      <div class="wiz-q" id="wiz-q"></div>
+      <div class="wiz-help" id="wiz-help"></div>
+      <div class="wiz-opts" id="wiz-opts"></div>
+      <div class="wiz-nav">
+        <button id="wiz-back">← Back</button>
+        <button id="wiz-cancel">Cancel</button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="content">
+
+    <!-- RECOMMENDER -->
+    <div class="card">
+      <h2>🎯 Routing recommender <button class="info-btn" data-pop="recommender">i</button></h2>
+      <div class="h-sub" id="rec-sub">Cheapest models that clear the bar for the selected task + constraints, vs. defaulting to the frontier.</div>
+      <div class="rec-head">
+        <div class="floor">
+          <div class="floor-bar"><span>Quality floor (min task score) <b id="floorV" style="color:var(--ink)">0</b></span></div>
+          <input type="range" id="floor" min="0" max="90" value="0">
+        </div>
+      </div>
+      <div class="recs" id="recs"></div>
+      <div class="arena-note" id="recArena"></div>
+    </div>
+
+    <!-- SCATTER -->
+    <div class="card">
+      <h2 id="scatter-title">Cost vs. capability <button class="info-btn" data-pop="scatter">i</button></h2>
+      <div class="h-sub" id="scatter-sub"></div>
+      <svg id="scatter"></svg>
+      <div class="legend">
+        <span><span class="sw" style="background:var(--frontier)"></span>Frontier</span>
+        <span><span class="sw" style="background:var(--value)"></span>Value</span>
+        <span><span class="sw" style="background:var(--cheap)"></span>Cheap-open</span>
+        <span><span class="sw" style="background:var(--floor)"></span>Floor</span>
+        <span style="margin-left:auto">Dot size = intelligence per $. <span title="See the ⓘ on the scatter title">Dashed line = Pareto frontier</span>.</span>
+      </div>
+    </div>
+
+    <!-- FINDINGS -->
+    <div class="card findings"><h2>What this view says</h2><ul id="findings"></ul></div>
+
+    <!-- TABLE -->
+    <div class="card" style="overflow-x:auto">
+      <h2>Full comparison</h2>
+      <div class="h-sub">Click a header to sort. Rows not matching constraints are dimmed.</div>
+      <div class="active-filters" id="active-filters"></div>
+      <table id="table"><thead><tr>
+        <th data-sort="display">Model</th>
+        <th data-sort="tier">Tier</th>
+        <th class="num" data-sort="_cap">Task score</th>
+        <th class="num" data-sort="intelligence_index">Intel</th>
+        <th class="num" data-sort="_eff">Eff $/1M</th>
+        <th class="num" data-sort="cost.direct_blended_3_to_1">List $/1M</th>
+        <th class="num" data-sort="_ipd">Intel/$</th>
+        <th class="num" data-sort="_hostmin">Cheapest host</th>
+        <th class="num" data-sort="ttft_seconds">TTFT</th>
+        <th class="num" data-sort="_arena">Arena SC</th>
+        <th class="num" data-sort="_scd">Style δ</th>
+        <th class="num" data-sort="_hall">Hall %</th>
+        <th class="num" data-sort="_up">Uptime</th>
+        <th class="num" data-sort="usage_rank">OR rank</th>
+        <th data-sort="_vis">Vis</th><th data-sort="_fc">FC</th>
+        <th data-sort="provenance.country">Origin</th>
+        <th data-sort="policy.train_policy">Train</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+  </div>
+</main>
+
+<!-- POPOVER -->
+<div class="pop" id="pop"><button class="close" id="pop-close">✕</button><div id="pop-body"></div></div>
+
+<!-- UNIFIED MODAL — content + tabs swap per scene (costing / scoring / quality) -->
+<div class="modal-bg" id="modal-bg"><div class="modal">
+  <div class="modal-h"><h3 id="modal-title"></h3><button id="modal-close">✕</button></div>
+  <div class="tabs" id="modal-tabs"></div>
+  <div class="modal-body" id="modal-body"></div>
+</div></div>
+
+<!-- DOT TOOLTIP -->
+<div class="tooltip" id="tip"></div>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+const pick=(o,p)=>p.split('.').reduce((a,k)=>a==null?a:a[k],o);
+const TIER_COLOR={frontier:'var(--frontier)',value:'var(--value)',cheap:'var(--cheap)',floor:'var(--floor)'};
+const TASK_LABEL={overall:'Overall intelligence',research:'Research',data_synthesis:'Data synthesis',web_research:'Web research (agentic)',chat:'Conversational chat',coding:'Coding',writing_email:'Email / writing',math:'Math',business:'Business / RevOps',legal:'Legal',healthcare:'Healthcare',software_engineering:'Software engineering',expert:'Expert reasoning',sales_coaching:'Sales coaching'};
+// Filled from models.json on load (set in build.py): which Arena category backs each task, and which tasks are Arena-only or salesevals-only.
+let ARENA_CAT_FOR_TASK={}, ARENA_ONLY=new Set(), SALESEVALS_ONLY=new Set();
+// GTM-leaning tasks where salesevals data shows as a cross-check chip on every card (in addition to the headline on sales_coaching itself)
+const SHOW_SALES_CHIP_ON=new Set(['sales_coaching','chat','writing_email','business']);
+
+// Mirror of build.py TASK_METRICS for the in-modal explainer
+const TASK_METRICS_INFO={
+  overall:{metrics:['Artificial Analysis Intelligence Index'],note:'Single index — average of multiple benchmarks (MMLU-Pro, GPQA, math, coding, instruction-following).'},
+  research:{metrics:['gpqa (×100)','mmlu_pro (×100)','hle (×100)'],note:'Graduate-level reasoning + broad knowledge + humanity\'s last exam.'},
+  data_synthesis:{metrics:['gpqa (×100)','mmlu_pro (×100)','ifbench (×100)'],note:'Reasoning + knowledge + instruction-following (most directly relevant for CRM enrichment).'},
+  web_research:{metrics:['tau2 (×100)','terminalbench_hard (×100)'],note:'Agentic tool-use benchmarks — the closest AA has to "browses the web and acts."'},
+  chat:{metrics:['ifbench (×100)','intelligence_index'],note:'AA has no direct chat benchmark; this is a proxy. The Arena human-pref rank shown on each card is the real signal.'},
+  coding:{metrics:['coding_index','livecodebench (×100)'],note:'AA\'s coding aggregate + a live competitive-coding benchmark.'},
+  math:{metrics:['math_index','aime_25 (×100)'],note:'AA\'s math aggregate + AIME 2025. Often sparse for newest models.'},
+  writing_email:{metrics:['ifbench (×100)','intelligence_index'],note:'No direct writing benchmark in AA; this is a proxy. Cross-check with Arena human-pref rank on each card.'},
+  // Vertical buckets — backed by LMArena human-preference Elo for the matching industry category.
+  legal:{metrics:['LMArena Elo · industry_legal_and_government (normalized 0–100)'],note:'Human-preference rank from real LMArena votes on legal-domain prompts. Score = (elo − 1300) ÷ 3, clamped 0–100.'},
+  healthcare:{metrics:['LMArena Elo · industry_medicine_and_healthcare'],note:'Human-preference rank on healthcare/medical prompts. Score = (elo − 1300) ÷ 3.'},
+  business:{metrics:['LMArena Elo · industry_business_and_management_and_financial_operations'],note:'Human-preference rank on business/RevOps/finance prompts. Score = (elo − 1300) ÷ 3.'},
+  software_engineering:{metrics:['LMArena Elo · industry_software_and_it_services'],note:'Human-preference rank on software-engineering prompts. Score = (elo − 1300) ÷ 3.'},
+  expert:{metrics:['LMArena Elo · expert (general high-nuance reasoning)'],note:'Human-preference rank on hard expert prompts. Score = (elo − 1300) ÷ 3.'},
+  // Sales coaching — backed by salesevals.com (NOT AA, NOT Arena).
+  sales_coaching:{metrics:['salesevals.com overall score (0–100)'],note:'Sales-call coaching benchmark: 50 synthetic calls scored 0–100 by hidden ground truth. Score is used as-is. Cost on this task is $/call (real measured), not $/1M tokens.'},
+};
+
+const SCENARIOS=[
+  {id:'chatbot',label:'💬 Live chatbot / Q&A',task:'chat',cache:65,batch:0,desc:'Customer asks a question, model replies right away. System prompt repeats every call.'},
+  {id:'email',label:'✉️ Drafting outreach emails',task:'writing_email',cache:70,batch:80,desc:'Brand voice + templates stay the same. Usually a queued job, not a live chat.'},
+  {id:'enrich',label:'🗂️ Enriching CRM data (bulk)',task:'data_synthesis',cache:55,batch:100,desc:'Overnight: enrich thousands of records. Schema stable, content varies, nobody is waiting.'},
+  {id:'summarize',label:'📄 Summarizing calls / docs',task:'data_synthesis',cache:30,batch:50,desc:'Each call is a fresh transcript, so little caching. Some live, some background.'},
+  {id:'research',label:'🔎 Research agent (browses)',task:'web_research',cache:75,batch:0,desc:'Long stable tool definitions + system prompt. Interactive — user is waiting.'},
+  {id:'classify',label:'🏷️ Classifying / routing',task:'data_synthesis',cache:80,batch:30,desc:'Same prompt every call ("classify into A/B/C"), input changes. Often background.'},
+];
+
+let MODELS=[],META={};
+
+const tierOf=m=>{
+  const i=m.intelligence_index||0, b=pick(m,'cost.direct_blended_3_to_1')??99;
+  if(i>=57)return'frontier'; if(b<=0.5&&i>=35)return'floor'; if(b<=2&&i>=45)return'cheap'; return'value';
+};
+const isReasoning=m=>!/Non-reasoning|Instant/.test(m.display);
+
+function effective(m,cacheFrac,batchFrac){
+  // Sales coaching short-circuits to salesevals's $/call (real measured cost, not $/1M token estimate).
+  if(taskSel()==='sales_coaching'){
+    if(!m.salesevals)return null;
+    return {input:null,output:null,blended:m.salesevals.cost_per_call,unit:'/call',source:'salesevals'};
+  }
+  const c=m.cost; const ent=$('#enterprise')?.checked;
+  let inp=c.direct_input_per_1m, out=c.direct_output_per_1m;
+  if(ent&&c.committed_input_per_1m!=null&&c.committed_output_per_1m!=null){inp=c.committed_input_per_1m;out=c.committed_output_per_1m;}
+  if(inp==null||out==null)return null;
+  const orc=m.openrouter&&m.openrouter.cached_read_per_1m;
+  const cacheDisc=(c.prompt_caching_discount_pct||0)/100;
+  let effIn;
+  if(orc!=null) effIn=inp*(1-cacheFrac)+orc*cacheFrac;
+  else if(cacheDisc>0) effIn=inp*(1-cacheFrac*cacheDisc);
+  else effIn=inp;
+  let effOut=out;
+  const batchDisc=(c.batch_api_discount_pct||0)/100;
+  if(batchDisc>0&&batchFrac>0){effIn*=(1-batchFrac*batchDisc); effOut*=(1-batchFrac*batchDisc);}
+  const rmult=isReasoning(m)?1.4:1.0;
+  return {input:effIn,output:effOut,blended:(3*effIn+rmult*effOut)/4};
+}
+// Arena Elo (typically 1300-1600) normalized to 0-100 score, matching how AA sub-indices score.
+function arenaEloToScore(elo){if(elo==null)return null;return Math.max(0,Math.min(100,(elo-1300)/3));}
+function arenaCategoryRow(m,task){const cat=ARENA_CAT_FOR_TASK[task];if(!cat)return null;return (m.arena_categories||{})[cat]||null;}
+function capValue(m,task){
+  if(task==='overall')return m.intelligence_index;
+  if(SALESEVALS_ONLY.has(task))return m.salesevals?m.salesevals.score:null;
+  if(ARENA_ONLY.has(task)){const r=arenaCategoryRow(m,task);return r?arenaEloToScore(r.rating):null;}
+  return m.task_scores[task]&&m.task_scores[task].score;
+}
+
+const taskSel=()=>document.querySelector('input[name=task]:checked').value;
+const cacheFrac=()=>+$('#cache').value/100, batchFrac=()=>+$('#batch').value/100;
+
+function syncSliderLabels(){
+  $('#cacheV').textContent=$('#cache').value+'%';
+  $('#batchV').textContent=$('#batch').value+'%';
+  $('#floorV').textContent=$('#floor').value;
+}
+function readState(){
+  const q=new URLSearchParams(location.search);
+  if(q.get('cache'))$('#cache').value=q.get('cache');
+  if(q.get('batch'))$('#batch').value=q.get('batch');
+  if(q.get('floor'))$('#floor').value=q.get('floor');
+  if(q.get('task')){const r=$(`input[name=task][value="${q.get('task')}"]`); if(r)r.checked=true;}
+  if(q.get('ent'))$('#enterprise').checked=true;
+  syncSliderLabels();  // ensure labels match restored slider values
+}
+function writeState(){
+  const q=new URLSearchParams();
+  q.set('cache',$('#cache').value); q.set('batch',$('#batch').value);
+  q.set('floor',$('#floor').value); q.set('task',taskSel());
+  if($('#enterprise').checked)q.set('ent','1');
+  history.replaceState(null,'','?'+q.toString());
+}
+function constraints(){
+  return {
+    caps:[...$$('.cap:checked')].map(i=>i.value),
+    usonly:$('#usonly').checked, notrain:$('#notrain').checked,
+    ushosted:$('#ushosted').checked, fastchat:$('#fastchat').checked,
+    upMin:+$('#upfilter').value, hallMax:+$('#hfilter').value,
+    tiers:new Set([...$$('.tier:checked')].map(i=>i.value)),
+  };
+}
+function passes(m,C){
+  if(!C.tiers.has(m.tier))return false;
+  for(const cap of C.caps) if(!m.capabilities[cap])return false;
+  if(C.usonly&&!(m.provenance.country||'').includes('United States'))return false;
+  if(C.notrain&&m.policy.train_policy!=='no-train-default')return false;
+  if(C.ushosted&&!m.policy.us_hosted_option)return false;
+  if(C.fastchat&&!(m.ttft_seconds!=null&&m.ttft_seconds<5))return false;
+  if(C.upMin>0){const u=(m.reliability||{}).best_uptime_1d; if(u==null||u<C.upMin)return false;}
+  if(C.hallMax<100){const h=(m.hallucination||{}).hallucination_rate; if(h==null||h>C.hallMax)return false;}
+  return true;
+}
+
+async function load(){
+  // Cache-bust on every load so daily refreshes are reflected without hard-reload friction.
+  const d=await (await fetch('models.json?t='+Date.now(),{cache:'no-store'})).json();
+  META=d; MODELS=d.models.map(m=>({...m,tier:tierOf(m)}));
+  ARENA_CAT_FOR_TASK=d.arena_category_for_task||{};
+  ARENA_ONLY=new Set(d.arena_only_tasks||[]);
+  SALESEVALS_ONLY=new Set(d.salesevals_only_tasks||[]);
+  // Show supporting-model counts next to each capability filter so the user can
+  // tell which toggles will actually narrow the list (vs. ones every model passes).
+  $$('.cap-count').forEach(span=>{
+    const cap=span.dataset.cap;
+    const supporting=MODELS.filter(m=>m.capabilities[cap]===true).length;
+    const total=MODELS.length;
+    if(supporting===total)span.innerHTML=` <span style="color:var(--dim);font-size:11px;font-style:italic">(${total}/${total} models)</span>`;
+    else span.innerHTML=` <span style="color:var(--dim);font-size:11px">(${supporting}/${total} models)</span>`;
+  });
+  const radar=(d.radar||[]).length;
+  const arenaN=MODELS.filter(m=>m.arena).length;
+  const arenaDate=(MODELS.find(m=>m.arena&&m.arena.publish_date)||{arena:{}}).arena.publish_date||'';
+  const salesN=MODELS.filter(m=>m.salesevals).length;
+  const salesSrc=d.sources.salesevals||{};
+  // Friendly date format: "Jun 15, 2026"
+  const fmt=iso=>{try{const d=new Date(iso);return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}catch(_){return iso;}};
+  const lastUpdated=fmt(d.generated_at.slice(0,10));
+  $('#freshness').innerHTML=`<span class="dot"></span><span>Auto-refreshed daily · Data last updated <b>${lastUpdated}</b></span>`;
+  const salesDateBit=salesSrc.snapshot_date?' (snapshot '+fmt(salesSrc.snapshot_date)+')':'';
+  $('#meta').innerHTML=
+    `<span><span class="ds-prefix">Data Sources:</span> AA ${d.sources.aa.rows_pulled} · Epoch ${d.sources.epoch.rows_pulled} · OpenRouter ${d.sources.openrouter.rows_pulled} · Arena ${arenaN}/${MODELS.length}${arenaDate?' (board '+fmt(arenaDate)+')':''} · salesevals ${salesN}/${MODELS.length}${salesDateBit}</span>`+
+    (radar?`<span class="warn">🛰 ${radar} new model(s) flagged</span>`:'');
+  readState(); render();
+}
+
+// ── recommender ──
+function renderRecommender(){
+  const task=taskSel(), C=constraints(), floor=+$('#floor').value, cF=cacheFrac(), bF=batchFrac();
+  const box=$('#recs'); box.innerHTML='';
+  const scored=MODELS.filter(m=>passes(m,C)).map(m=>({m,cap:capValue(m,task),eff:effective(m,cF,bF)}))
+                     .filter(x=>x.cap!=null&&x.eff!=null);
+  const frontier=scored.slice().sort((a,b)=>b.cap-a.cap)[0];
+  const clearing=scored.filter(x=>x.cap>=floor).sort((a,b)=>a.eff.blended-b.eff.blended);
+  if(!clearing.length){
+    const isVert=ARENA_ONLY.has(task);
+    const anyData=MODELS.some(m=>capValue(m,task)!=null);
+    if(isVert&&!anyData){
+      box.innerHTML=`<div class="rec-empty">⏳ <b>${TASK_LABEL[task]}</b> vertical data isn't available yet — LMArena's per-industry leaderboard for this category will populate after the next monthly refresh (rate-limit constrained today). Pick a general task or another vertical that has data.</div>`;
+    } else {
+      box.innerHTML=`<div class="rec-empty">No model clears a ${floor} quality floor for ${TASK_LABEL[task]} under these constraints. Lower the floor or relax a constraint.</div>`;
+    }
+  }
+  const isSales=task==='sales_coaching';
+  // $/call can be as low as $0.0047 — needs adaptive precision so we don't render $0.00.
+  const fmt=v=>isSales?(v<0.01?'$'+v.toFixed(4):v<1?'$'+v.toFixed(3):'$'+v.toFixed(2)):'$'+v.toFixed(2);
+  clearing.slice(0,3).forEach((x,i)=>{
+    const saved=frontier?(1-x.eff.blended/frontier.eff.blended):0;
+    const refCost=isSales?`${fmt(frontier.eff.blended)}/call`:`${fmt(frontier.eff.blended)}`;
+    const savedTxt=(frontier&&x.m.canonical!==frontier.m.canonical&&saved>0.005)
+      ? `${(saved*100).toFixed(0)}% cheaper than ${frontier.m.display} (${refCost})`
+      : (frontier&&x.m.canonical===frontier.m.canonical?'is the top-capability pick':'no cheaper option');
+    const sc=x.cap, qBand=sc==null?'q-none':sc>=70?'q-high':sc>=50?'q-mid':'q-low';
+    const scTxt=sc==null?'—':sc.toFixed(0);
+    // Cost display branches on task: $/call (adaptive precision) for sales, $/1M blended otherwise.
+    const costBig=isSales?`${fmt(x.eff.blended)}<small>/call</small>`:`${fmt(x.eff.blended)}<small>/1M</small>`;
+    const costSub=isSales?`salesevals real measured cost`:`blended (3:1 in/out)`;
+    const scoreSub=isSales?`${TASK_LABEL[task]} · salesevals rank #${x.m.salesevals.rank} of ${x.m.salesevals.total_in_test}`:`${TASK_LABEL[task]} · clears ${floor}`;
+    box.insertAdjacentHTML('beforeend',`
+      <div class="rec ${i===0?'win':''}">
+        <span class="rank">#${i+1} cheapest</span>
+        <div class="name">${x.m.display}</div>
+        <div class="rec-metrics">
+          <div class="rec-metric ${qBand}">
+            <div class="m-lab">Score</div>
+            <div class="m-big">${scTxt}<small>/100</small></div>
+            <div class="m-sub">${scoreSub}</div>
+          </div>
+          <div class="rec-metric">
+            <div class="m-lab">Cost</div>
+            <div class="m-big">${costBig}</div>
+            <div class="m-sub">${costSub}</div>
+          </div>
+        </div>
+        <div class="save ${saved>0.005?'':'none'}">${savedTxt}</div>
+        <div class="chips">${receipts(x.m,task).map(c=>`<div class="chip">${c}</div>`).join('')}</div>
+      </div>`);
+  });
+  const an=MODELS.length&&META.models.find(m=>m.task_scores[task]?.needs_arena);
+  $('#recArena').innerHTML = an ? `ℹ ${TASK_LABEL[task]} has no direct AA benchmark — score is an AA proxy. Cross-check with the <b>Arena human-preference rank</b> on each card.` : '';
+}
+function receipts(m,task){
+  const out=[], pr=m.provenance, p=m.policy;
+  if((pr.country||'').toLowerCase().includes('china')) out.push(`⚠ China-origin${p.us_hosted_option?' · US-host avail':''}`);
+  else if(pr.country) out.push(`🇺🇸 ${pr.country.includes('United States')?'US-origin':pr.country}`);
+  if(p.train_policy==='no-train-default')out.push('✓ no-train default');
+  else if(p.train_policy==='trains-by-default')out.push('⚠ trains on data (use US host)');
+  else out.push('• train policy unknown');
+  const sp=m.openrouter&&m.openrouter.spread;
+  if(sp)out.push(`cheapest host: ${sp.cheapest_provider} ($${sp.cheapest_in}/$${sp.cheapest_out})`);
+  if(m.ttft_seconds!=null)out.push(`TTFT ${m.ttft_seconds.toFixed(1)}s${m.ttft_seconds>30?' ⚠ slow for chat':''}`);
+  // Vertical-specific Arena rank takes precedence over the overall rank when a vertical task is selected.
+  const catRow=arenaCategoryRow(m,task);
+  if(catRow&&catRow.rank){const tot=catRow.total_in_cat?` of ${catRow.total_in_cat}`:'';out.push(`Arena #${catRow.rank}${tot} in ${TASK_LABEL[task]}`);}
+  else if(m.arena)out.push(`Arena human-pref #${m.arena.rank}${m.arena.low_confidence?' (low votes)':''}`);
+  else out.push('Arena: not in top 100 overall');
+  const h=m.hallucination&&m.hallucination.hallucination_rate;
+  if(h!=null)out.push(`Hallucinates ${h}% (Vectara)${h<=4?' ✓ best-in-class':h>=15?' ⚠ high':''}`);
+  const rel=m.reliability;
+  if(rel&&rel.best_uptime_1d!=null)out.push(`Best-host uptime ${rel.best_uptime_1d}%/24h`);
+  // Sales coaching cross-check chip on GTM-leaning tasks (sales is the headline; chat/writing/business get it as a tiebreaker).
+  if(SHOW_SALES_CHIP_ON.has(task)&&task!=='sales_coaching'&&m.salesevals){
+    out.push(`Sales coaching: #${m.salesevals.rank}/${m.salesevals.total_in_test} @ $${m.salesevals.cost_per_call}/call (salesevals)`);
+  }
+  return out.slice(0,7);
+}
+
+// ── scatter ──
+function renderScatter(){
+  const svg=$('#scatter'); svg.innerHTML=''; const task=taskSel(), C=constraints(), cF=cacheFrac(), bF=batchFrac();
+  const isSales=task==='sales_coaching';
+  $('#scatter-title').innerHTML=`Effective cost vs. ${TASK_LABEL[task]} <button class="info-btn" data-pop="scatter">i</button>`;
+  const xLabel=isSales?'$/call (salesevals real measured cost)':`effective $/1M (cache ${$('#cache').value}%, batch ${$('#batch').value}%)`;
+  $('#scatter-sub').textContent=`X: ${xLabel}. Y: ${task==='overall'?'AA intelligence index':TASK_LABEL[task]+' score'}.`;
+  const W=svg.clientWidth,H=svg.clientHeight,P={l:54,r:22,t:20,b:44};
+  const data=MODELS.map(m=>({m,x:effective(m,cF,bF)?.blended,y:capValue(m,task)})).filter(d=>d.x!=null&&d.y!=null);
+  if(!data.length)return;
+  const xMax=Math.max(...data.map(d=>d.x))*1.06, yMax=Math.max(...data.map(d=>d.y))*1.08, yMin=Math.max(0,Math.min(...data.map(d=>d.y))-6);
+  const xs=v=>P.l+(v/xMax)*(W-P.l-P.r), ys=v=>H-P.b-((v-yMin)/(yMax-yMin))*(H-P.t-P.b);
+  const ns='http://www.w3.org/2000/svg', el=(t,a,x)=>{const e=document.createElementNS(ns,t);for(const k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;};
+  for(let i=1;i<=5;i++){const x=P.l+i/5*(W-P.l-P.r);const xv=xMax*i/5;const xLab=isSales?(xv<0.05?'$'+xv.toFixed(3):'$'+xv.toFixed(2)):'$'+xv.toFixed(1);svg.appendChild(el('line',{x1:x,x2:x,y1:P.t,y2:H-P.b,class:'grid-line'}));svg.appendChild(el('text',{x,y:H-P.b+14,class:'axis-label','text-anchor':'middle'},xLab));}
+  for(let i=0;i<=5;i++){const y=P.t+i/5*(H-P.t-P.b);svg.appendChild(el('line',{x1:P.l,x2:W-P.r,y1:y,y2:y,class:'grid-line'}));svg.appendChild(el('text',{x:P.l-8,y:y+3,class:'axis-label','text-anchor':'end'},(yMax-i/5*(yMax-yMin)).toFixed(0)));}
+  svg.appendChild(el('text',{x:(W-P.r+P.l)/2,y:H-6,class:'axis-label','text-anchor':'middle'},isSales?'Cost per call ($/call, salesevals test)':'Effective cost ($/1M, 3:1 blend)'));
+  // Y-axis label — rotated, task-aware
+  const yLabel = task==='overall' ? 'AA intelligence index (0–100)' : `${TASK_LABEL[task]} score (0–100)`;
+  const yCy = (P.t + H - P.b) / 2;
+  svg.appendChild(el('text',{x:16,y:yCy,class:'axis-label','text-anchor':'middle',transform:`rotate(-90, 16, ${yCy})`},yLabel));
+  const sorted=[...data].sort((a,b)=>a.x-b.x);let best=-1e9;const par=sorted.filter(d=>{if(d.y>best){best=d.y;return true}return false});
+  if(par.length>1){
+    const path=el('path',{d:par.map((d,i)=>`${i?'L':'M'}${xs(d.x)},${ys(d.y)}`).join(' '),class:'pareto'});
+    const ttl=document.createElementNS(ns,'title');ttl.textContent='Pareto frontier: the "best-in-class" line. Models on it cannot be beaten on both cost and quality at the current settings — anything below is dominated.';
+    path.appendChild(ttl);svg.appendChild(path);
+  }
+  const keep=new Set(MODELS.filter(m=>passes(m,C)).map(m=>m.canonical));
+  for(const d of data){
+    const ipd=d.m.intel_per_dollar||5, r=Math.min(13,3+Math.sqrt(ipd)*.6);
+    const dot=el('circle',{cx:xs(d.x),cy:ys(d.y),r,fill:TIER_COLOR[d.m.tier],stroke:'#000','stroke-width':1.1,class:'dot'+(keep.has(d.m.canonical)?'':' dim')});
+    dot.addEventListener('mousemove',e=>showTip(e,d.m,task)); dot.addEventListener('mouseleave',hideTip); svg.appendChild(dot);
+    if(keep.has(d.m.canonical)&&(d.m.tier==='frontier'||ipd>30||r>8))svg.appendChild(el('text',{x:xs(d.x)+r+4,y:ys(d.y)+3,class:'dot-label'},d.m.display));
+  }
+}
+function showTip(e,m,task){
+  const t=$('#tip'),sp=m.openrouter&&m.openrouter.spread,eff=effective(m,cacheFrac(),batchFrac());
+  t.innerHTML=`<strong>${m.display}</strong>
+    <div class="r"><span class="l">${TASK_LABEL[task]}</span><span>${capValue(m,task)?.toFixed?.(0)??'—'}</span></div>
+    <div class="r"><span class="l">Intelligence</span><span>${m.intelligence_index??'—'}</span></div>
+    <div class="r"><span class="l">List blended</span><span>$${pick(m,'cost.direct_blended_3_to_1')??'—'}</span></div>
+    <div class="r"><span class="l">Enterprise est</span><span>${m.cost.committed_input_per_1m!=null?'$'+((3*m.cost.committed_input_per_1m+m.cost.committed_output_per_1m)/4).toFixed(2):'list (open)'}</span></div>
+    <div class="r"><span class="l">Effective blended</span><span>$${eff?eff.blended.toFixed(2):'—'}</span></div>
+    <div class="r"><span class="l">Hosted spread</span><span>${sp?`$${sp.input_min}–$${sp.input_max} (${sp.host_count})`:'—'}</span></div>
+    <div class="r"><span class="l">Vision / FC / Struct</span><span>${b(m.capabilities.vision)}/${b(m.capabilities.function_calling)}/${b(m.capabilities.structured_output)}</span></div>
+    <div class="r"><span class="l">Origin · train</span><span>${m.provenance.country||'—'} · ${m.policy.train_policy||'—'}</span></div>`
+    +(m.arena?`<div class="r"><span class="l">Arena SC (rank)</span><span>${m.arena.elo_overall_sc} (#${m.arena.rank})${m.arena.low_confidence?' ⚠ low votes':''}</span></div>
+       <div class="r"><span class="l">Arena style δ</span><span>${m.arena.sc_delta!=null?(m.arena.sc_delta>0?'+':'')+m.arena.sc_delta:'—'}</span></div>`
+     :`<div class="r"><span class="l">Arena</span><span>not in top 100</span></div>`);
+  t.style.opacity=1;t.style.left=(e.clientX+14)+'px';t.style.top=(e.clientY+14)+'px';
+}
+const b=v=>v===true?'<span class="yes">✓</span>':v===false?'<span class="no">✗</span>':'—';
+const hideTip=()=>$('#tip').style.opacity=0;
+
+// ── table ──
+let sortKey='_cap',sortDir=-1;
+function trainTag(p){return p==='no-train-default'?'<span class="tag ok">no-train</span>':p==='trains-by-default'?'<span class="tag bad">trains</span>':'<span class="tag unk">?</span>';}
+function renderTable(){
+  const task=taskSel(),C=constraints(),cF=cacheFrac(),bF=batchFrac(),tb=$('#table tbody');tb.innerHTML='';
+  const keep=new Set(MODELS.filter(m=>passes(m,C)).map(m=>m.canonical));
+  const aug=MODELS.map(m=>{const e=effective(m,cF,bF);const sp=m.openrouter&&m.openrouter.spread;
+    return {...m,_cap:capValue(m,task),_eff:e?e.blended:null,_ipd:m.intel_per_dollar,_hostmin:sp?sp.cheapest_in:null,_arena:m.arena?m.arena.elo_overall_sc:null,_scd:m.arena?m.arena.sc_delta:null,_hall:m.hallucination?m.hallucination.hallucination_rate:null,_up:(m.reliability||{}).best_uptime_1d??null,_vis:m.capabilities.vision?1:0,_fc:m.capabilities.function_calling?1:0};});
+  aug.sort((a,b)=>{const av=pick(a,sortKey)??-1e9,bv=pick(b,sortKey)??-1e9;return typeof av==='string'?sortDir*av.localeCompare(bv):sortDir*(av-bv);});
+  for(const m of aug){const tr=document.createElement('tr');if(!keep.has(m.canonical))tr.classList.add('dim');
+    const sp=m.openrouter&&m.openrouter.spread;
+    tr.innerHTML=`<td>${m.display}</td><td><span class="tag ${m.tier}">${m.tier}</span></td>
+      <td class="num">${m._cap?.toFixed?.(0)??'—'}</td><td class="num">${m.intelligence_index??'—'}</td>
+      <td class="num">${m._eff!=null?'$'+m._eff.toFixed(2):'—'}</td>
+      <td class="num">${pick(m,'cost.direct_blended_3_to_1')??'—'}</td>
+      <td class="num">${m._ipd??'—'}</td>
+      <td class="num">${sp?'$'+sp.cheapest_in:'—'}</td>
+      <td class="num">${m.ttft_seconds?.toFixed?.(1)??'—'}</td>
+      <td class="num">${m.arena?m.arena.elo_overall_sc.toFixed(0)+(m.arena.low_confidence?' ⚠':''):'—'}</td>
+      <td class="num">${m.arena&&m.arena.sc_delta!=null?(m.arena.sc_delta>0?'+':'')+m.arena.sc_delta:'—'}</td>
+      <td class="num">${m._hall!=null?m._hall+'%':'—'}</td>
+      <td class="num">${m._up!=null?m._up+'%':'—'}</td>
+      <td class="num">${m.usage_rank??'—'}</td>
+      <td>${b(m.capabilities.vision)}</td><td>${b(m.capabilities.function_calling)}</td>
+      <td>${m.provenance.country?(m.provenance.country.includes('United States')?'US':m.provenance.country.includes('China')?'China':m.provenance.country):'—'}</td>
+      <td>${trainTag(m.policy.train_policy)}</td>`;
+    tb.appendChild(tr);}
+}
+
+// ── findings ──
+function renderFindings(){
+  const L=$('#findings');L.innerHTML='';const f=t=>{const li=document.createElement('li');li.innerHTML=t;L.appendChild(li);};
+  const withIpd=MODELS.filter(m=>m.intel_per_dollar);
+  const best=withIpd.slice().sort((a,b)=>b.intel_per_dollar-a.intel_per_dollar)[0];
+  const front=MODELS.filter(m=>m.tier==='frontier'&&m.intel_per_dollar).sort((a,b)=>b.intelligence_index-a.intelligence_index)[0];
+  if(best&&front)f(`<b>Value gap:</b> ${best.display} delivers <b>${(best.intel_per_dollar/front.intel_per_dollar).toFixed(0)}× more intelligence per dollar</b> than ${front.display}.`);
+  const g4=MODELS.find(m=>m.canonical==='gpt-5.4'),g5=MODELS.find(m=>m.canonical==='gpt-5.5');
+  if(g4&&g5){const cd=g4.coding_index-g5.coding_index, pctc=Math.round(pick(g4,'cost.direct_blended_3_to_1')/pick(g5,'cost.direct_blended_3_to_1')*100);
+    const rel=cd>=0?`beats GPT-5.5 on coding by ${cd.toFixed(1)} pts`:`is within ${Math.abs(cd).toFixed(1)} coding pts of GPT-5.5`;
+    f(`<b>GPT-5.4 thesis:</b> ${rel} at ${pctc}% of the blended cost.`);}
+  const slow=MODELS.filter(m=>m.ttft_seconds>60);
+  if(slow.length)f(`<b>Latency trap:</b> ${slow.map(m=>m.display+' ('+m.ttft_seconds.toFixed(0)+'s TTFT)').join(', ')} — unusable for real-time chat despite high quality.`);
+  const china=MODELS.filter(m=>(m.provenance.country||'').toLowerCase().includes('china'));
+  if(china.length)f(`<b>Compliance collision:</b> ${china.length} best-value models are China-origin (${china.map(m=>m.display).join(', ')}). All have a US-hosted path (Bedrock/Together/Fireworks) for no-train compliance.`);
+  const scd=MODELS.filter(m=>m.arena&&m.arena.sc_delta!=null).sort((a,b)=>a.arena.sc_delta-b.arena.sc_delta);
+  if(scd.length&&scd[0].arena.sc_delta<-5)f(`<b>Vibes vs. substance:</b> ${scd[0].display} loses ${Math.abs(scd[0].arena.sc_delta)} Elo under Arena style-control — part of its human-preference edge is length/formatting, not substance.`);
+  const halluRanked=MODELS.filter(m=>m.hallucination&&m.hallucination.hallucination_rate!=null).sort((a,b)=>a.hallucination.hallucination_rate-b.hallucination.hallucination_rate);
+  if(halluRanked.length>=3){const best=halluRanked[0],front2=halluRanked.find(m=>m.tier==='frontier');
+    if(front2&&best.canonical!==front2.canonical&&best.hallucination.hallucination_rate<front2.hallucination.hallucination_rate)
+      f(`<b>Factuality surprise:</b> ${best.display} hallucinates ${best.hallucination.hallucination_rate}% — <b>better than ${front2.display}</b> (${front2.hallucination.hallucination_rate}%). Per Vectara summarization benchmark.`);
+  }
+  const flaky=MODELS.filter(m=>(m.reliability||{}).best_uptime_1d!=null&&m.reliability.best_uptime_1d<99);
+  if(flaky.length)f(`<b>Reliability flag:</b> ${flaky.map(m=>m.display+' ('+m.reliability.best_uptime_1d+'%)').join(', ')} — best host below 99% uptime in last 24h. Consider failover.`);
+  f(`<b>Cost levers:</b> at 80% cache the value tier roughly halves — switch the cost model to "Agent loop" to see effective rates, not list.`);
+}
+
+function renderActiveFilters(){
+  const af=$('#active-filters'); if(!af)return;
+  const C=constraints(), task=taskSel(), floor=+$('#floor').value, cache=+$('#cache').value, batch=+$('#batch').value;
+  const chips=[];
+  chips.push(`<span class="af-chip task">Task: ${TASK_LABEL[task]}</span>`);
+  if(floor>0)chips.push(`<span class="af-chip">Quality floor ≥ ${floor}</span>`);
+  if(cache>0)chips.push(`<span class="af-chip">Cache ${cache}%</span>`);
+  if(batch>0)chips.push(`<span class="af-chip">Batch ${batch}%</span>`);
+  if($('#enterprise').checked)chips.push(`<span class="af-chip">Enterprise rates</span>`);
+  C.caps.forEach(c=>chips.push(`<span class="af-chip">Requires ${c.replace(/_/g,' ')}</span>`));
+  if(C.usonly)chips.push(`<span class="af-chip">US-origin only</span>`);
+  if(C.notrain)chips.push(`<span class="af-chip">No-train only</span>`);
+  if(C.ushosted)chips.push(`<span class="af-chip">US-hosted option</span>`);
+  if(C.fastchat)chips.push(`<span class="af-chip">TTFT &lt; 5s</span>`);
+  if(C.upMin>0)chips.push(`<span class="af-chip">Uptime ≥ ${C.upMin}%</span>`);
+  if(C.hallMax<100)chips.push(`<span class="af-chip">Hallucination ≤ ${C.hallMax}%</span>`);
+  const allTiers=['frontier','value','cheap','floor'];
+  const selectedTiers=allTiers.filter(t=>C.tiers.has(t));
+  if(selectedTiers.length<allTiers.length)chips.push(`<span class="af-chip">Tiers: ${selectedTiers.join(', ')||'none'}</span>`);
+  const keep=MODELS.filter(m=>passes(m,C)).length;
+  af.innerHTML=`<span class="af-prefix">Toggled in (${keep}/${MODELS.length} models):</span>${chips.join(' ')}`;
+}
+function render(){
+  writeState();
+  $$('.btn[data-cache]').forEach(b=>b.classList.toggle('active',+b.dataset.cache===+$('#cache').value&&+b.dataset.batch===+$('#batch').value));
+  renderRecommender();renderScatter();renderFindings();renderTable();renderActiveFilters();
+}
+
+// ── popover system ──
+const POP_CONTENT={
+  cost:`<h4>💰 Cost model</h4>
+    <p>This panel controls <b>what cost number</b> the dashboard uses to rank models. Three layers stack:</p>
+    <p><b>1. The base price</b> — list (default) or your negotiated enterprise rate (Enterprise toggle).</p>
+    <p><b>2. Caching discount</b> — most agents resend the same system prompt every call. The cache slider says what % of input repeats.</p>
+    <p><b>3. Batch discount</b> — non-realtime work can run via Batch API for ~50% off.</p>
+    <p>The 4 presets set both sliders to a typical workload. Click them and watch the recommender shift.</p>`,
+  cache:`<h4>Input cached</h4>
+    <p>Providers cache repeated input chunks (system prompt, tool defs, examples) and charge ~90% less for them on subsequent calls.</p>
+    <p><b>Why it matters:</b> agents usually have a big stable prompt. At 80% cached, effective input cost drops dramatically.</p>
+    <p><b>Caveat:</b> cache only pays off if the repeated part is identical each call and requests come within ~5 min.</p>`,
+  batch:`<h4>Calls via batch</h4>
+    <p>For jobs that don't need an instant answer, the Batch API processes within ~24h at <b>~50% off</b>.</p>
+    <p><b>Use it for:</b> overnight CRM enrichment, scoring backlogs, summarization at scale.</p>
+    <p><b>Skip it for:</b> anything a user is waiting on (chat, live coaching, real-time decisions).</p>`,
+  enterprise:`<h4>Enterprise (committed) base</h4>
+    <p>Flips the base price from public list to <b>illustrative</b> negotiated rates — Anthropic ~22% off, OpenAI ~32%, Google ~25%. These are band-midpoints, not quotes; real numbers require a sales conversation.</p>
+    <p><b>Open-weight models don't change</b> — they're already at floor prices.</p>
+    <p><b>Answers Ryan's #1 customer objection:</b> "why not use Claude/ChatGPT direct?" Even at committed rates, frontier models stay ~15× pricier than a good-enough cheap model. <i>Routing beats negotiating.</i></p>`,
+  task:`<h4>🎯 Task</h4>
+    <p>Sets the <b>capability axis</b> used for the recommender's quality score, the scatter Y-axis, and the table's "Task score" column.</p>
+    <p><b>General tasks</b> score via AA's per-task sub-indices (gpqa, ifbench, livecodebench, etc.) — see the ⓘ on the Quality floor for the formula breakdown.</p>
+    <p><b>Industry verticals</b> use LMArena's human-preference Elo for the matching industry leaderboard, normalized to a 0–100 score. These directly answer <i>"is this model preferred by humans for this kind of work."</i></p>
+    <p>"Overall" uses AA's aggregate intelligence index. The other tasks are <b>more specific and often more useful</b> — a model can be middling overall but top-tier at a vertical.</p>`,
+  verticals:`<h4>🏭 Industry verticals</h4>
+    <p>These task buckets are backed by <b>LMArena's per-industry human-preference rankings</b> — actual humans voting on which model's output is better for that industry's prompts.</p>
+    <p>Each vertical maps to one LMArena category:</p>
+    <div class="row"><span>Business / RevOps</span><b>industry_business_and_management_and_financial_operations</b></div>
+    <div class="row"><span>Legal</span><b>industry_legal_and_government</b></div>
+    <div class="row"><span>Healthcare</span><b>industry_medicine_and_healthcare</b></div>
+    <div class="row"><span>Software engineering</span><b>industry_software_and_it_services</b></div>
+    <div class="row"><span>Expert reasoning</span><b>expert (general nuanced)</b></div>
+    <p style="margin-top:10px"><b>Score normalization:</b> Arena Elo (typically 1300–1600) is mapped to 0–100 as <code>(elo − 1300) / 3</code>, so an Elo of 1450 reads as a score of 50.</p>
+    <p><b>Coverage note:</b> some verticals may show "—" until the next monthly Arena pull completes. The category data is on a paginated endpoint with rate limits.</p>`,
+  constraints:`<h4>🚧 Constraints</h4>
+    <p><b>Capabilities:</b> hard requirements — vision, function calling, structured output, fine-tuning. A model that doesn't support these is filtered out (not just ranked lower).</p>
+    <p><b>Policy:</b> US-origin only, no-train policy required, US-hosted available, chat-fast (TTFT&lt;5s).</p>
+    <p><b>Pricing tier:</b> filter the universe to specific price bands.</p>
+    <p>Constraints turn the recommender into an <b>"acceptable picks"</b> ranking — not just "cheapest" but "cheapest that I can actually use."</p>`,
+  recommender:`<h4>🎯 Routing recommender</h4>
+    <p>Shows the <b>top-3 cheapest models that clear your quality floor</b> for the selected task + constraints.</p>
+    <p>Each card shows: model name, score on the task, effective cost, % cheaper than the top-capability pick, and <b>trade-off receipts</b> (origin, train policy, cheapest host, TTFT, Arena rank).</p>
+    <p>The #1 card is the answer to "cheapest model good enough for this." The others give you fallbacks if #1 violates an unstated requirement.</p>`,
+  reliability:`<h4>Reliability &amp; truthfulness</h4>
+    <p><b>Min uptime:</b> best-host uptime over the last 24h, from OpenRouter's per-provider data. Filters out models whose best available host is flaky.</p>
+    <p><b>Max hallucination rate:</b> from Vectara's hallucination leaderboard — % of summarizations that contained a factual error. Lower = more truthful. Critical for customer-facing GTM agents.</p>
+    <p><b>Surprise in current data:</b> GPT-5.4 nano leads on factuality (3.1%) — cheaper AND more truthful than GPT-5.5 and Claude Opus on this test.</p>
+    <p><b>Coverage limit:</b> some models (Opus 4.8, Gemini 3.5 Flash, DeepSeek V4 Flash, Qwen 3.6 Max, GLM-5.1) aren't yet on the Vectara leaderboard — they'll have "—" rather than be unfairly filtered out. Toggle the filter to be sure.</p>`,
+  scatter:`<h4>Cost vs. capability scatter</h4>
+    <p>Each dot = one model. <b>X</b> = effective $/1M (under your cost model), <b>Y</b> = task score, <b>size</b> = intelligence per $.</p>
+    <p><b>Dashed line = Pareto frontier</b>: the "best-in-class" curve. Models on it cannot be beaten on both axes at once. Anything below the line is dominated.</p>
+    <p>Hover any dot for full details.</p>`,
+};
+const pop=$('#pop');
+let popKey=null;
+function showPop(key,trigger){
+  const c=POP_CONTENT[key]; if(!c)return;
+  $('#pop-body').innerHTML=c;
+  pop.classList.add('on');
+  popKey=key;
+  const r=trigger.getBoundingClientRect();
+  let left=r.right+10, top=r.top-5;
+  if(left+400>window.innerWidth)left=r.left-410;
+  if(top+pop.offsetHeight>window.innerHeight)top=window.innerHeight-pop.offsetHeight-10;
+  pop.style.left=Math.max(8,left)+'px'; pop.style.top=Math.max(8,top)+'px';
+}
+function hidePop(){pop.classList.remove('on');popKey=null;}
+document.addEventListener('click',e=>{
+  const btn=e.target.closest('[data-pop]');
+  if(btn){
+    e.stopPropagation();
+    // Clicking the same ⓘ while it's open → close (toggle behavior).
+    if(popKey===btn.dataset.pop && pop.classList.contains('on'))hidePop();
+    else showPop(btn.dataset.pop,btn);
+    return;
+  }
+  if(!e.target.closest('#pop'))hidePop();
+});
+$('#pop-close').addEventListener('click',hidePop);
+
+// ── cache/batch wizard takeover ──
+const WIZ_STEPS=[
+  {q:'What does your AI feature do?',help:'Pick the option that sounds most like what you\'re building. We\'ll infer the rest.',
+   opts:SCENARIOS.map(s=>({label:s.label,sub:s.desc,apply:{task:s.task,cache:s.cache,batch:s.batch,scn:s.id}}))},
+  {q:'How much of each request is the same setup vs. brand-new content?',help:'This tells us how useful caching will be.',
+   opts:[{label:'Same setup, small new input',sub:'e.g. fixed system prompt + a short user message',apply:{cache:80}},
+         {label:'Balanced — about half and half',sub:'e.g. some context + a moderately long input',apply:{cache:55}},
+         {label:'Mostly new content each time',sub:'e.g. analyzing a fresh long document',apply:{cache:25}}]},
+  {q:'Is someone waiting for the answer right then?',help:'Live = no batch discount. Background = batch saves ~50%.',
+   opts:[{label:'Yes — they\'re looking at the screen',sub:'live chat, coding assistant, search',apply:{batch:0}},
+         {label:'Some of both',sub:'e.g. user kicks off a job and checks back later',apply:{batch:50}},
+         {label:'No — it runs in the background',sub:'overnight enrichment, batch scoring',apply:{batch:100}}]},
+];
+let wizStep=0, wizSnapshot=null;
+function openWiz(){
+  // Snapshot current values so Cancel can restore them cleanly.
+  wizSnapshot={cache:$('#cache').value,batch:$('#batch').value,task:taskSel()};
+  wizStep=0;
+  $$('#sidebar .sec').forEach(s=>s.style.display='none');
+  $('#wiz').classList.add('on');
+  renderWizStep();
+}
+function closeWiz(){$('#wiz').classList.remove('on');$$('#sidebar .sec').forEach(s=>s.style.display='');}
+function cancelWiz(){
+  // Restore the values from before the wizard opened — Cancel must not commit partial changes.
+  if(wizSnapshot){
+    $('#cache').value=wizSnapshot.cache;
+    $('#batch').value=wizSnapshot.batch;
+    const r=$(`input[name=task][value="${wizSnapshot.task}"]`);
+    if(r)r.checked=true;
+  }
+  closeWiz();
+  // Dispatch input so labels + URL + render all sync to the restored values
+  $('#cache').dispatchEvent(new Event('input',{bubbles:true}));
+}
+function renderWizStep(){
+  const step=WIZ_STEPS[wizStep];
+  $('#wiz-stepN').textContent=wizStep+1;
+  $('#wiz-q').textContent=step.q;
+  $('#wiz-help').textContent=step.help;
+  $('#wiz-back').style.visibility=wizStep===0?'hidden':'visible';
+  const box=$('#wiz-opts'); box.innerHTML='';
+  step.opts.forEach(o=>{
+    const b=document.createElement('button');b.innerHTML=`${o.label}<span class="sub">${o.sub}</span>`;
+    b.addEventListener('click',()=>{
+      const a=o.apply;
+      if(a.task){const r=$(`input[name=task][value="${a.task}"]`);if(r)r.checked=true;}
+      if('cache' in a){$('#cache').value=a.cache;}
+      if('batch' in a){$('#batch').value=a.batch;}
+      if(wizStep<WIZ_STEPS.length-1){wizStep++;renderWizStep();}
+      else{closeWiz();$('#cache').dispatchEvent(new Event('input',{bubbles:true}));}
+    });
+    box.appendChild(b);
+  });
+}
+$('#open-wiz').addEventListener('click',openWiz);
+$('#wiz-back').addEventListener('click',()=>{if(wizStep>0){wizStep--;renderWizStep();}});
+$('#wiz-cancel').addEventListener('click',cancelWiz);
+
+// ── quality guide modal ──
+const FLOOR_BANDS=[
+  {min:85,color:'var(--frontier)',label:'85+ · Frontier-grade',body:'Only the top reasoning/coding models clear this. Use when the cost of being wrong is severe — customer-facing high-stakes advice, regulated content, complex multi-step plans where errors compound. Expect to pay $10+/1M effective.',examples:'Opus 4.8, GPT-5.5 (high), Gemini 3.1 Pro'},
+  {min:70,color:'var(--info)',label:'70–85 · Strong / value tier',body:'Solid for most customer-facing GTM tasks: outbound drafting, research-agent loops, email triage. Sweet spot for unit economics — value-tier models often clear this for $2–5/1M.',examples:'Sonnet 4.6, Gemini 3.5 Flash, GPT-5.4 (xhigh), Kimi K2.6'},
+  {min:55,color:'var(--cheap)',label:'55–70 · Capable / cheap-open tier',body:'"Good enough" for most internal or moderate-stakes tasks: data enrichment, classification, routing. Open-weight models thrive here at $0.20–1.50/1M.',examples:'DeepSeek V4 Pro, GLM-5.1, Qwen3.6 Max, GPT-5.4 mini'},
+  {min:40,color:'var(--floor)',label:'40–55 · Floor tier',body:'High-volume simple tasks: tagging, simple Q&A, format conversion. Use only when you can tolerate occasional misses and need rock-bottom cost ($0.10–0.50/1M).',examples:'GPT-5.4 nano, DeepSeek V4 Flash, Haiku 4.5'},
+];
+
+// Tab renderers — each returns HTML for one tab's body.
+const TAB_HOW=()=>{
+  const task=taskSel(),info=TASK_METRICS_INFO[task]||{metrics:['(unknown — task not in TASK_METRICS_INFO map)'],note:'No explainer entry for this task. Add one to TASK_METRICS_INFO in index.html.'};
+  const ex=MODELS.find(m=>m.canonical==='deepseek-v4-pro')||MODELS[0];
+  const score=ex?capValue(ex,task):null;
+  return `<h4>The formula (simple average)</h4>
+    <p>Each task score is the <b>average of 2–3 underlying benchmarks</b>, normalized to a 0–100 scale. No weights, no magic. Benchmarks reported as 0–1 fractions get multiplied by 100; index metrics (already 0–100) are used as-is.</p>
+    <h4>For "${TASK_LABEL[task]||task}" specifically</h4>
+    <p>Inputs: <b>${info.metrics.join(' · ')}</b></p>
+    <p style="color:var(--dim);font-size:12.5px">${info.note}</p>
+    <h4>Worked example: ${ex?ex.display:'—'}${score==null?' (no data for this task)':''}</h4>
+    ${score!=null?renderWorkedExample(ex,task):`<p style="color:var(--warn)">No data for this combination — try a different model or task.</p>`}
+    <h4>Honest limitations</h4>
+    <p>1. Missing metrics get skipped, not penalized — a model with sparse data may average just one or two inputs.</p>
+    <p>2. <b>Chat and Email/writing have no direct AA benchmark</b> — they use instruction-following + intelligence as a proxy. The Arena human-preference rank shown alongside is the real signal.</p>
+    <p>3. <b>Sales coaching</b> uses salesevals.com's hidden-ground-truth score directly (no formula). Cost is $/call (real measured), not $/1M tokens.</p>
+    <p>4. Treat these scores as <b>coarse triage</b>. For a high-stakes decision, test the top-3 the recommender returns against your own examples.</p>`;
+};
+const TAB_LEVELS=()=>`<h4>What each score level means</h4>
+  <p style="color:var(--dim);font-size:12.5px">Use this as a rough map. Where you set your <b>quality floor</b> in the recommender depends on how much error you can tolerate and the stakes.</p>
+  ${FLOOR_BANDS.map(b=>`<div class="floor-band" style="border-color:${b.color}"><b>${b.label}</b>${b.body}<div style="color:var(--dim);font-size:11.5px;margin-top:4px">Examples: ${b.examples}</div></div>`).join('')}
+  <h4>How to read the bands</h4>
+  <p>These are <b>approximate</b>. A model just below a band's threshold may still work for your case; one just above may underperform on a specific sub-task. The goal is to give you a starting floor — then iterate.</p>`;
+const TAB_AGENTIC=()=>`<h4>What is "agentic scoring"?</h4>
+  <p>Standard LLM benchmarks (MMLU, GPQA, HumanEval, etc.) test isolated language tasks: answer this question, complete this code. They don't measure whether a model can <b>run a multi-step workflow</b> — pick a tool, call it, recover from errors, and finish a real job. That's what agentic scoring captures, and it's where most of Intelligent Noise's value lives (research, data synthesis, web research are all agentic workloads).</p>
+  <h4>Where it comes from in this dashboard</h4>
+  <p>For the agentic-flavored task buckets (<b>Web research, Coding, Software engineering, Expert reasoning</b>, and the verticals), the score blends AA's agentic sub-indices — <code>tau2</code> (tool-use), <code>terminalbench_hard</code> (multi-step terminal tasks), <code>livecodebench</code> — with the <b>LMArena</b> human-preference rank for the matching industry. AA gives you the benchmark number; Arena tells you whether humans actually prefer the model's output in real work.</p>
+  <h4>Agent Arena's methodology (<a href="https://arena.ai/blog/agent-arena-methodology/" target="_blank">arena.ai</a>)</h4>
+  <p>Arena's agent leaderboard uses <b>causal tracing</b>, not pairwise voting. Instead of asking "which response do you prefer?", it tracks real user sessions on arena.ai (~160K agent tasks in a recent week — coding, financial analysis, research, doc creation) and measures five concrete signals:</p>
+  <table style="font-size:12.5px;margin:8px 0">
+    <tr><td style="color:var(--accent);font-weight:600;padding-right:12px">Confirmed success</td><td>Did the user explicitly approve the task outcome?</td></tr>
+    <tr><td style="color:var(--accent);font-weight:600">Praise vs. complaint</td><td>Verbal satisfaction in the conversation</td></tr>
+    <tr><td style="color:var(--accent);font-weight:600">Steerability</td><td>How well the agent responds to user corrections</td></tr>
+    <tr><td style="color:var(--accent);font-weight:600">Bash recovery</td><td>How efficiently it recovers from command errors</td></tr>
+    <tr><td style="color:var(--accent);font-weight:600">Tool hallucination</td><td>Penalty for inventing tools that don't exist</td></tr>
+  </table>
+  <p>Statistically it's a multi-intervention randomized controlled trial: sessions randomly sample different orchestrator models and the system computes <b>net improvement</b> with 95% confidence intervals, weighted toward recent data.</p>
+  <h4>Why this matters for routing</h4>
+  <p>An agentic score isn't just "smarter model = better." A frontier model that <i>doesn't recover well from bash errors</i> loses to a cheaper model that does. That's why <b>DeepSeek V4 Flash</b> can rank surprisingly well for web research despite being floor-tier on overall intelligence — it's measured on the right things for the task.</p>
+  <p style="color:var(--dim);font-size:12px">⚠ As of this snapshot, agent-specific Elos aren't separately exposed in the LMArena public dataset we pull — we use the closest industry/use-case categories instead. When agent-specific data lands, we'll wire it in.</p>`;
+const TAB_PICK=()=>`<h4>Find the quality floor for your feature in 3 questions</h4>
+  <p style="color:var(--dim);font-size:12.5px">Answer these, and we'll suggest a floor. The right answer is "good enough for the stakes" — not "the highest number."</p>
+  <div id="qwiz-body"></div>`;
+const TAB_HOWTO=()=>`<h4>Three steps to get an answer</h4>
+  <table style="font-size:13px;margin:8px 0;border-collapse:separate;border-spacing:0 8px">
+    <tr><td style="padding-right:14px;vertical-align:top;width:32px">
+      <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#04110b;text-align:center;font-weight:700;line-height:22px;font-size:11px">1</span>
+    </td><td style="padding:0"><b>Tell us what you're building</b><div style="color:var(--dim);margin-top:2px">Click <b style="color:var(--ink)">💰 Costing</b> above — pick the scenario that sounds like your AI feature (chatbot, email drafter, CRM enrichment, etc.). The cost model presets and cache/batch settings get inferred for you.</div></td></tr>
+    <tr><td style="vertical-align:top"><span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#04110b;text-align:center;font-weight:700;line-height:22px;font-size:11px">2</span></td>
+    <td><b>Pick your quality bar</b><div style="color:var(--dim);margin-top:2px">Use the <b style="color:var(--ink)">Quality floor</b> slider on the recommender card. Not sure what level to set? Click <b style="color:var(--ink)">📏 Quality floor</b> above for a 3-question wizard that picks one based on your stakes.</div></td></tr>
+    <tr><td style="vertical-align:top"><span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#04110b;text-align:center;font-weight:700;line-height:22px;font-size:11px">3</span></td>
+    <td><b>Read the top-3</b><div style="color:var(--dim);margin-top:2px">The recommender shows the <b style="color:var(--ink)">cheapest models that clear your bar</b>, with savings vs. defaulting to the frontier and trade-off receipts (origin, train policy, cheapest host, hallucination, uptime). Tap any <b style="color:var(--ink)">ⓘ</b> for more.</div></td></tr>
+  </table>
+  <h4>What the header buttons do</h4>
+  <p><b>📖 How to use</b> — this guide.<br>
+  <b>💰 Costing</b> — explains how list price + caching + batch + reasoning penalty combine into the "effective cost" the dashboard uses; includes the "walk me through it" wizard.<br>
+  <b>🎯 Scoring</b> — explains how each task score is calculated, what each score level means, and how agentic scoring works.<br>
+  <b>📏 Quality floor</b> — 3-question wizard that picks a quality floor based on who sees the output, what happens if it's wrong, and how often it runs.</p>
+  <h4>Best practice</h4>
+  <p>Ask these questions <b>per feature of your product</b>, not for the company overall. A live customer chatbot and an overnight CRM enrichment job have very different floors — same product, different routing.</p>`;
+const TAB_COSTING=()=>`<h4>How the cost model works</h4>
+  <p>The dashboard's "effective cost" combines four levers that stack on each other:</p>
+  <table style="font-size:12.5px;margin:8px 0">
+    <tr><td style="color:var(--accent);font-weight:600;padding-right:12px;width:130px">List price</td><td>Public per-token rate the provider charges by default. The starting point.</td></tr>
+    <tr><td style="color:var(--accent);font-weight:600">Enterprise discount</td><td>Illustrative negotiated rate (Anthropic ~22% off, OpenAI ~32%, Google ~25%). Toggle "Enterprise (committed) base" in the cost-model panel. Open-weight models don't change.</td></tr>
+    <tr><td style="color:var(--accent);font-weight:600">Cache savings</td><td>~90% off the input portion that repeats across calls (system prompt, tool defs). The "Input cached" slider.</td></tr>
+    <tr><td style="color:var(--accent);font-weight:600">Batch savings</td><td>~50% off when the call can wait ~24h (overnight enrichment, scoring backfills). The "Calls via batch" slider.</td></tr>
+    <tr><td style="color:var(--accent);font-weight:600">Reasoning penalty</td><td>+40% on output tokens for reasoning models — they're billed for thinking tokens too.</td></tr>
+  </table>
+  <h4>Preset shortcuts</h4>
+  <p>The 4 preset buttons set both sliders to a typical workload:</p>
+  <p><b>List</b> 0% / 0%   ·   <b>Chat</b> 50% / 0%   ·   <b>Agent loop</b> 80% / 0%   ·   <b>Bulk</b> 50% / 100%</p>
+  <p style="color:var(--dim);font-size:12.5px;margin-top:14px">Not sure what to pick? Switch to the <b style="color:var(--accent)">Walk me through it</b> tab for a 3-question guided form.</p>`;
+// Step counter for the in-modal costing wizard (separate from the legacy sidebar wizard's wizStep).
+let modalWizStep=0, modalWizSnapshot=null;
+const TAB_COSTING_WIZARD=()=>{
+  const step=WIZ_STEPS[modalWizStep];
+  const intro=modalWizStep===0?`<div style="margin:0 0 14px;padding:10px 12px;background:var(--accent-dim);border-left:3px solid var(--accent);border-radius:4px;font-size:13px;line-height:1.5">This 3-question form asks about your AI feature and infers the right <b>cache/batch settings</b> to estimate which model is sufficient for your use case. Then select the correct <b>task</b> and <b>quality floor</b> to find the right model.</div>`:'';
+  const back=modalWizStep>0?`<button class="profbtn" id="modal-wiz-back" style="margin-top:14px;background:var(--panel2);color:var(--dim);border-color:var(--line)">← Back</button>`:'';
+  return `${intro}
+    <div class="wiz-step" style="font-size:10.5px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Step ${modalWizStep+1} of 3</div>
+    <div class="wiz-q" style="font-size:15px;font-weight:600;margin-bottom:12px">${step.q}</div>
+    <div class="wiz-help" style="font-size:12.5px;color:var(--dim);margin-bottom:14px;line-height:1.5">${step.help}</div>
+    <div class="wiz-opts" id="modal-wiz-opts" style="display:flex;flex-direction:column;gap:7px">
+      ${step.opts.map((o,i)=>`<button data-i="${i}" style="text-align:left;background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:11px 13px;font-size:13px;cursor:pointer;line-height:1.4">${o.label}<span class="sub" style="display:block;color:var(--dim);font-size:11.5px;margin-top:4px">${o.sub}</span></button>`).join('')}
+    </div>
+    ${back}`;
+};
+// Scene = one header button. Each scene has a title, an optional set of tabs, and a default tab.
+const SCENES={
+  howto:{title:'👋 How to use this tool',
+    tabs:{howto:{label:'',render:TAB_HOWTO}},
+    default:'howto'},
+  costing:{title:'💰 Costing — how to model what you actually pay',
+    tabs:{'cost-model':{label:'How the cost model works',render:TAB_COSTING},
+          'wizard':{label:'Walk me through it',render:TAB_COSTING_WIZARD}},
+    default:'cost-model'},
+  scoring:{title:'🎯 Scoring — how task scores are calculated',
+    tabs:{how:{label:'How calculated',render:TAB_HOW},levels:{label:'Score levels',render:TAB_LEVELS},agentic:{label:'Agentic scoring',render:TAB_AGENTIC}},
+    default:'how'},
+  quality:{title:'📏 Quality floor — pick the right bar for your feature',
+    tabs:{pick:{label:'',render:TAB_PICK}},
+    default:'pick'},
+};
+
+const QW_Q=[
+  {key:'visibility',q:'Who sees the output?',opts:[
+    {label:'Just internal — me or my team',v:0},
+    {label:'Internal but reaches a customer-facing channel later (e.g. drafts a human edits)',v:1},
+    {label:'Directly customer-facing — no human in the loop',v:2}]},
+  {key:'cost',q:'What happens if it\'s wrong?',opts:[
+    {label:'Annoying — we re-run it / it gets caught',v:0},
+    {label:'Real cost — a lost deal, embarrassment, bad metric',v:1},
+    {label:'Severe — compliance, safety, legal, customer trust',v:2}]},
+  {key:'volume',q:'How often does this task run?',opts:[
+    {label:'High volume — thousands of calls per day',v:0},
+    {label:'Moderate — hundreds a day',v:1},
+    {label:'Low — occasional or human-triggered',v:2}]},
+];
+let qwAns={};
+function renderQwiz(){
+  const body=document.querySelector('#qwiz-body'); if(!body)return;
+  body.innerHTML='';
+  QW_Q.forEach(qq=>{
+    body.insertAdjacentHTML('beforeend',`<div class="qwiz-q">${qq.q}</div><div class="qwiz-opts" data-q="${qq.key}">${qq.opts.map((o,i)=>`<button data-v="${o.v}" class="${qwAns[qq.key]===o.v?'sel':''}">${o.label}</button>`).join('')}</div>`);
+  });
+  body.querySelectorAll('.qwiz-opts').forEach(grp=>{
+    const k=grp.dataset.q;
+    grp.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+      qwAns[k]=+b.dataset.v;
+      grp.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');
+      maybeShowResult();
+    }));
+  });
+  if(Object.keys(qwAns).length===3)maybeShowResult();
+}
+function maybeShowResult(){
+  if(Object.keys(qwAns).length<3)return;
+  // Remove any prior result so changing an answer replaces (not appends) the suggestion.
+  document.querySelectorAll('#qwiz-body .qwiz-result').forEach(el=>el.remove());
+  // Suggested floor: weighted sum (cost matters most), normalized to 45–85
+  const score=qwAns.visibility*1.5 + qwAns.cost*2.5 + qwAns.volume*0.5;
+  const floor=Math.round(45 + (score/9)*40);
+  const band=FLOOR_BANDS.find(b=>floor>=b.min)||FLOOR_BANDS[FLOOR_BANDS.length-1];
+  document.querySelector('#qwiz-body').insertAdjacentHTML('beforeend',`
+    <div class="qwiz-result">
+      Suggested quality floor: <b>${floor}</b>
+      <div style="color:var(--dim);font-size:12px;margin-top:4px">That lands in the <b style="color:var(--ink)">"${band.label}"</b> band.</div>
+      <button id="qwiz-apply">Apply ${floor} to the recommender →</button>
+    </div>`);
+  // Use the just-inserted button explicitly (avoids stale-ID collisions if user re-clicks fast)
+  document.querySelector('#qwiz-body .qwiz-result button').addEventListener('click',()=>{
+    $('#floor').value=floor;
+    $('#floor').dispatchEvent(new Event('input',{bubbles:true}));
+    qwAns={};
+    closeModal();
+    const fv=$('#floorV');
+    if(fv){fv.style.transition='color .4s, transform .4s';fv.style.color='var(--accent)';fv.style.transform='scale(1.25)';
+      setTimeout(()=>{fv.style.color='';fv.style.transform='';},700);}
+  });
+}
+// Scene-based modal: one HTML element, content swaps per scene. Tab list hides when there's only one tab.
+let currentScene=null;
+function renderModalTabs(scene,activeTab){
+  const tabs=SCENES[scene].tabs;
+  const keys=Object.keys(tabs);
+  const tabBar=$('#modal-tabs');
+  if(keys.length<2){tabBar.innerHTML='';tabBar.style.display='none';return;}
+  tabBar.style.display='';
+  tabBar.innerHTML=keys.map(k=>`<button data-tab="${k}" class="${k===activeTab?'on':''}">${tabs[k].label}</button>`).join('');
+  tabBar.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>openModal(scene,b.dataset.tab)));
+}
+function openModal(scene,tab){
+  const cfg=SCENES[scene]; if(!cfg)return;
+  tab=tab||cfg.default;
+  // Reset in-modal wizard state BEFORE render so step 0 shows fresh.
+  if(scene==='costing'&&tab==='wizard'){modalWizStep=0;modalWizSnapshot={cache:$('#cache').value,batch:$('#batch').value,task:taskSel()};}
+  currentScene=scene;
+  $('#modal-title').textContent=cfg.title;
+  renderModalTabs(scene,tab);
+  $('#modal-body').innerHTML=cfg.tabs[tab].render();
+  $('#modal-bg').classList.add('on');
+  // Scene-specific post-render setup
+  if(scene==='quality'&&tab==='pick'){qwAns={};renderQwiz();}
+  if(scene==='costing'&&tab==='wizard')bindModalCostingWizard();
+  // Sync header button "on" state
+  $('#show-onb').classList.toggle('on',scene==='howto');
+  ['costing','scoring','quality'].forEach(s=>$('#show-'+s).classList.toggle('on',s===scene));
+}
+function bindModalCostingWizard(){
+  document.querySelectorAll('#modal-wiz-opts button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const i=+btn.dataset.i, step=WIZ_STEPS[modalWizStep], o=step.opts[i], a=o.apply;
+      if(a.task){const r=$(`input[name=task][value="${a.task}"]`);if(r)r.checked=true;}
+      if('cache' in a)$('#cache').value=a.cache;
+      if('batch' in a)$('#batch').value=a.batch;
+      if(modalWizStep<WIZ_STEPS.length-1){
+        modalWizStep++;
+        $('#modal-body').innerHTML=TAB_COSTING_WIZARD();
+        bindModalCostingWizard();
+      } else {
+        // Final step — commit, flash, close.
+        $('#cache').dispatchEvent(new Event('input',{bubbles:true}));
+        [$('#cacheV'),$('#batchV')].forEach(el=>{if(el){el.style.transition='color .4s, transform .4s';el.style.color='var(--accent)';el.style.transform='scale(1.2)';setTimeout(()=>{el.style.color='';el.style.transform='';},700);}});
+        modalWizStep=0;
+        closeModal();
+      }
+    });
+  });
+  const back=document.querySelector('#modal-wiz-back');
+  if(back)back.addEventListener('click',()=>{
+    if(modalWizStep>0){modalWizStep--;$('#modal-body').innerHTML=TAB_COSTING_WIZARD();bindModalCostingWizard();}
+  });
+}
+function closeModal(){
+  $('#modal-bg').classList.remove('on');
+  currentScene=null;
+  $('#show-onb').classList.remove('on');
+  ['costing','scoring','quality'].forEach(s=>$('#show-'+s).classList.remove('on'));
+}
+function toggleModal(scene){
+  if(currentScene===scene&&$('#modal-bg').classList.contains('on'))closeModal();
+  else openModal(scene);
+}
+function renderWorkedExample(m,task){
+  const info=TASK_METRICS_INFO[task];
+  const aa={ifbench:'ifbench',gpqa:'gpqa',mmlu_pro:'mmlu_pro',hle:'hle',tau2:'tau2',terminalbench_hard:'terminalbench_hard',livecodebench:'livecodebench',aime_25:'aime_25'};
+  // approximate values from the merged data
+  const score=capValue(m,task);
+  return `<div class="formula">
+    Inputs: ${info.metrics.map(x=>`<b>${x}</b>`).join(' · ')}<br>
+    Computed: average of these → <span class="out">${score?.toFixed(1)}</span>
+  </div>
+  <p style="font-size:12px;color:var(--dim)">e.g. for ${m.display}, the underlying metrics are read from Artificial Analysis. Any missing metric is skipped, not penalized.</p>`;
+}
+$('#modal-close').addEventListener('click',closeModal);
+$('#modal-bg').addEventListener('click',e=>{if(e.target===$('#modal-bg'))closeModal();});
+$('#show-costing').addEventListener('click',()=>toggleModal('costing'));
+$('#show-scoring').addEventListener('click',()=>toggleModal('scoring'));
+$('#show-quality').addEventListener('click',()=>toggleModal('quality'));
+
+// ── onboarding card ──
+$('#show-onb').addEventListener('click',()=>toggleModal('howto'));
+
+// ── input wiring ──
+$$('input,select').forEach(i=>i.addEventListener('input',()=>{
+  $('#cacheV').textContent=$('#cache').value+'%';$('#batchV').textContent=$('#batch').value+'%';$('#floorV').textContent=$('#floor').value;
+  render();
+}));
+$$('#presets button').forEach(btn=>btn.addEventListener('click',()=>{$('#cache').value=btn.dataset.cache;$('#batch').value=btn.dataset.batch;$('#cache').dispatchEvent(new Event('input',{bubbles:true}));}));
+$$('th[data-sort]').forEach(th=>th.addEventListener('click',()=>{const k=th.dataset.sort;sortDir=sortKey===k?-sortDir:-1;sortKey=k;renderTable();}));
+window.addEventListener('resize',renderScatter);
+window.addEventListener('keydown',e=>{if(e.key==='Escape'){hidePop();closeModal();closeWiz();}});
+
+load();
+</script>
+</body>
+</html>
