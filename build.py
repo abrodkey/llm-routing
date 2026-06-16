@@ -94,17 +94,21 @@ PROVIDERS = json.loads((ROOT / "providers.json").read_text())
 TRACKED_CREATORS = {"OpenAI", "Anthropic", "Google", "DeepSeek", "Kimi", "Moonshot", "Alibaba", "Z AI", "Zhipu"}
 RADAR_INTEL_THRESHOLD = 45
 
-# Per-task quality mapping. Each task -> list of (aa_evaluation_key, scale_to_100).
+# Per-task quality mapping. Each task -> list of (aa_evaluation_key, scale_to_100, weight).
 # Index keys are already 0-100 (scale 1); raw benchmarks are 0-1 fractions (scale 100).
+# Weights reflect RouterArena's Bloom-tier difficulty mix per task category: harder
+# benchmarks count more for buckets dominated by Analyze/Evaluate/Create-tier queries
+# (research, coding, math), easier benchmarks count more for Remember/Understand-tier
+# buckets (chat, writing). Weights default to 1.0 if a third element is omitted.
 # needs_arena flags buckets AA can't measure well (chat/writing) -> LMArena fills these.
 TASK_METRICS = {
-    "research":       {"metrics": [("gpqa", 100), ("mmlu_pro", 100), ("hle", 100)], "needs_arena": False},
-    "data_synthesis": {"metrics": [("gpqa", 100), ("mmlu_pro", 100), ("ifbench", 100)], "needs_arena": False},
-    "web_research":   {"metrics": [("tau2", 100), ("terminalbench_hard", 100)], "needs_arena": False},
-    "chat":           {"metrics": [("ifbench", 100), ("artificial_analysis_intelligence_index", 1)], "needs_arena": True},
-    "coding":         {"metrics": [("artificial_analysis_coding_index", 1), ("livecodebench", 100)], "needs_arena": False},
-    "math":           {"metrics": [("artificial_analysis_math_index", 1), ("aime_25", 100)], "needs_arena": False},
-    "writing_email":  {"metrics": [("ifbench", 100), ("artificial_analysis_intelligence_index", 1)], "needs_arena": True},
+    "research":       {"metrics": [("gpqa", 100, 1.5), ("mmlu_pro", 100, 1.0), ("hle", 100, 2.0)], "needs_arena": False},
+    "data_synthesis": {"metrics": [("gpqa", 100, 1.0), ("mmlu_pro", 100, 1.0), ("ifbench", 100, 0.5)], "needs_arena": False},
+    "web_research":   {"metrics": [("tau2", 100, 1.5), ("terminalbench_hard", 100, 1.5)], "needs_arena": False},
+    "chat":           {"metrics": [("ifbench", 100, 1.5), ("artificial_analysis_intelligence_index", 1, 0.5)], "needs_arena": True},
+    "coding":         {"metrics": [("artificial_analysis_coding_index", 1, 1.0), ("livecodebench", 100, 1.5)], "needs_arena": False},
+    "math":           {"metrics": [("artificial_analysis_math_index", 1, 1.0), ("aime_25", 100, 2.0)], "needs_arena": False},
+    "writing_email":  {"metrics": [("ifbench", 100, 1.5), ("artificial_analysis_intelligence_index", 1, 0.5)], "needs_arena": True},
 }
 
 # ── Pull helpers (cache-first so local dev works without live SSL) ───────────────
@@ -329,17 +333,21 @@ def base_name(name):
     return name.split("(")[0].strip()
 
 def task_scores(ev):
-    """Compute per-task 0-100 quality from available AA sub-indices."""
+    """Compute per-task 0-100 quality from available AA sub-indices, weighted by
+    RouterArena's Bloom-tier difficulty mix (see TASK_METRICS)."""
     out = {}
     for task, cfg in TASK_METRICS.items():
-        vals, present = [], []
-        for key, scale in cfg["metrics"]:
+        num, den, present = 0.0, 0.0, []
+        for entry in cfg["metrics"]:
+            key, scale = entry[0], entry[1]
+            weight = entry[2] if len(entry) > 2 else 1.0
             v = ev.get(key)
             if v is not None:
-                vals.append(v * scale)
+                num += v * scale * weight
+                den += weight
                 present.append(key)
         out[task] = {
-            "score": round(sum(vals) / len(vals), 1) if vals else None,
+            "score": round(num / den, 1) if den else None,
             "metrics_used": present,
             "needs_arena": cfg["needs_arena"],
         }
@@ -391,6 +399,11 @@ def merge_one(alias, aa_rows, epoch_rows, or_catalog, arena_data, or_usage, hall
         "committed_output_per_1m": prov.get("committed_output_per_1m"),
         "committed_assumptions":   prov.get("committed_assumptions"),
         "aa_blended_per_1m":    (aa or {}).get("pricing", {}).get("price_1m_blended_3_to_1"),
+        # AA cache fields — present for some providers; cross-check against OpenRouter's
+        # endpoint-level cached_read_per_1m. When AA exposes them, they're the most
+        # authoritative since they come from the provider's published rate card.
+        "aa_cache_hit_per_1m":   (aa or {}).get("pricing", {}).get("price_1m_cache_hit_tokens"),
+        "aa_cache_write_per_1m": (aa or {}).get("pricing", {}).get("price_1m_cache_write_tokens"),
         "prompt_caching_discount_pct": prov.get("prompt_caching_discount_pct"),
         "batch_api_discount_pct":      prov.get("batch_api_discount_pct"),
         "promo_note": prov.get("promo_note"),

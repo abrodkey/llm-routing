@@ -45,19 +45,23 @@ providers.json       ──(manual)──────►  direct + committed pri
 
 ### Per-task quality (`task_scores`)
 
-`build.py` maps Ryan's task buckets to AA sub-indices (`TASK_METRICS`):
+`build.py` maps Ryan's task buckets to AA sub-indices (`TASK_METRICS`), **weighted by RouterArena's Bloom-tier difficulty mix**. Harder benchmarks count more for buckets dominated by Analyze/Evaluate/Create-tier queries (research, coding, math); easier benchmarks count more for Remember/Understand-tier buckets (chat, writing). Weights live in `TASK_METRICS`.
 
-| Bucket | AA metrics | Note |
+| Bucket | AA metrics (weights) | Note |
 |---|---|---|
-| research | gpqa, mmlu_pro, hle | knowledge/reasoning |
-| data_synthesis | gpqa, mmlu_pro, ifbench | |
-| web_research | tau2, terminalbench_hard | **agentic / tool-use** |
-| coding | coding_index, livecodebench | |
-| math | math_index, aime_25 | sparse for newest models |
-| chat | ifbench, intelligence | `needs_arena: true` — AA can't measure chat well |
-| writing_email | ifbench, intelligence | `needs_arena: true` |
+| research | gpqa (1.5), mmlu_pro (1.0), hle (2.0) | knowledge/reasoning; hle dominates |
+| data_synthesis | gpqa (1.0), mmlu_pro (1.0), ifbench (0.5) | |
+| web_research | tau2 (1.5), terminalbench_hard (1.5) | **agentic / tool-use** |
+| coding | coding_index (1.0), livecodebench (1.5) | contest-style weighted up |
+| math | math_index (1.0), aime_25 (2.0) | AIME dominates; sparse for newest models |
+| chat | ifbench (1.5), intelligence (0.5) | `needs_arena: true` — instruction-follow weighted up |
+| writing_email | ifbench (1.5), intelligence (0.5) | `needs_arena: true` |
 
 Buckets flagged `needs_arena` (chat, writing) use AA proxies for the score; LMArena human-preference rank is shown alongside them (cross-check, not blended).
+
+### Cache-hit pricing (`effective()` cost)
+
+Three sources in priority order: AA's `price_1m_cache_hit_tokens` (published rate, most authoritative when present) → OpenRouter endpoint `cached_read_per_1m` (real per-host) → manual `prompt_caching_discount_pct` in `providers.json` (fallback only). Open-weight Chinese models (DeepSeek, Kimi, Qwen, GLM) have no batch API — the batch slider correctly has no effect on them.
 
 ---
 

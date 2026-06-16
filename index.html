@@ -433,10 +433,14 @@ function effective(m,cacheFrac,batchFrac){
   let inp=c.direct_input_per_1m, out=c.direct_output_per_1m;
   if(ent&&c.committed_input_per_1m!=null&&c.committed_output_per_1m!=null){inp=c.committed_input_per_1m;out=c.committed_output_per_1m;}
   if(inp==null||out==null)return null;
+  // Cache-hit price priority: AA's published rate (most authoritative when present)
+  // > OpenRouter endpoint cached_read (real but host-mediated) > manual % fallback.
+  const aac=c.aa_cache_hit_per_1m;
   const orc=m.openrouter&&m.openrouter.cached_read_per_1m;
+  const cacheRate=(aac!=null)?aac:(orc!=null?orc:null);
   const cacheDisc=(c.prompt_caching_discount_pct||0)/100;
   let effIn;
-  if(orc!=null) effIn=inp*(1-cacheFrac)+orc*cacheFrac;
+  if(cacheRate!=null) effIn=inp*(1-cacheFrac)+cacheRate*cacheFrac;
   else if(cacheDisc>0) effIn=inp*(1-cacheFrac*cacheDisc);
   else effIn=inp;
   let effOut=out;
