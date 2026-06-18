@@ -97,6 +97,11 @@
   .rec-head .floor{flex:1;min-width:200px}
   .floor-bar{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--dim)}
   .floor-bar a{cursor:pointer;text-decoration:underline;text-decoration-style:dotted}
+  /* Editable floor value — large bold number that doubles as an input. */
+  #floorV{background:transparent;border:none;border-bottom:1px dashed var(--line);color:var(--ink);font-size:22px;font-weight:700;width:56px;padding:1px 4px;font-family:inherit;text-align:center;cursor:pointer;-moz-appearance:textfield;margin-left:4px;vertical-align:-3px}
+  #floorV::-webkit-inner-spin-button,#floorV::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+  #floorV:hover{border-bottom-color:var(--accent);color:var(--accent)}
+  #floorV:focus{border-bottom-color:var(--accent);outline:none;color:var(--accent)}
   .recs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   .rec{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:13px 14px;position:relative}
   .rec.win{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
@@ -198,6 +203,35 @@
   .active-filters .af-none{color:var(--dim)}
   .af-chip{display:inline-block;padding:2px 8px;margin:2px;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent);border-radius:4px;font-size:11px;font-weight:500;white-space:nowrap}
   .af-chip.task{background:#1c2a40;color:#93c5fd;border-color:#93c5fd}
+  /* Feature profile library (Intelligent Noise routing taxonomy) — compact name-only buttons; details show in the active chip once clicked. */
+  .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0 14px}
+  .feature-card{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:9px 11px;cursor:pointer;text-align:left;font:inherit;color:inherit;line-height:1.35}
+  .feature-card:hover{border-color:var(--accent);color:var(--accent)}
+  .feature-card:disabled{opacity:.4;cursor:not-allowed}
+  .feature-card.active{background:var(--accent-dim);border-color:var(--accent)}
+  .fc-name{font-weight:600;font-size:12.5px;color:inherit}
+  .feature-area-h{color:var(--accent);font-size:13px;margin:18px 0 8px;font-weight:600;letter-spacing:.01em}
+  /* Active feature chip — top of recommender */
+  .af-chip{background:var(--accent-dim);border:1px solid var(--accent);border-radius:8px;padding:11px 14px;margin-bottom:14px;font-size:12.5px;display:flex;align-items:flex-start;gap:10px;line-height:1.45}
+  .af-chip.hidden{display:none}
+  .af-chip .af-icon{font-size:18px;line-height:1}
+  .af-chip .af-content{flex:1}
+  .af-chip .af-name{font-weight:600;color:var(--ink)}
+  .af-chip .af-meta{color:var(--accent);font-size:11.5px;margin-top:2px}
+  .af-chip .af-notes{color:var(--dim);font-size:11.5px;margin-top:3px;font-style:italic}
+  .af-chip .af-clear{background:none;border:1px solid var(--line);color:var(--dim);border-radius:4px;padding:4px 9px;font-size:11px;cursor:pointer;flex-shrink:0}
+  .af-chip .af-clear:hover{color:var(--accent);border-color:var(--accent)}
+  .af-derivation{color:var(--dim);font-size:11.5px;margin-top:8px;padding-top:7px;border-top:1px solid var(--accent-dim);line-height:1.5}
+  .af-derivation b{color:var(--ink);font-weight:600}
+  /* Near-miss callout — surface a cheaper model just below the floor */
+  .near-miss{margin-top:14px;padding:11px 14px;background:var(--panel2);border:1px solid var(--warn);border-radius:8px;font-size:12.5px;line-height:1.5;display:flex;gap:10px;align-items:flex-start}
+  .near-miss.hidden{display:none}
+  .near-miss .nm-icon{font-size:16px;line-height:1.1}
+  .near-miss .nm-content{flex:1}
+  .near-miss b{color:var(--warn);font-weight:600}
+  .near-miss .nm-strong{color:var(--ink);font-weight:600}
+  .near-miss button{background:none;border:1px solid var(--warn);color:var(--warn);border-radius:4px;padding:5px 11px;font-size:11.5px;cursor:pointer;flex-shrink:0;align-self:center}
+  .near-miss button:hover{background:var(--warn);color:#04110b}
   .findings ul{margin:0;padding-left:18px;color:var(--dim)}
   .findings li{margin:5px 0}.findings li b{color:var(--ink);font-weight:600}
 </style>
@@ -215,6 +249,7 @@
     <button id="show-costing">💰 Costing</button>
     <button id="show-scoring">🎯 Scoring</button>
     <button id="show-quality">📏 Quality floor</button>
+    <button id="show-features">📋 Features</button>
   </div>
 </header>
 
@@ -253,6 +288,8 @@
       <label><input type="radio" name="task" value="chat"> Conversational chat</label>
       <label><input type="radio" name="task" value="coding"> Coding</label>
       <label><input type="radio" name="task" value="writing_email"> Email / writing</label>
+      <label><input type="radio" name="task" value="classification"> Classification</label>
+      <label><input type="radio" name="task" value="summarization"> Summarization</label>
       <div style="font-size:10px;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin:14px 0 4px;display:flex;align-items:center;gap:6px">Industry verticals <button class="info-btn" data-pop="verticals" style="width:14px;height:14px;font-size:8px">i</button></div>
       <label><input type="radio" name="task" value="business"> 💼 Business / RevOps</label>
       <label><input type="radio" name="task" value="legal"> ⚖️ Legal</label>
@@ -304,17 +341,21 @@
 
   <div class="content">
 
+    <!-- ACTIVE FEATURE CHIP (when a feature profile is applied) -->
+    <div class="af-chip hidden" id="active-feature"></div>
+
     <!-- RECOMMENDER -->
     <div class="card">
       <h2>🎯 Routing recommender <button class="info-btn" data-pop="recommender">i</button></h2>
       <div class="h-sub" id="rec-sub">Cheapest models that clear the bar for the selected task + constraints, vs. defaulting to the frontier.</div>
       <div class="rec-head">
         <div class="floor">
-          <div class="floor-bar"><span>Quality floor (min task score) <b id="floorV" style="color:var(--ink)">0</b></span></div>
-          <input type="range" id="floor" min="0" max="90" value="0">
+          <div class="floor-bar"><span>Quality floor (min task score) <input id="floorV" type="number" min="0" max="100" value="0" title="Click to type a custom value"></span></div>
+          <input type="range" id="floor" min="0" max="100" value="0">
         </div>
       </div>
       <div class="recs" id="recs"></div>
+      <div class="near-miss hidden" id="near-miss"></div>
       <div class="arena-note" id="recArena"></div>
     </div>
 
@@ -380,7 +421,7 @@
 const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
 const pick=(o,p)=>p.split('.').reduce((a,k)=>a==null?a:a[k],o);
 const TIER_COLOR={frontier:'var(--frontier)',value:'var(--value)',cheap:'var(--cheap)',floor:'var(--floor)'};
-const TASK_LABEL={overall:'Overall intelligence',research:'Research',data_synthesis:'Data synthesis',web_research:'Web research (agentic)',chat:'Conversational chat',coding:'Coding',writing_email:'Email / writing',math:'Math',business:'Business / RevOps',legal:'Legal',healthcare:'Healthcare',software_engineering:'Software engineering',expert:'Expert reasoning',sales_coaching:'Sales coaching'};
+const TASK_LABEL={overall:'Overall intelligence',research:'Research',data_synthesis:'Data synthesis',web_research:'Web research (agentic)',chat:'Conversational chat',coding:'Coding',writing_email:'Email / writing',math:'Math',classification:'Classification',summarization:'Summarization',business:'Business / RevOps',legal:'Legal',healthcare:'Healthcare',software_engineering:'Software engineering',expert:'Expert reasoning',sales_coaching:'Sales coaching'};
 // Filled from models.json on load (set in build.py): which Arena category backs each task, and which tasks are Arena-only or salesevals-only.
 let ARENA_CAT_FOR_TASK={}, ARENA_ONLY=new Set(), SALESEVALS_ONLY=new Set();
 // GTM-leaning tasks where salesevals data shows as a cross-check chip on every card (in addition to the headline on sales_coaching itself)
@@ -392,10 +433,10 @@ const TASK_METRICS_INFO={
   research:{metrics:['gpqa (×100)','mmlu_pro (×100)','hle (×100)'],note:'Graduate-level reasoning + broad knowledge + humanity\'s last exam.'},
   data_synthesis:{metrics:['gpqa (×100)','mmlu_pro (×100)','ifbench (×100)'],note:'Reasoning + knowledge + instruction-following (most directly relevant for CRM enrichment).'},
   web_research:{metrics:['tau2 (×100)','terminalbench_hard (×100)'],note:'Agentic tool-use benchmarks — the closest AA has to "browses the web and acts."'},
-  chat:{metrics:['ifbench (×100)','intelligence_index'],note:'AA has no direct chat benchmark; this is a proxy. The Arena human-pref rank shown on each card is the real signal.'},
+  chat:{metrics:['LMArena Elo · multi_turn category (preferred)','AA: ifbench + intelligence_index (fallback)'],note:'AA has no direct chat benchmark, so the score is LMArena\'s multi_turn category Elo normalized to 0–100 ((elo − 1300) ÷ 3). If a model has no Arena multi_turn data, falls back to AA\'s instruction-following + intelligence proxy.'},
   coding:{metrics:['coding_index','livecodebench (×100)'],note:'AA\'s coding aggregate + a live competitive-coding benchmark.'},
   math:{metrics:['math_index','aime_25 (×100)'],note:'AA\'s math aggregate + AIME 2025. Often sparse for newest models.'},
-  writing_email:{metrics:['ifbench (×100)','intelligence_index'],note:'No direct writing benchmark in AA; this is a proxy. Cross-check with Arena human-pref rank on each card.'},
+  writing_email:{metrics:['LMArena Elo · creative_writing category (preferred)','AA: ifbench + intelligence_index (fallback)'],note:'AA has no direct writing benchmark, so the score is LMArena\'s creative_writing category Elo normalized to 0–100. Falls back to AA proxy when Arena data is missing.'},
   // Vertical buckets — backed by LMArena human-preference Elo for the matching industry category.
   legal:{metrics:['LMArena Elo · industry_legal_and_government (normalized 0–100)'],note:'Human-preference rank from real LMArena votes on legal-domain prompts. Score = (elo − 1300) ÷ 3, clamped 0–100.'},
   healthcare:{metrics:['LMArena Elo · industry_medicine_and_healthcare'],note:'Human-preference rank on healthcare/medical prompts. Score = (elo − 1300) ÷ 3.'},
@@ -404,6 +445,9 @@ const TASK_METRICS_INFO={
   expert:{metrics:['LMArena Elo · expert (general high-nuance reasoning)'],note:'Human-preference rank on hard expert prompts. Score = (elo − 1300) ÷ 3.'},
   // Sales coaching — backed by salesevals.com (NOT AA, NOT Arena).
   sales_coaching:{metrics:['salesevals.com overall score (0–100)'],note:'Sales-call coaching benchmark: 50 synthetic calls scored 0–100 by hidden ground truth. Score is used as-is. Cost on this task is $/call (real measured), not $/1M tokens.'},
+  // Buckets added for Intelligent Noise feature profiles (Source Relevance Routing, Pre-Approval Classifier, Conversation Compaction).
+  classification:{metrics:['ifbench (×100)','intelligence_index'],note:'Binary or multi-class routing decisions. AA has no direct classification benchmark — ifbench (instruction-following compliance) is the strongest proxy. Validate on your own labeled set before high-volume deployment.'},
+  summarization:{metrics:['ifbench (×100)','intelligence_index'],note:'Summarization fidelity. No direct AA benchmark; proxy via instruction-following + intelligence. Vectara hallucination rate (shown as a chip) is the production-relevant cross-check.'},
 };
 
 const SCENARIOS=[
@@ -448,11 +492,40 @@ function effective(m,cacheFrac,batchFrac){
 // Arena Elo (typically 1300-1600) normalized to 0-100 score, matching how AA sub-indices score.
 function arenaEloToScore(elo){if(elo==null)return null;return Math.max(0,Math.min(100,(elo-1300)/3));}
 function arenaCategoryRow(m,task){const cat=ARENA_CAT_FOR_TASK[task];if(!cat)return null;return (m.arena_categories||{})[cat]||null;}
+// chat + writing_email have NO direct AA benchmark — Arena per-category Elo is the right signal.
+// We prefer Arena here (matching the vertical-bucket pattern), falling back to the AA proxy only
+// when Arena data is missing.
+const ARENA_PREFERRED_TASKS=new Set(['chat','writing_email']);
 function capValue(m,task){
   if(task==='overall')return m.intelligence_index;
   if(SALESEVALS_ONLY.has(task))return m.salesevals?m.salesevals.score:null;
   if(ARENA_ONLY.has(task)){const r=arenaCategoryRow(m,task);return r?arenaEloToScore(r.rating):null;}
+  if(ARENA_PREFERRED_TASKS.has(task)){
+    const r=arenaCategoryRow(m,task);
+    if(r&&r.rating!=null)return arenaEloToScore(r.rating);
+    // fall through to AA proxy if Arena data missing for this model
+  }
   return m.task_scores[task]&&m.task_scores[task].score;
+}
+// Percentile-based score band for the current task — honest about variance across task types.
+// Different tasks have wildly different score ranges (overall intelligence tops out ~60; data_synthesis ~85;
+// salesevals ~92 because all tested models are decent). Hardcoded thresholds would mislabel models depending on task.
+function scoreBand(score,task){
+  if(score==null)return 'q-none';
+  const all=MODELS.map(m=>capValue(m,task)).filter(s=>s!=null).sort((a,b)=>a-b);
+  if(all.length<2)return 'q-mid';
+  const rank=all.filter(s=>s<=score).length;
+  const pct=rank/all.length;
+  if(pct>=0.75)return 'q-high';   // top 25% within tracked models for THIS task
+  if(pct>=0.5)return 'q-mid';     // upper half
+  return 'q-low';                  // bottom half
+}
+// Build per-task quartiles for the "Score levels" tab dynamically from current MODELS.
+function taskQuartiles(task){
+  const items=MODELS.map(m=>({m,score:capValue(m,task)})).filter(x=>x.score!=null).sort((a,b)=>a.score-b.score);
+  if(items.length<4)return null;
+  const at=p=>items[Math.min(items.length-1,Math.floor(items.length*p))].score;
+  return {items,min:items[0].score,max:items[items.length-1].score,q1:at(0.25),q2:at(0.5),q3:at(0.75)};
 }
 
 const taskSel=()=>document.querySelector('input[name=task]:checked').value;
@@ -461,7 +534,7 @@ const cacheFrac=()=>+$('#cache').value/100, batchFrac=()=>+$('#batch').value/100
 function syncSliderLabels(){
   $('#cacheV').textContent=$('#cache').value+'%';
   $('#batchV').textContent=$('#batch').value+'%';
-  $('#floorV').textContent=$('#floor').value;
+  $('#floorV').value=$('#floor').value;
 }
 function readState(){
   const q=new URLSearchParams(location.search);
@@ -529,7 +602,10 @@ async function load(){
   // Radar lives on the SAME line as Data Sources (one logical span; wraps within itself if needed).
   const radarBit=radar?` · <span class="warn">🛰 ${radar} new model(s) flagged</span>`:'';
   $('#meta').innerHTML=`<span><span class="ds-prefix">Data Sources:</span> AA ${d.sources.aa.rows_pulled} · Epoch ${d.sources.epoch.rows_pulled} · OpenRouter ${d.sources.openrouter.rows_pulled} · Arena ${arenaN}/${MODELS.length}${arenaDate?' (board '+fmt(arenaDate)+')':''} · salesevals ${salesN}/${MODELS.length}${salesDateBit}${radarBit}</span>`;
-  readState(); render();
+  readState();
+  // Seed the floor-undo baseline AFTER readState so the initial loaded value isn't pushed onto the history.
+  lastCapturedFloor=$('#floor').value;
+  render();
 }
 
 // ── recommender ──
@@ -558,7 +634,7 @@ function renderRecommender(){
     const savedTxt=(frontier&&x.m.canonical!==frontier.m.canonical&&saved>0.005)
       ? `${(saved*100).toFixed(0)}% cheaper than ${frontier.m.display} (${refCost})`
       : (frontier&&x.m.canonical===frontier.m.canonical?'is the top-capability pick':'no cheaper option');
-    const sc=x.cap, qBand=sc==null?'q-none':sc>=70?'q-high':sc>=50?'q-mid':'q-low';
+    const sc=x.cap, qBand=scoreBand(sc,task);  // percentile-based, honest across tasks
     const scTxt=sc==null?'—':sc.toFixed(0);
     // Cost display branches on task: $/call (adaptive precision) for sales, $/1M blended otherwise.
     const costBig=isSales?`${fmt(x.eff.blended)}<small>/call</small>`:`${fmt(x.eff.blended)}<small>/1M</small>`;
@@ -584,8 +660,36 @@ function renderRecommender(){
         <div class="chips">${receipts(x.m,task).map(c=>`<div class="chip">${c}</div>`).join('')}</div>
       </div>`);
   });
-  const an=MODELS.length&&META.models.find(m=>m.task_scores[task]?.needs_arena);
-  $('#recArena').innerHTML = an ? `ℹ ${TASK_LABEL[task]} has no direct AA benchmark — score is an AA proxy. Cross-check with the <b>Arena human-preference rank</b> on each card.` : '';
+  // Near-miss callout: a model just below the floor that's significantly cheaper than #1
+  const nm=$('#near-miss');
+  if(clearing.length>0&&floor>0){
+    const top1=clearing[0];
+    const nearMiss=scored
+      .filter(x=>x.cap<floor && x.cap>=floor-5)        // within 5 points below the floor
+      .filter(x=>x.eff.blended<=top1.eff.blended*0.5)   // 50%+ cheaper than #1
+      .sort((a,b)=>a.eff.blended-b.eff.blended)[0];
+    if(nearMiss){
+      const fmtCost=v=>task==='sales_coaching'?(v<0.01?'$'+v.toFixed(4):'$'+v.toFixed(2)):'$'+v.toFixed(2);
+      const unit=task==='sales_coaching'?'/call':'/1M';
+      const gap=floor-Math.round(nearMiss.cap);
+      const savings=Math.round((1-nearMiss.eff.blended/top1.eff.blended)*100);
+      nm.classList.remove('hidden');
+      nm.innerHTML=`<div class="nm-icon">📉</div>
+        <div class="nm-content"><b>Just below the bar:</b> <span class="nm-strong">${nearMiss.m.display}</span> scores ${Math.round(nearMiss.cap)} (${gap} pt${gap===1?'':'s'} below your floor of ${floor}) at <span class="nm-strong">${fmtCost(nearMiss.eff.blended)}${unit}</span> — <span class="nm-strong">${savings}% cheaper than ${top1.m.display}</span> (${fmtCost(top1.eff.blended)}${unit}). Worth it if ${gap} pt${gap===1?'':'s'} of quality is below your real tolerance.</div>
+        <button id="lower-floor-${Math.round(nearMiss.cap)}">Lower floor to ${Math.round(nearMiss.cap)}</button>`;
+      const lowerBtn=document.querySelector(`#lower-floor-${Math.round(nearMiss.cap)}`);
+      if(lowerBtn)lowerBtn.addEventListener('click',()=>{$('#floor').value=Math.round(nearMiss.cap);$('#floor').dispatchEvent(new Event('input',{bubbles:true}));});
+    } else { nm.classList.add('hidden'); }
+  } else { nm.classList.add('hidden'); }
+
+  // Message depends on which signal actually drives the score for this task.
+  if(ARENA_PREFERRED_TASKS.has(task)){
+    const catSlug=ARENA_CAT_FOR_TASK[task]||'(none)';
+    $('#recArena').innerHTML = `ℹ ${TASK_LABEL[task]} score = <b>LMArena ${catSlug} category Elo</b> normalized to 0–100 (the real human-preference signal). AA has no direct benchmark for this task; the score above already reflects Arena, not an AA proxy.`;
+  } else {
+    const an=MODELS.length&&META.models.find(m=>m.task_scores[task]?.needs_arena);
+    $('#recArena').innerHTML = an ? `ℹ ${TASK_LABEL[task]} has no direct AA benchmark — score uses an AA proxy. The Arena human-preference rank on each card is the real signal.` : '';
+  }
 }
 function receipts(m,task){
   const out=[], pr=m.provenance, p=m.policy;
@@ -747,7 +851,35 @@ function renderActiveFilters(){
 function render(){
   writeState();
   $$('.btn[data-cache]').forEach(b=>b.classList.toggle('active',+b.dataset.cache===+$('#cache').value&&+b.dataset.batch===+$('#batch').value));
-  renderRecommender();renderScatter();renderFindings();renderTable();renderActiveFilters();
+  renderActiveFeature();renderRecommender();renderScatter();renderFindings();renderTable();renderActiveFilters();
+  captureFloorChange();
+}
+// Undo history for the quality floor. Debounced so rapid slider drags / typing batch into one entry.
+let floorHistory=[],lastCapturedFloor=null,floorCaptureTimeout=null;
+function captureFloorChange(){
+  clearTimeout(floorCaptureTimeout);
+  floorCaptureTimeout=setTimeout(()=>{
+    const current=$('#floor').value;
+    if(lastCapturedFloor!==null&&current!==lastCapturedFloor){
+      floorHistory.push(lastCapturedFloor);
+      if(floorHistory.length>50)floorHistory.shift();
+    }
+    lastCapturedFloor=current;
+  },400);
+}
+function undoFloor(){
+  if(floorHistory.length===0)return false;
+  const prev=floorHistory.pop();
+  lastCapturedFloor=prev;
+  $('#floor').value=prev;
+  $('#floorV').value=prev;
+  // Flash so the user sees the change
+  const fv=$('#floorV');
+  fv.style.transition='color .3s';fv.style.color='var(--accent)';
+  setTimeout(()=>{fv.style.color='';},500);
+  // Render without re-capturing — captureFloorChange is debounced and lastCapturedFloor is already in sync
+  writeState();renderActiveFeature();renderRecommender();renderScatter();renderFindings();renderTable();renderActiveFilters();
+  return true;
 }
 
 // ── popover system ──
@@ -916,13 +1048,29 @@ const TAB_HOW=()=>{
     <p>3. <b>Sales coaching</b> uses salesevals.com's hidden-ground-truth score directly (no formula). Cost is $/call (real measured), not $/1M tokens.</p>
     <p>4. Treat these scores as <b>coarse triage</b>. For a high-stakes decision, test the top-3 the recommender returns against your own examples.</p>`;
 };
-const TAB_LEVELS=()=>`<h4>What each score level means</h4>
-  <p style="color:var(--dim);font-size:12.5px">Use this as a rough map. Where you set your <b>quality floor</b> in the recommender depends on how much error you can tolerate and the stakes.</p>
-  ${FLOOR_BANDS.map(b=>`<div class="floor-band" style="border-color:${b.color}"><b>${b.label}</b>${b.body}<div style="color:var(--dim);font-size:11.5px;margin-top:4px">Examples: ${b.examples}</div></div>`).join('')}
-  <h4>How to read the bands</h4>
-  <p>These are <b>approximate</b>. A model just below a band's threshold may still work for your case; one just above may underperform on a specific sub-task. The goal is to give you a starting floor — then iterate.</p>`;
+const TAB_LEVELS=()=>{
+  const task=taskSel(), q=taskQuartiles(task);
+  if(!q)return `<h4>What scores mean for "${TASK_LABEL[task]||task}"</h4><p style="color:var(--warn)">Not enough scored models for this task yet (need at least 4 to compute quartiles).</p>`;
+  // Models in each band, named for the dashboard
+  const top=q.items.filter(x=>x.score>=q.q3).map(x=>x.m.display);
+  const upperMid=q.items.filter(x=>x.score>=q.q2&&x.score<q.q3).map(x=>x.m.display);
+  const lowerMid=q.items.filter(x=>x.score>=q.q1&&x.score<q.q2).map(x=>x.m.display);
+  const bottom=q.items.filter(x=>x.score<q.q1).map(x=>x.m.display);
+  const bands=[
+    {label:`Top 25% — score ≥ ${q.q3.toFixed(0)}`,color:'var(--accent)',body:'Strongest models for this task. Pick when stakes are high and quality matters more than cost.',examples:top},
+    {label:`Upper-middle — ${q.q2.toFixed(0)} to ${q.q3.toFixed(0)}`,color:'var(--info)',body:'Solid mid-tier performers — usually the value sweet spot for customer-facing GTM work.',examples:upperMid},
+    {label:`Lower-middle — ${q.q1.toFixed(0)} to ${q.q2.toFixed(0)}`,color:'var(--cheap)',body:'Good enough for moderate-stakes tasks; check per-task data for your specific use case.',examples:lowerMid},
+    {label:`Bottom 25% — score &lt; ${q.q1.toFixed(0)}`,color:'var(--warn)',body:'Floor tier for this specific task. Use only when occasional misses are acceptable and rock-bottom cost matters.',examples:bottom},
+  ];
+  return `<h4>What scores mean for "${TASK_LABEL[task]||task}"</h4>
+    <p style="color:var(--warn);font-size:12.5px;background:var(--panel2);border-left:3px solid var(--warn);padding:9px 11px;border-radius:4px;margin:8px 0 14px;line-height:1.5">⚠ <b>Score scales differ by task.</b> Overall intelligence tops out near 60 in practice; data synthesis tops out near 90; sales coaching is compressed between 80–92 because every tested model is decent. The bands below are <b>quartiles within the tracked dataset for THIS task</b>, not absolute quality thresholds — they update automatically as data shifts.</p>
+    <p style="font-size:12.5px;color:var(--dim)">Current distribution for ${TASK_LABEL[task]||task}: <b style="color:var(--ink)">min ${q.min.toFixed(0)} · median ${q.q2.toFixed(0)} · max ${q.max.toFixed(0)}</b>, across ${q.items.length} tracked models with data on this task.</p>
+    ${bands.map(b=>`<div class="floor-band" style="border-color:${b.color}"><b>${b.label}</b>${b.body}<div style="color:var(--dim);font-size:11.5px;margin-top:4px">Examples: ${b.examples.length?b.examples.join(', '):'<i>—</i>'}</div></div>`).join('')}
+    <h4>How to read the bands</h4>
+    <p>The recommender card's <b>score color</b> uses the same quartile logic — mint = top 25%, white = upper-half, warn-amber = lower-half. Same model can be mint on one task and amber on another (e.g., DeepSeek V4 Flash is bottom-quartile overall but top-quartile on data synthesis). Always check the per-task score for the bucket you actually care about.</p>`;
+};
 const TAB_AGENTIC=()=>`<h4>What is "agentic scoring"?</h4>
-  <p>Standard LLM benchmarks (MMLU, GPQA, HumanEval, etc.) test isolated language tasks: answer this question, complete this code. They don't measure whether a model can <b>run a multi-step workflow</b> — pick a tool, call it, recover from errors, and finish a real job. That's what agentic scoring captures, and it's where most of Intelligent Noise's value lives (research, data synthesis, web research are all agentic workloads).</p>
+  <p>Standard LLM benchmarks (MMLU, GPQA, HumanEval, etc.) test isolated language tasks: answer this question, complete this code. They don't measure whether a model can <b>run a multi-step workflow</b> — pick a tool, call it, recover from errors, and finish a real job. That's what agentic scoring captures.</p>
   <h4>Where it comes from in this dashboard</h4>
   <p>For the agentic-flavored task buckets (<b>Web research, Coding, Software engineering, Expert reasoning</b>, and the verticals), the score blends AA's agentic sub-indices — <code>tau2</code> (tool-use), <code>terminalbench_hard</code> (multi-step terminal tasks), <code>livecodebench</code> — with the <b>LMArena</b> human-preference rank for the matching industry. AA gives you the benchmark number; Arena tells you whether humans actually prefer the model's output in real work.</p>
   <h4>Agent Arena's methodology (<a href="https://arena.ai/blog/agent-arena-methodology/" target="_blank">arena.ai</a>)</h4>
@@ -987,10 +1135,36 @@ const TAB_COSTING_WIZARD=()=>{
     ${back}`;
 };
 // Scene = one header button. Each scene has a title, an optional set of tabs, and a default tab.
+// Feature profile library — Ryan's 22 Intelligent Noise features encoded as routing profiles.
+let activeFeatureId=null;
+let activeFeatureDerivation=null;
+function findFeature(id){const fp=META.feature_profiles;if(!fp)return null;for(const g of fp.groups){const f=g.features.find(f=>f.id===id);if(f)return {feature:f,area:g.area};}return null;}
+const TAB_FEATURES=()=>{
+  const fp=META.feature_profiles;
+  if(!fp)return `<p style="color:var(--warn)">Feature profiles not loaded — run <code>python3 build.py</code> to regenerate <code>models.json</code>.</p>`;
+  return `<h4>Pick a feature to auto-configure the recommender</h4>
+    <p style="color:var(--dim);font-size:12.5px;margin:6px 0 12px">Each Intelligent Noise feature maps to a task bucket + quality floor + pricing-tier filters based on Ryan's routing taxonomy. Clicking a card applies the profile; you can override any individual setting manually afterward. Mapping is a first-pass — flag any feature where the task bucket feels wrong.</p>
+    ${fp.groups.map(g=>`<div class="feature-area-h">${g.area}</div>
+      <div class="feature-grid">
+        ${g.features.map(f=>{
+          const disabled=!f.task_bucket;
+          const isActive=activeFeatureId===f.id;
+          // Compact name-only card. Full details (frequency / intel / cost-sens / description / notes) surface
+          // in the active-feature chip after click — keeps the picker scannable.
+          return `<button class="feature-card ${isActive?'active':''}" data-feature-id="${f.id}" ${disabled?'disabled':''} title="${(f.description||'').replace(/"/g,'&quot;')}">
+            <div class="fc-name">${f.name}</div>
+          </button>`;
+        }).join('')}
+      </div>`).join('')}
+    <p style="color:var(--dim);font-size:11.5px;margin-top:14px"><b style="color:var(--ink)">Honest caveat:</b> "Sufficient" here means "the task score in the top X% of tracked models for the matching task bucket" — derived from public benchmarks, not from Intelligent Noise's own evals. For high-stakes features, validate the top-3 recommendations against your own prompts before shipping.</p>`;
+};
 const SCENES={
   howto:{title:'👋 How to use this tool',
     tabs:{howto:{label:'',render:TAB_HOWTO}},
     default:'howto'},
+  features:{title:'📋 Feature profiles — Intelligent Noise routing taxonomy',
+    tabs:{features:{label:'',render:TAB_FEATURES}},
+    default:'features'},
   costing:{title:'💰 Costing — how to model what you actually pay',
     tabs:{'cost-model':{label:'How the cost model works',render:TAB_COSTING},
           'wizard':{label:'Walk me through it',render:TAB_COSTING_WIZARD}},
@@ -1083,9 +1257,64 @@ function openModal(scene,tab){
   // Scene-specific post-render setup
   if(scene==='quality'&&tab==='pick'){qwAns={};renderQwiz();}
   if(scene==='costing'&&tab==='wizard')bindModalCostingWizard();
+  if(scene==='features')bindFeatureCards();
   // Sync header button "on" state
   $('#show-onb').classList.toggle('on',scene==='howto');
+  $('#show-features').classList.toggle('on',scene==='features');
   ['costing','scoring','quality'].forEach(s=>$('#show-'+s).classList.toggle('on',s===scene));
+}
+function bindFeatureCards(){
+  document.querySelectorAll('.feature-card[data-feature-id]').forEach(btn=>{
+    btn.addEventListener('click',()=>applyFeatureProfile(btn.dataset.featureId));
+  });
+}
+function applyFeatureProfile(featureId){
+  const found=findFeature(featureId); if(!found)return;
+  const f=found.feature, fp=META.feature_profiles;
+  if(!f.task_bucket)return;
+  // 1. Set task radio
+  const r=document.querySelector(`input[name=task][value="${f.task_bucket}"]`);
+  if(r)r.checked=true;
+  // 2. Convert "intelligence required" to a min-percentile, then derive absolute floor score from current task's distribution
+  const pct=fp._intelligence_to_min_percentile[f.intelligence_required]||0;
+  let floorScore=0, totalModels=0;
+  if(pct>0){
+    const items=MODELS.map(m=>capValue(m,f.task_bucket)).filter(s=>s!=null).sort((a,b)=>a-b);
+    totalModels=items.length;
+    if(items.length>0){const idx=Math.floor(items.length*pct/100);floorScore=Math.round(items[Math.min(items.length-1,idx)]);}
+  }
+  $('#floor').value=floorScore;
+  // Record HOW we got the floor so renderActiveFeature can show the derivation line
+  activeFeatureDerivation={floor:floorScore,pct,intelLabel:f.intelligence_required,taskLabel:TASK_LABEL[f.task_bucket]||f.task_bucket,totalModels};
+  // 3. Set pricing tier filters from cost sensitivity
+  const allowedTiers=fp._cost_sensitivity_to_tiers[f.cost_sensitivity]||['floor','cheap','value','frontier'];
+  document.querySelectorAll('.tier').forEach(cb=>{cb.checked=allowedTiers.includes(cb.value);});
+  // 4. Track + re-render via standard input event
+  activeFeatureId=featureId;
+  $('#cache').dispatchEvent(new Event('input',{bubbles:true}));
+  closeModal();
+}
+function clearFeatureProfile(){activeFeatureId=null;activeFeatureDerivation=null;render();}
+function renderActiveFeature(){
+  const chip=$('#active-feature');
+  if(!activeFeatureId){chip.classList.add('hidden');return;}
+  const found=findFeature(activeFeatureId);
+  if(!found){chip.classList.add('hidden');activeFeatureId=null;return;}
+  const {feature:f,area}=found;
+  chip.classList.remove('hidden');
+  const d=activeFeatureDerivation;
+  const derivLine=d?(d.pct>0
+    ? `<div class="af-derivation">ⓘ Quality floor set to <b>${d.floor}</b>: "${d.intelLabel}" maps to <b>top ${100-d.pct}%</b> of ${d.totalModels} tracked models for ${d.taskLabel}. Drag the slider below to override.</div>`
+    : `<div class="af-derivation">ⓘ Quality floor set to <b>0</b>: "${d.intelLabel}" intelligence requires no minimum filter. Drag the slider below to tighten.</div>`):'';
+  chip.innerHTML=`<div class="af-icon">📋</div>
+    <div class="af-content">
+      <div><span class="af-name">${f.name}</span> <span style="color:var(--dim);font-size:11px">· ${area}</span></div>
+      <div class="af-meta">${f.frequency} freq · ${f.intelligence_required} intelligence required · ${f.cost_sensitivity} cost sensitivity · routed to <b style="color:var(--ink)">${TASK_LABEL[f.task_bucket]||f.task_bucket}</b></div>
+      ${f.notes?`<div class="af-notes">${f.notes}</div>`:''}
+      ${derivLine}
+    </div>
+    <button class="af-clear" id="clear-feature">✕ clear</button>`;
+  document.getElementById('clear-feature').addEventListener('click',clearFeatureProfile);
 }
 function bindModalCostingWizard(){
   document.querySelectorAll('#modal-wiz-opts button').forEach(btn=>{
@@ -1116,6 +1345,7 @@ function closeModal(){
   $('#modal-bg').classList.remove('on');
   currentScene=null;
   $('#show-onb').classList.remove('on');
+  $('#show-features').classList.remove('on');
   ['costing','scoring','quality'].forEach(s=>$('#show-'+s).classList.remove('on'));
 }
 function toggleModal(scene){
@@ -1138,19 +1368,37 @@ $('#modal-bg').addEventListener('click',e=>{if(e.target===$('#modal-bg'))closeMo
 $('#show-costing').addEventListener('click',()=>toggleModal('costing'));
 $('#show-scoring').addEventListener('click',()=>toggleModal('scoring'));
 $('#show-quality').addEventListener('click',()=>toggleModal('quality'));
+$('#show-features').addEventListener('click',()=>toggleModal('features'));
 
 // ── onboarding card ──
 $('#show-onb').addEventListener('click',()=>toggleModal('howto'));
 
 // ── input wiring ──
-$$('input,select').forEach(i=>i.addEventListener('input',()=>{
-  $('#cacheV').textContent=$('#cache').value+'%';$('#batchV').textContent=$('#batch').value+'%';$('#floorV').textContent=$('#floor').value;
+$$('input,select').forEach(i=>i.addEventListener('input',(e)=>{
+  // Bidirectional sync between #floor (slider) and #floorV (typed number).
+  if(e.target&&e.target.id==='floorV'){
+    const max=+$('#floor').max, v=Math.max(0,Math.min(max,+$('#floorV').value||0));
+    $('#floor').value=v;
+  } else {
+    $('#floorV').value=$('#floor').value;
+  }
+  $('#cacheV').textContent=$('#cache').value+'%';$('#batchV').textContent=$('#batch').value+'%';
   render();
 }));
+// Snap floor input to the clamped slider value when user finishes typing (handles out-of-range input gracefully).
+$('#floorV').addEventListener('blur',()=>{$('#floorV').value=$('#floor').value;});
+$('#floorV').addEventListener('keydown',e=>{if(e.key==='Enter')e.target.blur();});
 $$('#presets button').forEach(btn=>btn.addEventListener('click',()=>{$('#cache').value=btn.dataset.cache;$('#batch').value=btn.dataset.batch;$('#cache').dispatchEvent(new Event('input',{bubbles:true}));}));
 $$('th[data-sort]').forEach(th=>th.addEventListener('click',()=>{const k=th.dataset.sort;sortDir=sortKey===k?-sortDir:-1;sortKey=k;renderTable();}));
 window.addEventListener('resize',renderScatter);
-window.addEventListener('keydown',e=>{if(e.key==='Escape'){hidePop();closeModal();closeWiz();}});
+window.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){hidePop();closeModal();closeWiz();}
+  // Cmd+Z (Mac) / Ctrl+Z (Win/Linux) undo for the quality floor. Only when there's history.
+  if((e.metaKey||e.ctrlKey)&&!e.shiftKey&&e.key.toLowerCase()==='z'&&floorHistory.length>0){
+    e.preventDefault();
+    undoFloor();
+  }
+});
 
 load();
 </script>

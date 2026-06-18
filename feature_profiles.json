@@ -1,0 +1,85 @@
+{
+  "_comment": "Intelligent Noise's product features, encoded as routing profiles. Ryan provided this taxonomy on 2026-06-16. Each feature maps to a task bucket + intelligence/cost/frequency dimensions in Ryan's vocabulary. Hand-curated first-pass mapping — review when features evolve.",
+  "_intelligence_to_min_percentile": {
+    "_doc": "Maps Ryan's qualitative intelligence-required labels to a minimum percentile-rank within the dataset for the matching task. 'Low' = no filter; 'Very High' = top 15%.",
+    "Low": 0,
+    "Low-Medium": 30,
+    "Medium": 50,
+    "Medium-High": 65,
+    "High": 75,
+    "Very High": 85
+  },
+  "_cost_sensitivity_to_tiers": {
+    "_doc": "Maps Ryan's cost-sensitivity labels to which pricing tiers should be ENABLED. Higher cost sensitivity restricts to cheaper tiers.",
+    "Very High": ["floor", "cheap"],
+    "High": ["floor", "cheap", "value"],
+    "Moderate": ["floor", "cheap", "value", "frontier"],
+    "Lower": ["floor", "cheap", "value", "frontier"],
+    "Low": ["floor", "cheap", "value", "frontier"]
+  },
+  "groups": [
+    {
+      "area": "Interactive Rep Experience",
+      "features": [
+        {"id": "inny-main-agent", "name": "Inny Main Agent / Chat Orchestration", "description": "Rep-facing chat that interprets requests, plans work, selects capabilities, asks follow-up questions, and synthesizes responses.", "task_bucket": "chat", "intelligence_required": "High", "cost_sensitivity": "Lower", "frequency": "Very High", "correctness_type": "judgment", "notes": "Front door to the platform — leads to CRM/tool actions, reasoning quality matters."},
+        {"id": "tool-planning", "name": "Tool Planning & Governed Actions", "description": "Determines when a request requires tools, approvals, or structured proposals before execution.", "task_bucket": "web_research", "intelligence_required": "High", "cost_sensitivity": "Lower", "frequency": "High", "correctness_type": "mixed", "notes": "Incorrect routing creates downstream issues. Closest task bucket = web_research (agentic) since it's tool-use planning."},
+        {"id": "crm-qa", "name": "CRM / Account Q&A", "description": "Natural language answers over CRM, account, company, contact, and deal data.", "task_bucket": "data_synthesis", "intelligence_required": "Medium-High", "cost_sensitivity": "Moderate", "frequency": "High", "correctness_type": "mixed", "notes": "Candidate for model tiering based on complexity."},
+        {"id": "run-status", "name": "Run / Status Investigation", "description": "Explains background runs, failures, artifacts, and operational state.", "task_bucket": "data_synthesis", "intelligence_required": "Medium", "cost_sensitivity": "High", "frequency": "Medium", "correctness_type": "binary", "notes": "Good lower-cost candidate if context is already structured."},
+        {"id": "specialized-subagents", "name": "Specialized Subagents", "description": "Delegated agents used for scoped research and analysis tasks.", "task_bucket": "research", "intelligence_required": "High", "cost_sensitivity": "Moderate", "frequency": "Medium", "correctness_type": "mixed", "notes": "Cost depends on task type and context size."}
+      ]
+    },
+    {
+      "area": "WARM Path",
+      "features": [
+        {"id": "warm-full-research", "name": "WARM Path Full Research", "description": "Deep account and network research, source gathering, evidence classification, path finding, no-path preservation, and final synthesis.", "task_bucket": "web_research", "intelligence_required": "Very High", "cost_sensitivity": "Low", "frequency": "Medium", "correctness_type": "judgment", "notes": "Premium-model territory — complexity + business impact."},
+        {"id": "warm-pre-approval", "name": "WARM Pre-Approval Classifier", "description": "Lightweight classification before launching full WARM research.", "task_bucket": "classification", "intelligence_required": "Low-Medium", "cost_sensitivity": "High", "frequency": "Medium-High", "correctness_type": "binary", "notes": "Strong candidate for low-cost structured models."}
+      ]
+    },
+    {
+      "area": "ICP & Research",
+      "features": [
+        {"id": "icp-discovery", "name": "ICP Account Discovery", "description": "Agentic account discovery and research workflow.", "task_bucket": "web_research", "intelligence_required": "High", "cost_sensitivity": "Moderate", "frequency": "Medium", "correctness_type": "mixed", "notes": "Potential split between cheaper extraction and more expensive synthesis."}
+      ]
+    },
+    {
+      "area": "Follow-Up Agent",
+      "features": [
+        {"id": "followup-gates", "name": "Follow-Up Semantic Gates", "description": "Determines whether follow-up should happen and whether available context is sufficient/useful.", "task_bucket": "classification", "intelligence_required": "Medium", "cost_sensitivity": "High", "frequency": "High", "correctness_type": "binary", "notes": "Strong candidate for cheaper structured-output models."},
+        {"id": "followup-draft", "name": "Follow-Up Draft Generation", "description": "Generates rep-ready follow-up messaging.", "task_bucket": "writing_email", "intelligence_required": "Medium-High", "cost_sensitivity": "Moderate", "frequency": "High", "correctness_type": "judgment", "notes": "Mid-tier models sufficient except for strategic accounts."}
+      ]
+    },
+    {
+      "area": "Signals",
+      "features": [
+        {"id": "public-source-extraction", "name": "Public Source Extraction", "description": "Extracts structured signal facts from public content.", "task_bucket": "data_synthesis", "intelligence_required": "Medium", "cost_sensitivity": "High", "frequency": "High", "correctness_type": "binary", "notes": "Structured extraction should be benchmarked aggressively."},
+        {"id": "source-relevance-routing", "name": "Source Relevance Routing", "description": "Determines whether a source is relevant to a signal or account.", "task_bucket": "classification", "intelligence_required": "Low-Medium", "cost_sensitivity": "Very High", "frequency": "Very High", "correctness_type": "binary", "notes": "One of the strongest low-cost candidates in the entire portfolio."},
+        {"id": "source-identity", "name": "Source Identity Resolution", "description": "Determines whether a source/entity matches the intended company or person.", "task_bucket": "data_synthesis", "intelligence_required": "Medium", "cost_sensitivity": "Moderate", "frequency": "High", "correctness_type": "binary", "notes": "False positives are expensive — favor models with higher precision."},
+        {"id": "contact-slate-ranking", "name": "Contact Slate Ranking", "description": "Ranks likely contacts/personas to engage based on a signal.", "task_bucket": "business", "intelligence_required": "Medium-High", "cost_sensitivity": "Moderate", "frequency": "High", "correctness_type": "judgment", "notes": "Precision AND recall matter."},
+        {"id": "draft-or-skip", "name": "Draft-or-Skip Generation", "description": "Decides whether outreach should be generated and drafts messaging when appropriate.", "task_bucket": "writing_email", "intelligence_required": "Medium-High", "cost_sensitivity": "Moderate", "frequency": "High", "correctness_type": "mixed", "notes": "Skip/no-skip accuracy more important than generation cost."}
+      ]
+    },
+    {
+      "area": "Lead Agent",
+      "features": [
+        {"id": "lead-research", "name": "Lead Research", "description": "Researches inbound leads and target accounts.", "task_bucket": "web_research", "intelligence_required": "Medium-High", "cost_sensitivity": "High", "frequency": "High", "correctness_type": "mixed", "notes": "Important optimization area due to volume."},
+        {"id": "lead-research-extraction", "name": "Lead Research Extraction", "description": "Converts research into structured lead/account facts.", "task_bucket": "data_synthesis", "intelligence_required": "Medium", "cost_sensitivity": "High", "frequency": "High", "correctness_type": "binary", "notes": "Strong lower-cost model candidate."},
+        {"id": "lead-qualification", "name": "Lead Qualification", "description": "Performs qualification judgments and scoring.", "task_bucket": "business", "intelligence_required": "Medium-High", "cost_sensitivity": "Moderate", "frequency": "High", "correctness_type": "judgment", "notes": "False qualification/disqualification impacts revenue."},
+        {"id": "lead-email-generation", "name": "Lead Email Generation", "description": "Generates outbound and inbound messaging.", "task_bucket": "writing_email", "intelligence_required": "Medium-High", "cost_sensitivity": "Moderate", "frequency": "High", "correctness_type": "judgment", "notes": "Mid-tier models likely sufficient for most cases."}
+      ]
+    },
+    {
+      "area": "Marketing Intelligence",
+      "features": [
+        {"id": "insight-analysis", "name": "Insight Analysis", "description": "Analyzes marketing and account intelligence and returns structured insights.", "task_bucket": "business", "intelligence_required": "Medium-High", "cost_sensitivity": "Moderate", "frequency": "Medium", "correctness_type": "mixed", "notes": "Cost depends on complexity and whether output is customer-facing."}
+      ]
+    },
+    {
+      "area": "Platform Infrastructure",
+      "features": [
+        {"id": "kb-embeddings", "name": "Knowledge Base Embeddings", "description": "Embedding model used for retrieval support.", "task_bucket": null, "intelligence_required": "N/A", "cost_sensitivity": "Moderate", "frequency": "High", "correctness_type": "n/a", "notes": "Not a reasoning model — track spend separately. EXCLUDED from the recommender."},
+        {"id": "conversation-compaction", "name": "Conversation Compaction", "description": "Summarizes long conversations while preserving decisions, constraints, and unresolved items.", "task_bucket": "summarization", "intelligence_required": "Medium", "cost_sensitivity": "High", "frequency": "High", "correctness_type": "judgment", "notes": "Good lower-cost candidate if fidelity remains strong."},
+        {"id": "memory-synthesis", "name": "Memory Proposal / Memory Synthesis", "description": "Proposes durable memory candidates from historical interactions.", "task_bucket": "data_synthesis", "intelligence_required": "Medium-High", "cost_sensitivity": "Lower", "frequency": "Low-Medium", "correctness_type": "judgment", "notes": "Accuracy and privacy matter more than latency/cost."}
+      ]
+    }
+  ]
+}

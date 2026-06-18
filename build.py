@@ -105,6 +105,9 @@ TASK_METRICS = {
     "coding":         {"metrics": [("artificial_analysis_coding_index", 1), ("livecodebench", 100)], "needs_arena": False},
     "math":           {"metrics": [("artificial_analysis_math_index", 1), ("aime_25", 100)], "needs_arena": False},
     "writing_email":  {"metrics": [("ifbench", 100), ("artificial_analysis_intelligence_index", 1)], "needs_arena": True},
+    # New buckets driven by Intelligent Noise feature profiles (Source Relevance Routing, Pre-Approval Classifier, Follow-Up Gates, Conversation Compaction)
+    "classification": {"metrics": [("ifbench", 100), ("artificial_analysis_intelligence_index", 1)], "needs_arena": False},
+    "summarization":  {"metrics": [("ifbench", 100), ("artificial_analysis_intelligence_index", 1)], "needs_arena": True},
 }
 
 # ── Pull helpers (cache-first so local dev works without live SSL) ───────────────
@@ -576,6 +579,7 @@ def main():
         "arena_category_for_task": ARENA_CATEGORY_FOR_TASK,
         "arena_only_tasks": sorted(ARENA_ONLY_TASKS),
         "salesevals_only_tasks": sorted(SALESEVALS_ONLY_TASKS),
+        "feature_profiles": json.loads((ROOT / "feature_profiles.json").read_text()) if (ROOT / "feature_profiles.json").exists() else None,
         "models": merged,
     }
     (ROOT / "models.json").write_text(json.dumps(out, indent=2))
