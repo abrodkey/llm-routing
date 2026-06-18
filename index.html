@@ -850,6 +850,15 @@ function renderActiveFilters(){
 }
 function render(){
   writeState();
+  // If a feature profile is active but the user has navigated to a different task, clear the chip —
+  // the feature was selected for its task_bucket; once the user picks something else it's no longer relevant.
+  if(activeFeatureId){
+    const f=findFeature(activeFeatureId)?.feature;
+    if(f&&f.task_bucket&&taskSel()!==f.task_bucket){
+      activeFeatureId=null;
+      activeFeatureDerivation=null;
+    }
+  }
   $$('.btn[data-cache]').forEach(b=>b.classList.toggle('active',+b.dataset.cache===+$('#cache').value&&+b.dataset.batch===+$('#batch').value));
   renderActiveFeature();renderRecommender();renderScatter();renderFindings();renderTable();renderActiveFilters();
   captureFloorChange();
