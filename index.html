@@ -345,8 +345,9 @@
     /* Wizard takeover (in costing modal) — fits modal width */
     .wiz{width:100%}
     /* Quality floor input + slider — touch friendly */
-    /* Quality floor number takes the empty right space — make it the visual anchor */
-    #floorV{font-size:44px;width:auto;min-width:72px;line-height:1;padding:0;margin:0;border-bottom-color:var(--line);text-align:right}
+    /* Quality floor number takes the empty right space — visible affordance that it's editable */
+    #floorV{font-size:36px;width:auto;min-width:64px;line-height:1;padding:2px 8px 2px 6px;margin:0;border:1px dashed var(--line);border-radius:8px;background:var(--panel2);color:var(--accent);text-align:right}
+    #floorV:hover,#floorV:focus{border-color:var(--accent);border-style:solid}
     .floor-lbl{font-size:var(--fs-body);color:var(--ink);font-weight:500}
     .floor-sub{font-size:9.5px}
     input[type=range]{height:24px}
