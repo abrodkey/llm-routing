@@ -748,6 +748,25 @@ function taskQuartiles(task){
 }
 
 const taskSel=()=>document.querySelector('input[name=task]:checked').value;
+
+// Country-of-origin display: standardize to "flag + short name" everywhere.
+// Returns "" for unknown so callers can decide what to show.
+function flagFor(country){
+  if(!country)return '';
+  const c=country.toLowerCase();
+  if(c.includes('united states'))return '🇺🇸 US';
+  if(c.includes('china'))return '🇨🇳 China';
+  if(c.includes('france'))return '🇫🇷 France';
+  if(c.includes('united kingdom')||c==='uk')return '🇬🇧 UK';
+  if(c.includes('canada'))return '🇨🇦 Canada';
+  if(c.includes('germany'))return '🇩🇪 Germany';
+  if(c.includes('japan'))return '🇯🇵 Japan';
+  if(c.includes('korea'))return '🇰🇷 Korea';
+  if(c.includes('israel'))return '🇮🇱 Israel';
+  if(c.includes('india'))return '🇮🇳 India';
+  if(c.includes('uae')||c.includes('emirates'))return '🇦🇪 UAE';
+  return '🌐 '+country;
+}
 const cacheFrac=()=>+$('#cache').value/100, batchFrac=()=>+$('#batch').value/100;
 
 function syncSliderLabels(){
@@ -932,8 +951,9 @@ function renderRecommender(){
 }
 function receipts(m,task){
   const out=[], pr=m.provenance, p=m.policy;
-  if((pr.country||'').toLowerCase().includes('china')) out.push(`⚠ China-origin${p.us_hosted_option?' · US-host avail':''}`);
-  else if(pr.country) out.push(`🇺🇸 ${pr.country.includes('United States')?'US-origin':pr.country}`);
+  const flag=flagFor(pr.country);
+  if((pr.country||'').toLowerCase().includes('china')) out.push(`${flag||'🇨🇳 China'}${p.us_hosted_option?' · US-host avail':''}`);
+  else if(flag) out.push(flag);
   if(p.train_policy==='no-train-default')out.push('✓ no-train default');
   else if(p.train_policy==='trains-by-default')out.push('⚠ trains on data (use US host)');
   else out.push('• train policy unknown');
@@ -1049,7 +1069,7 @@ function showTip(e,m,task){
     <div class="r"><span class="l">Effective blended</span><span>$${eff?eff.blended.toFixed(2):'—'}</span></div>
     <div class="r"><span class="l">Hosted spread</span><span>${sp?`$${sp.input_min}–$${sp.input_max} (${sp.host_count})`:'—'}</span></div>
     <div class="r"><span class="l">Vision / FC / Struct</span><span>${b(m.capabilities.vision)}/${b(m.capabilities.function_calling)}/${b(m.capabilities.structured_output)}</span></div>
-    <div class="r"><span class="l">Origin · train</span><span>${m.provenance.country||'—'} · ${m.policy.train_policy||'—'}</span></div>`
+    <div class="r"><span class="l">Origin · train</span><span>${flagFor(m.provenance.country)||'—'} · ${m.policy.train_policy||'—'}</span></div>`
     +(m.arena?`<div class="r"><span class="l">Arena SC (rank)</span><span>${m.arena.elo_overall_sc} (#${m.arena.rank})${m.arena.low_confidence?' ⚠ low votes':''}</span></div>
        <div class="r"><span class="l">Arena style δ</span><span>${m.arena.sc_delta!=null?(m.arena.sc_delta>0?'+':'')+m.arena.sc_delta:'—'}</span></div>`
      :`<div class="r"><span class="l">Arena</span><span>not in top 100</span></div>`);
@@ -1096,7 +1116,7 @@ function renderTable(){
       <td class="num">${m._up!=null?m._up+'%':'—'}</td>
       <td class="num">${m.usage_rank??'—'}</td>
       <td>${b(m.capabilities.vision)}</td><td>${b(m.capabilities.function_calling)}</td>
-      <td>${m.provenance.country?(m.provenance.country.includes('United States')?'US':m.provenance.country.includes('China')?'China':m.provenance.country):'—'}</td>
+      <td>${flagFor(m.provenance.country)||'—'}</td>
       <td>${trainTag(m.policy.train_policy)}</td>`;
     tb.appendChild(tr);
     // Mobile stacked-row rendering — same data, scannable per row, no horizontal scroll.
@@ -1106,7 +1126,7 @@ function renderTable(){
     const arenaTxt=m.arena?`Arena #${m.arena.rank}`:'';
     const upTxt=m._up!=null?m._up+'% up':'';
     const hallTxt=m._hall!=null?m._hall+'% hall':'';
-    const origin=m.provenance.country?(m.provenance.country.includes('United States')?'🇺🇸 US':m.provenance.country.includes('China')?'🇨🇳 China':m.provenance.country):'';
+    const origin=flagFor(m.provenance.country);
     const meta=[`<b>${effTxt}</b>`,arenaTxt,upTxt,hallTxt,origin].filter(Boolean).join(' · ');
     const previewBadge=m.preliminary?`<span class="tag preview" title="PRELIMINARY — LMArena rank is thin (no rank or <5000 votes). Score may shift as community votes accumulate. Excluded from recommender top-3." style="font-size:9px;vertical-align:1px;flex:0 0 auto;margin-left:4px">PRELIMINARY</span>`:'';
     mob.insertAdjacentHTML('beforeend',
