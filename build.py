@@ -672,7 +672,7 @@ def promote_radar_to_preview(radar_candidates, aa_rows, arena_data, or_catalog, 
             "provider_key":  template_key,
         }
         entry = merge_one(alias, aa_rows, epoch_rows, or_catalog, arena_data, or_usage, hallu_data, arena_cat_data, arena_cat_sizes, salesevals)
-        entry["staging"] = True
+        entry["auto_promoted"] = True   # track origin separately from data-confidence
         entry["staging_provenance"] = {
             "promoted_at": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
             "creator": c["creator"],
@@ -742,6 +742,15 @@ def main():
         for n in preview_notes:
             print(n, file=sys.stderr)
     merged.extend(previews)
+
+    # Unified "preliminary" flag — applied across ALL models (tracked + auto-promoted).
+    # A model is preliminary when its LMArena signal is thin: no rank, or low_confidence
+    # (<5000 votes). This is LMArena's own terminology — "pre-release testing, scores may
+    # shift as community prompts and votes evolve". Frees us from the binary 'staging' flag
+    # which conflated 'we just discovered it' with 'we don't trust its rank yet'.
+    for m in merged:
+        arena = m.get("arena") or {}
+        m["preliminary"] = (not arena) or arena.get("low_confidence", True)
 
     out = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),

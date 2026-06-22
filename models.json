@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-22T17:00:04+00:00",
+  "generated_at": "2026-06-22T17:05:00+00:00",
   "sources": {
     "aa": {
       "url": "https://artificialanalysis.ai/api/v2/data/llms/models",
@@ -743,7 +743,8 @@
         "n": 30,
         "total_in_test": 24
       },
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "claude-sonnet-4.6-reasoning",
@@ -1064,7 +1065,8 @@
         "n": 30,
         "total_in_test": 24
       },
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "claude-sonnet-4.6-fast",
@@ -1385,7 +1387,8 @@
         "n": 30,
         "total_in_test": 24
       },
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "claude-haiku-4.5",
@@ -1539,7 +1542,8 @@
       "arena": null,
       "arena_categories": {},
       "salesevals": null,
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": true
     },
     {
       "canonical": "gpt-5.5",
@@ -1860,7 +1864,8 @@
         "n": 30,
         "total_in_test": 24
       },
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "gpt-5.5-fast",
@@ -2175,7 +2180,8 @@
         }
       },
       "salesevals": null,
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "gpt-5.4",
@@ -2496,7 +2502,8 @@
         "n": 30,
         "total_in_test": 24
       },
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "gpt-5.4-mini",
@@ -2811,7 +2818,8 @@
         }
       },
       "salesevals": null,
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "gpt-5.4-nano",
@@ -2959,7 +2967,8 @@
       "arena": null,
       "arena_categories": {},
       "salesevals": null,
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": true
     },
     {
       "canonical": "gemini-3.5-flash",
@@ -3260,7 +3269,8 @@
         }
       },
       "salesevals": null,
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "gemini-3.1-pro",
@@ -3581,7 +3591,8 @@
         "n": 30,
         "total_in_test": 24
       },
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "kimi-k2.6",
@@ -3896,7 +3907,8 @@
         }
       },
       "salesevals": null,
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "deepseek-v4-pro",
@@ -4219,7 +4231,8 @@
         "n": 30,
         "total_in_test": 24
       },
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "deepseek-v4-flash",
@@ -4532,7 +4545,8 @@
         }
       },
       "salesevals": null,
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "qwen-3.6-max",
@@ -4825,7 +4839,8 @@
         }
       },
       "salesevals": null,
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "glm-5.1",
@@ -5130,7 +5145,8 @@
         }
       },
       "salesevals": null,
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "gpt-5.4-high",
@@ -5425,7 +5441,8 @@
         "n": 30,
         "total_in_test": 24
       },
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "gpt-5.5-xhigh",
@@ -5575,7 +5592,8 @@
         "n": 30,
         "total_in_test": 24
       },
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": true
     },
     {
       "canonical": "gpt-5.5-none",
@@ -5892,7 +5910,8 @@
         "n": 30,
         "total_in_test": 24
       },
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "claude-opus-4.7-max",
@@ -6193,7 +6212,8 @@
         "n": 30,
         "total_in_test": 24
       },
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": false
     },
     {
       "canonical": "claude-fable-5-high",
@@ -6425,7 +6445,8 @@
         "n": 50,
         "total_in_test": 24
       },
-      "last_verified": "2026-06-15"
+      "last_verified": "2026-06-15",
+      "preliminary": true
     },
     {
       "canonical": "nemotron-3-ultra-550b-a55b",
@@ -6551,7 +6572,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "NVIDIA",
@@ -6561,7 +6582,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "minimax-m3",
@@ -6836,7 +6858,7 @@
       },
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "MiniMax",
@@ -6847,7 +6869,8 @@
           "aa",
           "arena"
         ]
-      }
+      },
+      "preliminary": false
     },
     {
       "canonical": "qwen3.7-plus",
@@ -6973,7 +6996,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-15",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "Alibaba",
@@ -6983,7 +7006,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "command-a",
@@ -7109,7 +7133,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "Cohere",
@@ -7119,7 +7143,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "qwen3.7-max",
@@ -7245,7 +7270,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-15",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "Alibaba",
@@ -7255,7 +7280,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "grok-4.3",
@@ -7547,7 +7573,7 @@
       },
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "xAI",
@@ -7558,7 +7584,8 @@
           "aa",
           "arena"
         ]
-      }
+      },
+      "preliminary": false
     },
     {
       "canonical": "mistral-medium-3.5",
@@ -7832,7 +7859,7 @@
       },
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "Mistral",
@@ -7843,7 +7870,8 @@
           "aa",
           "arena"
         ]
-      }
+      },
+      "preliminary": false
     },
     {
       "canonical": "mimo-v2.5-pro",
@@ -8135,7 +8163,7 @@
       },
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "Xiaomi",
@@ -8146,7 +8174,8 @@
           "aa",
           "arena"
         ]
-      }
+      },
+      "preliminary": false
     },
     {
       "canonical": "mimo-v2.5",
@@ -8438,7 +8467,7 @@
       },
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "Xiaomi",
@@ -8449,7 +8478,8 @@
           "aa",
           "arena"
         ]
-      }
+      },
+      "preliminary": false
     },
     {
       "canonical": "qwen3.6-27b",
@@ -8575,7 +8605,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-15",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "Alibaba",
@@ -8585,7 +8615,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "muse-spark",
@@ -8872,7 +8903,7 @@
       },
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "Meta",
@@ -8883,7 +8914,8 @@
           "aa",
           "arena"
         ]
-      }
+      },
+      "preliminary": false
     },
     {
       "canonical": "grok-4.20-0309-v2",
@@ -9009,7 +9041,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "xAI",
@@ -9019,7 +9051,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "mimo-v2-omni-0327",
@@ -9145,7 +9178,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "Xiaomi",
@@ -9155,7 +9188,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "mimo-v2-omni",
@@ -9436,7 +9470,7 @@
       },
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "Xiaomi",
@@ -9447,7 +9481,8 @@
           "aa",
           "arena"
         ]
-      }
+      },
+      "preliminary": false
     },
     {
       "canonical": "minimax-m2.7",
@@ -9740,7 +9775,7 @@
       },
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "MiniMax",
@@ -9751,7 +9786,8 @@
           "aa",
           "arena"
         ]
-      }
+      },
+      "preliminary": false
     },
     {
       "canonical": "mimo-v2-pro",
@@ -10043,7 +10079,7 @@
       },
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "Xiaomi",
@@ -10054,7 +10090,8 @@
           "aa",
           "arena"
         ]
-      }
+      },
+      "preliminary": false
     },
     {
       "canonical": "nvidia-nemotron-3-super-120b-a12b",
@@ -10325,7 +10362,7 @@
       },
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "NVIDIA",
@@ -10335,7 +10372,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "grok-4.20-0309",
@@ -10461,7 +10499,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "xAI",
@@ -10471,7 +10509,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "minimax-m2.5",
@@ -10763,7 +10802,7 @@
       },
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "MiniMax",
@@ -10774,7 +10813,8 @@
           "aa",
           "arena"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "minimax-m2.1",
@@ -10905,7 +10945,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "MiniMax",
@@ -10915,7 +10955,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "mimo-v2-flash",
@@ -11046,7 +11087,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "Xiaomi",
@@ -11056,7 +11097,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "nova-2.0-pro-preview",
@@ -11188,7 +11230,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "Amazon",
@@ -11198,7 +11240,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "grok-4.1-fast",
@@ -11329,7 +11372,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "xAI",
@@ -11339,7 +11382,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "minimax-m2",
@@ -11613,7 +11657,7 @@
       },
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "MiniMax",
@@ -11624,7 +11668,8 @@
           "aa",
           "arena"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "grok-4-fast",
@@ -11755,7 +11800,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "xAI",
@@ -11765,7 +11810,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     },
     {
       "canonical": "grok-4",
@@ -11896,7 +11942,7 @@
       "arena_categories": {},
       "salesevals": null,
       "last_verified": "2026-06-22",
-      "staging": true,
+      "auto_promoted": true,
       "staging_provenance": {
         "promoted_at": "2026-06-22",
         "creator": "xAI",
@@ -11906,7 +11952,8 @@
         "data_coverage": [
           "aa"
         ]
-      }
+      },
+      "preliminary": true
     }
   ]
 }
