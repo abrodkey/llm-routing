@@ -965,6 +965,9 @@ function renderScatter(){
   }
   const keep=new Set(MODELS.filter(m=>passes(m,C)).map(m=>m.canonical));
   const isMobile=window.innerWidth<=780;
+  // Two-pass render so labels always paint ON TOP of all dots — otherwise later dots
+  // can be drawn over earlier labels, hiding the model name behind a sibling dot.
+  const labelDefs=[];
   for(const d of data){
     const ipd=d.m.intel_per_dollar||5, r=Math.min(13,3+Math.sqrt(ipd)*.6);
     const dot=el('circle',{cx:xs(d.x),cy:ys(d.y),r,fill:TIER_COLOR[d.m.tier],stroke:'#000','stroke-width':1.1,class:'dot'+(keep.has(d.m.canonical)?'':' dim')});
@@ -987,9 +990,11 @@ function renderScatter(){
       const attrs=fitsRight
         ? {x:xs(d.x)+r+4,y:ys(d.y)+3,class:'dot-label'}
         : {x:xs(d.x)-r-4,y:ys(d.y)+3,class:'dot-label','text-anchor':'end'};
-      svg.appendChild(el('text',attrs,d.m.display));
+      labelDefs.push({attrs,text:d.m.display});
     }
   }
+  // Second pass: paint labels last so they sit above every dot in stacking order.
+  for(const {attrs,text} of labelDefs)svg.appendChild(el('text',attrs,text));
 }
 function showTip(e,m,task){
   const t=$('#tip'),sp=m.openrouter&&m.openrouter.spread,eff=effective(m,cacheFrac(),batchFrac());
