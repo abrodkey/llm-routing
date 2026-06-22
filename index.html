@@ -623,8 +623,15 @@ const SCENARIOS=[
 let MODELS=[],META={};
 
 const tierOf=m=>{
-  const i=m.intelligence_index||0, b=pick(m,'cost.direct_blended_3_to_1')??99;
-  if(i>=57)return'frontier'; if(b<=0.5&&i>=35)return'floor'; if(b<=2&&i>=45)return'cheap'; return'value';
+  // Price-anchored tiering: 'frontier' is what you pay flagship rates for, regardless
+  // of measured intel (catches models with missing AA scores like Fable 5). Then floor
+  // / cheap-open / value carve up the rest of the price spectrum.
+  const b=pick(m,'cost.direct_blended_3_to_1')??99;
+  const i=m.intelligence_index||0;
+  if(b>=5)return'frontier';
+  if(b<=0.5&&i>=35)return'floor';
+  if(b<=2)return'cheap';
+  return'value';
 };
 const isReasoning=m=>!/Non-reasoning|Instant/.test(m.display);
 
