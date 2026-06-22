@@ -326,6 +326,9 @@
     /* Active-filters is redundant on mobile — task lives in the title chip, constraints
        live in the sticky chip bar at the top of the page. Hide to reclaim space. */
     #fc-card .active-filters{display:none}
+    /* 'Click a header to sort' only applies to the desktop table — mobile cards have no
+       sortable headers, so the hint is meaningless here. */
+    #fc-card .h-sub{display:none}
     /* Quartile band cards tighter */
     .floor-band{font-size:var(--fs-caption);padding:7px 9px}
     /* Workload profiler in cost panel — already responsive enough */
