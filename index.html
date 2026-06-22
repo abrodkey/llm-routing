@@ -765,9 +765,10 @@ function isPreliminary(m, task){
     }
     return !m.arena || m.arena.low_confidence;
   }
-  // Everything else uses AA evaluations. Preliminary if AA names it a Preview model
-  // (e.g. 'Gemini 3.1 Pro Preview') or if intelligence data is missing.
-  if(m.aa_is_preview) return true;
+  // Everything else uses AA evaluations. Preliminary only if AA hasn't published
+  // intelligence data yet — once a score exists, AA considers it settled.
+  // (We deliberately do NOT use the 'Preview' substring in AA names as a signal —
+  // it's not a reliable indicator of data confidence per AA's own changelog.)
   return m.intelligence_index == null;
 }
 
@@ -880,7 +881,7 @@ async function load(){
   }
   // Radar lives on the SAME line as Data Sources (one logical span; wraps within itself if needed).
   const radarBit=radar?` · <span class="warn" data-pop="radar" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted">🛰 ${radar} new model(s) flagged</span>`:'';
-  $('#meta').innerHTML=`<span><span class="ds-prefix">Data Sources:</span> Artificial Analysis · Epoch · OpenRouter · LMArena · salesevals${radarBit}<span id="meta-preliminary"></span></span>`;
+  $('#meta').innerHTML=`<span><span class="ds-prefix">Data Sources:</span> Artificial Analysis · Epoch · OpenRouter · LMArena · salesevals<span id="meta-fielded"></span></span>`;
   readState();
   // Seed the floor-undo baseline AFTER readState so the initial loaded value isn't pushed onto the history.
   lastCapturedFloor=$('#floor').value;
@@ -1227,26 +1228,35 @@ function render(){
   updatePreliminaryNotice();
   captureFloorChange();
 }
-// Task-aware "N preliminary on <task>" counter next to Data Sources. Click reveals each
-// model with reason (AA Preview / no AA intel / thin LMArena) + release date.
+// Unified "recently fielded" feed: every model with a release_date in the last N days
+// surfaces here regardless of confidence. Each entry shows its release date + a
+// 'preliminary' tag IF the data backing the current task's score is still thin.
+// Inspired by AA's changelog (artificialanalysis.ai/changelog) and how LMArena marks
+// new entries: surface the release, separately mark confidence.
+const FIELDED_WINDOW_DAYS = 30;
 function updatePreliminaryNotice(){
   const task=taskSel();
-  const el=document.getElementById('meta-preliminary');
+  const el=document.getElementById('meta-fielded');
   if(!el)return;
-  const prelim=MODELS.filter(m=>isPreliminary(m,task));
-  if(!prelim.length){el.innerHTML='';return;}
-  const fmt=iso=>{try{return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}catch(_){return iso||'—';}};
-  const rows=prelim.map(m=>{
+  const cutoffMs=Date.now() - FIELDED_WINDOW_DAYS*24*60*60*1000;
+  const fielded=MODELS.filter(m=>{
     const rel=m.provenance&&m.provenance.release_date;
-    const dateLine=rel?` · released ${fmt(rel)}`:'';
-    let reason;
-    if(m.aa_is_preview)reason=`AA labels this <b>Preview</b> (<code>${m.aa_name_raw}</code>)`;
-    else if(m.intelligence_index==null)reason='no AA intelligence data yet';
-    else reason='thin LMArena coverage for this category';
-    return `<div style="padding:6px 0;border-bottom:1px solid var(--line)"><b>${m.display}</b><div style="color:var(--dim);font-size:var(--fs-caption);margin-top:2px">${reason}${dateLine}</div></div>`;
+    if(!rel)return false;
+    const t=Date.parse(rel);
+    return !isNaN(t) && t >= cutoffMs;
+  }).sort((a,b)=>(b.provenance.release_date||'').localeCompare(a.provenance.release_date||''));
+  if(!fielded.length){el.innerHTML='';return;}
+  const fmt=iso=>{try{return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}catch(_){return iso||'—';}};
+  const rows=fielded.map(m=>{
+    const rel=m.provenance.release_date;
+    const prelim=isPreliminary(m,task);
+    const prelimBadge=prelim?` <span class="tag preview" style="margin-left:6px">preliminary</span>`:'';
+    const flag=flagFor(m.provenance.country);
+    const meta=[fmt(rel), flag, m.provenance.provider].filter(Boolean).join(' · ');
+    return `<div style="padding:7px 0;border-bottom:1px solid var(--line)"><div style="display:flex;align-items:center;gap:4px"><b>${m.display}</b>${prelimBadge}</div><div style="color:var(--dim);font-size:var(--fs-caption);margin-top:2px">${meta}</div></div>`;
   }).join('');
-  POP_CONTENT.preliminary=`<h4>🕓 Preliminary on ${TASK_LABEL[task]||task}</h4><p>The data source backing this task's score (see Scoring panel) is thin for these models. Their score may shift as data fills in. Excluded from the recommender top-3.</p>${rows}`;
-  el.innerHTML=` · <span class="warn" data-pop="preliminary" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted">🕓 ${prelim.length} preliminary on ${TASK_LABEL[task]||task}</span>`;
+  POP_CONTENT.fielded=`<h4>🆕 Recently fielded — last ${FIELDED_WINDOW_DAYS} days</h4><p>Models with a release date in this window. The <span class="tag preview" style="margin:0">preliminary</span> tag marks ones where the data source backing this task's score is still thin (LMArena votes &lt;5000, no AA intel yet, or no salesevals row). Preliminary models are excluded from the recommender top-3.</p>${rows}`;
+  el.innerHTML=` · <span class="warn" data-pop="fielded" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted">🆕 ${fielded.length} recently fielded</span>`;
 }
 function syncMobileSummary(){
   const task=taskSel();
