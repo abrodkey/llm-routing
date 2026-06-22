@@ -585,11 +585,30 @@ def _pick_template_provider_key(creator: str):
     return sorted(candidates)[-1]
 
 def find_promotion_candidates(aa_rows):
-    """Find ALL competitive untracked models from TRACKED_CREATORS (no date window).
-    This is separate from new_model_radar() — radar shows truly-recent drops for the
-    'N new flagged' notification, promotion backfills any model we should be covering
-    regardless of release age. Returns the same shape as new_model_radar()."""
+    """Find competitive untracked models worth surfacing as PREVIEW.
+
+    Rules:
+      - For creators we already cover in aliases.json: only promote if NEWER than our
+        newest tracked model from that creator (otherwise it's back-catalog — e.g. GPT-5.2,
+        Claude Opus 4.5, Gemini 3 Pro Preview are superseded by models we already track).
+      - For creators we don't yet track: promote any competitive model regardless of age.
+        This enables backfilling brand-new-to-us creators like Meta, xAI, MiniMax.
+    """
     tracked_bases = {base_name(a["aa_name"]) for a in ALIASES["models"]}
+    aa_by_name = {r.get("name"): r for r in aa_rows}
+    # Newest release_date per creator we already track
+    tracked_newest = {}
+    tracked_creator_set = set()
+    for a in ALIASES["models"]:
+        r = aa_by_name.get(a["aa_name"])
+        if not r:
+            continue
+        creator = (r.get("model_creator") or {}).get("name", "")
+        if creator:
+            tracked_creator_set.add(creator)
+        d = r.get("release_date")
+        if d and (creator not in tracked_newest or d > tracked_newest[creator]):
+            tracked_newest[creator] = d
     candidates = {}
     for r in aa_rows:
         intel = (r.get("evaluations") or {}).get("artificial_analysis_intelligence_index")
@@ -599,10 +618,17 @@ def find_promotion_candidates(aa_rows):
         b = base_name(r.get("name", ""))
         if b in tracked_bases:
             continue
+        rel = r.get("release_date")
+        # For already-tracked creators, only promote NEWER releases (back-catalog filter)
+        if creator in tracked_creator_set:
+            newest = tracked_newest.get(creator)
+            if newest and rel and rel <= newest:
+                continue
         prev = candidates.get(b)
         if not prev or intel > prev["max_intel"]:
             candidates[b] = {"base": b, "creator": creator, "max_intel": intel,
-                             "release_date": r.get("release_date"), "newer_than_our": None}
+                             "release_date": rel,
+                             "newer_than_our": tracked_newest.get(creator)}
     return sorted(candidates.values(), key=lambda x: (x["release_date"] or "", x["max_intel"]), reverse=True)
 
 def promote_radar_to_preview(radar_candidates, aa_rows, arena_data, or_catalog, or_usage, hallu_data, arena_cat_data, arena_cat_sizes, salesevals, epoch_rows):
