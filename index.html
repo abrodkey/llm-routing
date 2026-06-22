@@ -300,6 +300,37 @@
     .sec{margin-bottom:16px}
     .sec-h{margin-bottom:8px}
   }
+  /* Mobile summary bar + bottom-sheet (hidden on desktop) */
+  #mobile-summary{display:none}
+  .mob-sheet-bg{display:none}
+  .mob-sheet-done{display:none}
+  @media (max-width:780px){
+    /* Sidebar is hidden by default on mobile; promoted to bottom sheet on demand */
+    aside{display:none}
+    /* Sticky summary chips at the very top of content */
+    #mobile-summary{display:flex;gap:6px;position:sticky;top:0;z-index:60;background:var(--bg);padding:10px 0 8px;margin:-16px -14px 10px;padding-left:14px;padding-right:14px;border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .mob-chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--text);font-size:11.5px;cursor:pointer;min-height:34px;font-family:inherit}
+    .mob-chip:hover,.mob-chip:focus{border-color:var(--accent)}
+    .mob-chip .mob-lbl{color:var(--dim);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+    .mob-chip .mob-val{color:var(--text);font-weight:600;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .mob-chip .mob-caret{color:var(--dim);font-size:9px;margin-left:1px}
+    /* When a sheet is open: show sidebar as a fixed bottom sheet, with backdrop */
+    body.sheet-open .mob-sheet-bg{display:block;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:90}
+    body.sheet-open aside{display:block;position:fixed;left:0;right:0;bottom:0;top:auto;max-height:82vh;overflow:auto;z-index:100;border:none;border-top:1px solid var(--line);border-radius:18px 18px 0 0;padding:14px 16px 80px;background:var(--panel);box-shadow:0 -8px 30px rgba(0,0,0,.5);animation:sheetUp .22s ease-out}
+    @keyframes sheetUp{from{transform:translateY(20%);opacity:.6}to{transform:translateY(0);opacity:1}}
+    /* Hide non-active sections inside the sheet (data attr set by openSheet) */
+    body.sheet-open[data-sheet="task"] aside .sec:not([data-sec="task"]),
+    body.sheet-open[data-sheet="cost"] aside .sec:not([data-sec="cost"]),
+    body.sheet-open[data-sheet="constraints"] aside .sec:not([data-sec="constraints"]){display:none}
+    body.sheet-open aside .wiz{display:none}
+    /* Sheet "Done" button */
+    .mob-sheet-done{display:none}
+    body.sheet-open .mob-sheet-done{display:flex;position:fixed;left:14px;right:14px;bottom:14px;justify-content:center;z-index:101;background:var(--accent);color:#04140a;border:none;border-radius:10px;padding:13px 16px;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.4);font-family:inherit}
+    /* Tighten sidebar sections in sheet form */
+    body.sheet-open aside .sec{margin-bottom:0}
+    body.sheet-open aside label{padding:8px 4px;font-size:13.5px}
+    body.sheet-open aside input[type=radio],body.sheet-open aside input[type=checkbox]{transform:scale(1.15);margin-right:6px}
+  }
   /* Very narrow phones — tighten further */
   @media (max-width:420px){
     header .ttl h1{font-size:15.5px}
@@ -414,6 +445,15 @@
   </aside>
 
   <div class="content">
+
+    <!-- MOBILE-ONLY: collapsed summary bar; tap a chip to open the relevant bottom sheet -->
+    <div id="mobile-summary" class="mob-sum">
+      <button class="mob-chip" data-open-sec="task"><span class="mob-lbl">Task</span><span class="mob-val" id="mob-task-val">—</span><span class="mob-caret">▾</span></button>
+      <button class="mob-chip" data-open-sec="cost"><span class="mob-lbl">Cost</span><span class="mob-val" id="mob-cost-val">—</span><span class="mob-caret">▾</span></button>
+      <button class="mob-chip" data-open-sec="constraints"><span class="mob-lbl">Filters</span><span class="mob-val" id="mob-filt-val">—</span><span class="mob-caret">▾</span></button>
+    </div>
+    <div class="mob-sheet-bg" id="mob-sheet-bg"></div>
+    <button class="mob-sheet-done" id="mob-sheet-done">Done</button>
 
     <!-- ACTIVE FEATURE CHIP (when a feature profile is applied) -->
     <div class="af-chip hidden" id="active-feature"></div>
@@ -649,7 +689,16 @@ function passes(m,C){
 
 async function load(){
   // Cache-bust on every load so daily refreshes are reflected without hard-reload friction.
-  const d=await (await fetch('models.json?t='+Date.now(),{cache:'no-store'})).json();
+  let d;
+  try{
+    const r=await fetch('models.json?t='+Date.now(),{cache:'no-store'});
+    if(!r.ok)throw new Error('models.json HTTP '+r.status);
+    d=await r.json();
+  }catch(err){
+    const msg=`<div style="padding:20px;color:var(--warn);font-size:13px;line-height:1.6">⚠️ Couldn't load <code>models.json</code> (${err.message}). The dashboard data may still be deploying — try refreshing in 30 seconds. If this persists, the GitHub Actions data pipeline likely failed.</div>`;
+    document.querySelector('.content').insertAdjacentHTML('afterbegin',msg);
+    throw err;
+  }
   META=d; MODELS=d.models.map(m=>({...m,tier:tierOf(m)}));
   ARENA_CAT_FOR_TASK=d.arena_category_for_task||{};
   ARENA_ONLY=new Set(d.arena_only_tasks||[]);
@@ -935,8 +984,40 @@ function render(){
   }
   $$('.btn[data-cache]').forEach(b=>b.classList.toggle('active',+b.dataset.cache===+$('#cache').value&&+b.dataset.batch===+$('#batch').value));
   renderActiveFeature();renderRecommender();renderScatter();renderFindings();renderTable();renderActiveFilters();
+  syncMobileSummary();
   captureFloorChange();
 }
+function syncMobileSummary(){
+  const task=taskSel();
+  const taskEl=$('#mob-task-val'); if(taskEl)taskEl.textContent=TASK_LABEL[task]||task;
+  const cache=+$('#cache').value, batch=+$('#batch').value;
+  const presetName=({'0|0':'List','50|0':'Chat','80|0':'Agent loop','50|100':'Bulk'})[cache+'|'+batch];
+  const ent=$('#enterprise').checked?' · Ent':'';
+  const costEl=$('#mob-cost-val'); if(costEl)costEl.textContent=(presetName||`Cache ${cache}% · Batch ${batch}%`)+ent;
+  // Count active constraint filters (capability toggles + policy + tier exclusions + reliability)
+  let nFilt=0;
+  $$('.cap:checked').forEach(()=>nFilt++);
+  ['usonly','notrain','ushosted','fastchat'].forEach(id=>{if($('#'+id).checked)nFilt++;});
+  if(+$('#upfilter').value>0)nFilt++;
+  if(+$('#hfilter').value<100)nFilt++;
+  const tiersOff=$$('.tier').length - $$('.tier:checked').length;
+  nFilt+=tiersOff;
+  const filtEl=$('#mob-filt-val'); if(filtEl)filtEl.textContent=nFilt?`${nFilt} active`:'None';
+}
+function openSheet(sec){
+  document.body.setAttribute('data-sheet',sec);
+  document.body.classList.add('sheet-open');
+  document.querySelector('aside').scrollTop=0;
+}
+function closeSheet(){
+  document.body.classList.remove('sheet-open');
+  document.body.removeAttribute('data-sheet');
+}
+document.addEventListener('click',e=>{
+  const chip=e.target.closest('.mob-chip[data-open-sec]');
+  if(chip){openSheet(chip.dataset.openSec);return;}
+  if(e.target.id==='mob-sheet-done'||e.target.id==='mob-sheet-bg'){closeSheet();}
+});
 // Undo history for the quality floor. Debounced so rapid slider drags / typing batch into one entry.
 let floorHistory=[],lastCapturedFloor=null,floorCaptureTimeout=null;
 function captureFloorChange(){
