@@ -1090,7 +1090,7 @@ function renderTable(){
       <td class="num">${m._ipd??'—'}</td>
       <td class="num">${sp?'$'+sp.cheapest_in:'—'}</td>
       <td class="num">${m.ttft_seconds?.toFixed?.(1)??'—'}</td>
-      <td class="num">${m.arena?m.arena.elo_overall_sc.toFixed(0)+(m.arena.low_confidence?' ⚠':''):'—'}</td>
+      <td class="num">${m.arena&&m.arena.elo_overall_sc!=null?m.arena.elo_overall_sc.toFixed(0)+(m.arena.low_confidence?' ⚠':''):'—'}</td>
       <td class="num">${m.arena&&m.arena.sc_delta!=null?(m.arena.sc_delta>0?'+':'')+m.arena.sc_delta:'—'}</td>
       <td class="num">${m._hall!=null?m._hall+'%':'—'}</td>
       <td class="num">${m._up!=null?m._up+'%':'—'}</td>
