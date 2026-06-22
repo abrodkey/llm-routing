@@ -186,7 +186,7 @@
   .fc-row-m b{color:var(--ink);font-weight:500}
   .tag{display:inline-block;padding:2px 6px;border-radius:3px;font-size:var(--fs-eyebrow);font-weight:600}
   .tag.frontier{background:#3a1f23;color:#fca5a5}.tag.value{background:#1c2a40;color:#93c5fd}
-  .tag.preview{background:#3a2a10;color:var(--warn);border:1px solid var(--warn);letter-spacing:.04em}
+  .tag.preview{background:#3a2a10;color:var(--warn)}
   .tag.cheap{background:#1c3327;color:#6ee7b7}.tag.floor{background:#2a2240;color:#c4b5fd}
   .tag.ok{background:#1c3327;color:#6ee7b7}.tag.bad{background:#3a1f23;color:#fca5a5}.tag.unk{background:#2a2f37;color:var(--dim)}
   .yes{color:var(--good)}.no{color:#5b626c}
@@ -1128,9 +1128,9 @@ function renderTable(){
     const hallTxt=m._hall!=null?m._hall+'% hall':'';
     const origin=flagFor(m.provenance.country);
     const meta=[`<b>${effTxt}</b>`,arenaTxt,upTxt,hallTxt,origin].filter(Boolean).join(' · ');
-    const previewBadge=m.preliminary?`<span class="tag preview" title="PRELIMINARY — LMArena rank is thin (no rank or <5000 votes). Score may shift as community votes accumulate. Excluded from recommender top-3." style="font-size:9px;vertical-align:1px;flex:0 0 auto;margin-left:4px">PRELIMINARY</span>`:'';
+    const previewBadge=m.preliminary?`<span class="tag preview" title="PRELIMINARY — LMArena rank is thin (no rank or <5000 votes). Score may shift as community votes accumulate. Excluded from recommender top-3." style="flex:0 0 auto;margin-left:4px">PRELIMINARY</span>`:'';
     mob.insertAdjacentHTML('beforeend',
-      `<div class="fc-row${dimmed}"><div class="fc-row-h"><div class="fc-row-n"><span class="fc-row-name" title="${m.display}">${m.display}</span><span class="tag ${m.tier}" style="font-size:9px;vertical-align:1px;flex:0 0 auto">${m.tier}</span>${previewBadge}</div><div class="fc-row-s">${score}</div></div><div class="fc-row-m">${meta}</div></div>`);
+      `<div class="fc-row${dimmed}"><div class="fc-row-h"><div class="fc-row-n"><span class="fc-row-name" title="${m.display}">${m.display}</span><span class="tag ${m.tier}" style="flex:0 0 auto">${m.tier}</span>${previewBadge}</div><div class="fc-row-s">${score}</div></div><div class="fc-row-m">${meta}</div></div>`);
   }
 }
 
