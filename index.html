@@ -272,14 +272,19 @@
   .af-derivation{color:var(--dim);font-size:var(--fs-caption);margin-top:8px;padding-top:7px;border-top:1px solid var(--accent-dim);line-height:1.5}
   .af-derivation b{color:var(--ink);font-weight:600}
   /* Near-miss callout — surface a cheaper model just below the floor */
-  .near-miss{margin-top:14px;padding:11px 14px;background:var(--panel2);border:1px solid var(--warn);border-radius:8px;font-size:var(--fs-button);line-height:1.5;display:flex;gap:10px;align-items:flex-start}
+  .near-miss{margin-top:14px;padding:13px 14px;background:var(--panel2);border:1px solid var(--warn);border-radius:8px;font-size:var(--fs-button);line-height:1.55;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
   .near-miss.hidden{display:none}
-  .near-miss .nm-icon{font-size:var(--fs-h2);line-height:1.1}
-  .near-miss .nm-content{flex:1}
+  .near-miss .nm-content{flex:1 1 240px;min-width:0}
   .near-miss b{color:var(--warn);font-weight:600}
   .near-miss .nm-strong{color:var(--ink);font-weight:600}
-  .near-miss button{background:none;border:1px solid var(--warn);color:var(--warn);border-radius:4px;padding:5px 11px;font-size:var(--fs-caption);cursor:pointer;flex-shrink:0;align-self:center}
+  .near-miss button{background:none;border:1px solid var(--warn);color:var(--warn);border-radius:6px;padding:8px 14px;font-size:var(--fs-button);font-weight:500;cursor:pointer;flex-shrink:0;align-self:center;white-space:nowrap}
   .near-miss button:hover{background:var(--warn);color:#04110b}
+  @media (max-width:780px){
+    /* Stack: full-width button below the text so it's a real tap target */
+    .near-miss{flex-direction:column;align-items:stretch;gap:10px;flex-wrap:nowrap}
+    .near-miss .nm-content{flex:0 0 auto}
+    .near-miss button{width:100%;padding:11px 14px;font-size:var(--fs-body);font-weight:600}
+  }
   .findings ul{margin:0;padding-left:18px;color:var(--dim)}
   .findings li{margin:5px 0}.findings li b{color:var(--ink);font-weight:600}
 
@@ -893,9 +898,8 @@ function renderRecommender(){
       const gap=floor-Math.round(nearMiss.cap);
       const savings=Math.round((1-nearMiss.eff.blended/top1.eff.blended)*100);
       nm.classList.remove('hidden');
-      nm.innerHTML=`<div class="nm-icon">📉</div>
-        <div class="nm-content"><b>Just below the bar:</b> <span class="nm-strong">${nearMiss.m.display}</span> scores ${Math.round(nearMiss.cap)} (${gap} pt${gap===1?'':'s'} below your floor of ${floor}) at <span class="nm-strong">${fmtCost(nearMiss.eff.blended)}${unit}</span> — <span class="nm-strong">${savings}% cheaper than ${top1.m.display}</span> (${fmtCost(top1.eff.blended)}${unit}). Worth it if ${gap} pt${gap===1?'':'s'} of quality is below your real tolerance.</div>
-        <button id="lower-floor-${Math.round(nearMiss.cap)}">Lower floor to ${Math.round(nearMiss.cap)}</button>`;
+      nm.innerHTML=`<div class="nm-content"><b>Just below the bar:</b> <span class="nm-strong">${nearMiss.m.display}</span> scores ${Math.round(nearMiss.cap)} (${gap} pt${gap===1?'':'s'} below your floor of ${floor}) at <span class="nm-strong">${fmtCost(nearMiss.eff.blended)}${unit}</span> — <span class="nm-strong">${savings}% cheaper than ${top1.m.display}</span> (${fmtCost(top1.eff.blended)}${unit}). Worth it if ${gap} pt${gap===1?'':'s'} of quality is below your real tolerance.</div>
+        <button id="lower-floor-${Math.round(nearMiss.cap)}">Lower floor to ${Math.round(nearMiss.cap)} →</button>`;
       const lowerBtn=document.querySelector(`#lower-floor-${Math.round(nearMiss.cap)}`);
       if(lowerBtn)lowerBtn.addEventListener('click',()=>{$('#floor').value=Math.round(nearMiss.cap);$('#floor').dispatchEvent(new Event('input',{bubbles:true}));});
     } else { nm.classList.add('hidden'); }
