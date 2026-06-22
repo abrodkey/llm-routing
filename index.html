@@ -700,7 +700,7 @@ async function load(){
   // Cache-bust on every load so daily refreshes are reflected without hard-reload friction.
   let d;
   try{
-    const r=await fetch('models.json?t='+Date.now(),{cache:'no-store'});
+    const r=await fetch(new URL('models.json?t='+Date.now(),document.baseURI),{cache:'no-store'});
     if(!r.ok)throw new Error('models.json HTTP '+r.status);
     d=await r.json();
   }catch(err){
