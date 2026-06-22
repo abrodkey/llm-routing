@@ -92,7 +92,8 @@ ALIASES   = json.loads((ROOT / "aliases.json").read_text())
 PROVIDERS = json.loads((ROOT / "providers.json").read_text())
 
 # New-model radar config
-TRACKED_CREATORS = {"OpenAI", "Anthropic", "Google", "DeepSeek", "Kimi", "Moonshot", "Alibaba", "Z AI", "Zhipu"}
+TRACKED_CREATORS = {"OpenAI", "Anthropic", "Google", "DeepSeek", "Kimi", "Moonshot", "Alibaba", "Z AI", "Zhipu",
+                    "Meta", "xAI", "MiniMax", "Xiaomi", "NVIDIA", "Mistral", "Cohere", "Amazon"}
 RADAR_INTEL_THRESHOLD = 45
 RADAR_WINDOW_DAYS = 14   # Only flag models released in the last N days — anything older isn't "new"
 
@@ -114,6 +115,14 @@ CREATOR_TO_PROVIDER_PREFIX = {
     "Alibaba":  "alibaba-",
     "Z AI":     "zhipu-",
     "Zhipu":    "zhipu-",
+    "Meta":     "meta-",
+    "xAI":      "xai-",
+    "MiniMax":  "minimax-",
+    "Xiaomi":   "xiaomi-",
+    "NVIDIA":   "nvidia-",
+    "Mistral":  "mistral-",
+    "Cohere":   "cohere-",
+    "Amazon":   "amazon-",
 }
 
 # Maintainer veto list — canonicals that should NEVER auto-promote (typos, duplicates, abandoned releases)
@@ -575,6 +584,27 @@ def _pick_template_provider_key(creator: str):
     # proxy for "most-recent generation" — same train policy / fine-tuning support is more likely.
     return sorted(candidates)[-1]
 
+def find_promotion_candidates(aa_rows):
+    """Find ALL competitive untracked models from TRACKED_CREATORS (no date window).
+    This is separate from new_model_radar() — radar shows truly-recent drops for the
+    'N new flagged' notification, promotion backfills any model we should be covering
+    regardless of release age. Returns the same shape as new_model_radar()."""
+    tracked_bases = {base_name(a["aa_name"]) for a in ALIASES["models"]}
+    candidates = {}
+    for r in aa_rows:
+        intel = (r.get("evaluations") or {}).get("artificial_analysis_intelligence_index")
+        creator = (r.get("model_creator") or {}).get("name", "")
+        if intel is None or intel < PREVIEW_INTEL_THRESHOLD or creator not in TRACKED_CREATORS:
+            continue
+        b = base_name(r.get("name", ""))
+        if b in tracked_bases:
+            continue
+        prev = candidates.get(b)
+        if not prev or intel > prev["max_intel"]:
+            candidates[b] = {"base": b, "creator": creator, "max_intel": intel,
+                             "release_date": r.get("release_date"), "newer_than_our": None}
+    return sorted(candidates.values(), key=lambda x: (x["release_date"] or "", x["max_intel"]), reverse=True)
+
 def promote_radar_to_preview(radar_candidates, aa_rows, arena_data, or_catalog, or_usage, hallu_data, arena_cat_data, arena_cat_sizes, salesevals, epoch_rows):
     """Auto-promote radar candidates to Tier 1 PREVIEW per PROMOTION_POLICY.md.
     Returns a list of synthetic model entries (each with staging=True) ready to merge into models.json."""
@@ -677,7 +707,10 @@ def main():
             print(f"      • {c['base']} ({c['creator']}, intel {c['max_intel']}, {c['release_date']})", file=sys.stderr)
 
     # Tier 1 auto-promotion — see PROMOTION_POLICY.md
-    previews, preview_notes = promote_radar_to_preview(radar, aa_rows, arena_data, or_catalog, or_usage, hallu_data, arena_cat_data, arena_cat_sizes, salesevals, epoch_rows)
+    # Uses find_promotion_candidates() (no date window) so we backfill any competitive
+    # model from a tracked creator, not just recent drops.
+    promotion_candidates = find_promotion_candidates(aa_rows)
+    previews, preview_notes = promote_radar_to_preview(promotion_candidates, aa_rows, arena_data, or_catalog, or_usage, hallu_data, arena_cat_data, arena_cat_sizes, salesevals, epoch_rows)
     if preview_notes:
         print(f"\n📋  TIER 1 AUTO-PROMOTION:", file=sys.stderr)
         for n in preview_notes:

@@ -1,5 +1,825 @@
 {
-  "generated_at": "2026-06-22T16:46:02+00:00",
-  "promoted": [],
-  "decisions": []
+  "generated_at": "2026-06-22T16:51:46+00:00",
+  "promoted": [
+    {
+      "canonical": "nemotron-3-ultra-550b-a55b",
+      "display": "Nemotron 3 Ultra 550B A55B",
+      "promoted_at": "2026-06-22",
+      "creator": "NVIDIA",
+      "template_provider": "nvidia-template",
+      "release_date": "2026-06-04",
+      "max_intel": 47.7,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "minimax-m3",
+      "display": "MiniMax-M3",
+      "promoted_at": "2026-06-22",
+      "creator": "MiniMax",
+      "template_provider": "minimax-template",
+      "release_date": "2026-06-01",
+      "max_intel": 54.7,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "qwen3.7-plus",
+      "display": "Qwen3.7 Plus",
+      "promoted_at": "2026-06-22",
+      "creator": "Alibaba",
+      "template_provider": "alibaba-qwen-3.6-max",
+      "release_date": "2026-06-01",
+      "max_intel": 53.3,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "command-a",
+      "display": "Command A+",
+      "promoted_at": "2026-06-22",
+      "creator": "Cohere",
+      "template_provider": "cohere-template",
+      "release_date": "2026-05-20",
+      "max_intel": 37.2,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "qwen3.7-max",
+      "display": "Qwen3.7 Max",
+      "promoted_at": "2026-06-22",
+      "creator": "Alibaba",
+      "template_provider": "alibaba-qwen-3.6-max",
+      "release_date": "2026-05-19",
+      "max_intel": 56.6,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "grok-4.3",
+      "display": "Grok 4.3",
+      "promoted_at": "2026-06-22",
+      "creator": "xAI",
+      "template_provider": "xai-template",
+      "release_date": "2026-04-30",
+      "max_intel": 53.2,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "mistral-medium-3.5",
+      "display": "Mistral Medium 3.5",
+      "promoted_at": "2026-06-22",
+      "creator": "Mistral",
+      "template_provider": "mistral-template",
+      "release_date": "2026-04-29",
+      "max_intel": 39.2,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "mimo-v2.5-pro",
+      "display": "MiMo-V2.5-Pro",
+      "promoted_at": "2026-06-22",
+      "creator": "Xiaomi",
+      "template_provider": "xiaomi-template",
+      "release_date": "2026-04-22",
+      "max_intel": 53.8,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "mimo-v2.5",
+      "display": "MiMo-V2.5",
+      "promoted_at": "2026-06-22",
+      "creator": "Xiaomi",
+      "template_provider": "xiaomi-template",
+      "release_date": "2026-04-22",
+      "max_intel": 49,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "qwen3.6-27b",
+      "display": "Qwen3.6 27B",
+      "promoted_at": "2026-06-22",
+      "creator": "Alibaba",
+      "template_provider": "alibaba-qwen-3.6-max",
+      "release_date": "2026-04-22",
+      "max_intel": 45.8,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "qwen3.6-35b-a3b",
+      "display": "Qwen3.6 35B A3B",
+      "promoted_at": "2026-06-22",
+      "creator": "Alibaba",
+      "template_provider": "alibaba-qwen-3.6-max",
+      "release_date": "2026-04-16",
+      "max_intel": 43.5,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "muse-spark",
+      "display": "Muse Spark",
+      "promoted_at": "2026-06-22",
+      "creator": "Meta",
+      "template_provider": "meta-template",
+      "release_date": "2026-04-08",
+      "max_intel": 52.2,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "grok-4.20-0309-v2",
+      "display": "Grok 4.20 0309 v2",
+      "promoted_at": "2026-06-22",
+      "creator": "xAI",
+      "template_provider": "xai-template",
+      "release_date": "2026-04-07",
+      "max_intel": 49.3,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "qwen3.6-plus",
+      "display": "Qwen3.6 Plus",
+      "promoted_at": "2026-06-22",
+      "creator": "Alibaba",
+      "template_provider": "alibaba-qwen-3.6-max",
+      "release_date": "2026-04-02",
+      "max_intel": 50,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "gemma-4-31b",
+      "display": "Gemma 4 31B",
+      "promoted_at": "2026-06-22",
+      "creator": "Google",
+      "template_provider": "google-gemini-3.5-flash",
+      "release_date": "2026-04-02",
+      "max_intel": 39.2,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "glm-5v-turbo",
+      "display": "GLM 5V Turbo",
+      "promoted_at": "2026-06-22",
+      "creator": "Z AI",
+      "template_provider": "zhipu-glm-5.1",
+      "release_date": "2026-04-01",
+      "max_intel": 42.9,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "qwen3.5-omni-plus",
+      "display": "Qwen3.5 Omni Plus",
+      "promoted_at": "2026-06-22",
+      "creator": "Alibaba",
+      "template_provider": "alibaba-qwen-3.6-max",
+      "release_date": "2026-03-30",
+      "max_intel": 38.6,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "mimo-v2-omni-0327",
+      "display": "MiMo-V2-Omni-0327",
+      "promoted_at": "2026-06-22",
+      "creator": "Xiaomi",
+      "template_provider": "xiaomi-template",
+      "release_date": "2026-03-27",
+      "max_intel": 44.9,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "mimo-v2-omni",
+      "display": "MiMo-V2-Omni",
+      "promoted_at": "2026-06-22",
+      "creator": "Xiaomi",
+      "template_provider": "xiaomi-template",
+      "release_date": "2026-03-19",
+      "max_intel": 43.4,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "minimax-m2.7",
+      "display": "MiniMax-M2.7",
+      "promoted_at": "2026-06-22",
+      "creator": "MiniMax",
+      "template_provider": "minimax-template",
+      "release_date": "2026-03-18",
+      "max_intel": 49.6,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "mimo-v2-pro",
+      "display": "MiMo-V2-Pro",
+      "promoted_at": "2026-06-22",
+      "creator": "Xiaomi",
+      "template_provider": "xiaomi-template",
+      "release_date": "2026-03-18",
+      "max_intel": 49.2,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "glm-5-turbo",
+      "display": "GLM-5-Turbo",
+      "promoted_at": "2026-06-22",
+      "creator": "Z AI",
+      "template_provider": "zhipu-glm-5.1",
+      "release_date": "2026-03-15",
+      "max_intel": 46.8,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "nvidia-nemotron-3-super-120b-a12b",
+      "display": "NVIDIA Nemotron 3 Super 120B A12B",
+      "promoted_at": "2026-06-22",
+      "creator": "NVIDIA",
+      "template_provider": "nvidia-template",
+      "release_date": "2026-03-11",
+      "max_intel": 36,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "grok-4.20-0309",
+      "display": "Grok 4.20 0309",
+      "promoted_at": "2026-06-22",
+      "creator": "xAI",
+      "template_provider": "xai-template",
+      "release_date": "2026-03-10",
+      "max_intel": 48.5,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "qwen3.5-27b",
+      "display": "Qwen3.5 27B",
+      "promoted_at": "2026-06-22",
+      "creator": "Alibaba",
+      "template_provider": "alibaba-qwen-3.6-max",
+      "release_date": "2026-02-24",
+      "max_intel": 42.1,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "qwen3.5-122b-a10b",
+      "display": "Qwen3.5 122B A10B",
+      "promoted_at": "2026-06-22",
+      "creator": "Alibaba",
+      "template_provider": "alibaba-qwen-3.6-max",
+      "release_date": "2026-02-24",
+      "max_intel": 41.6,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "qwen3.5-35b-a3b",
+      "display": "Qwen3.5 35B A3B",
+      "promoted_at": "2026-06-22",
+      "creator": "Alibaba",
+      "template_provider": "alibaba-qwen-3.6-max",
+      "release_date": "2026-02-24",
+      "max_intel": 37.1,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "qwen3.5-397b-a17b",
+      "display": "Qwen3.5 397B A17B",
+      "promoted_at": "2026-06-22",
+      "creator": "Alibaba",
+      "template_provider": "alibaba-qwen-3.6-max",
+      "release_date": "2026-02-16",
+      "max_intel": 45,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "minimax-m2.5",
+      "display": "MiniMax-M2.5",
+      "promoted_at": "2026-06-22",
+      "creator": "MiniMax",
+      "template_provider": "minimax-template",
+      "release_date": "2026-02-12",
+      "max_intel": 41.9,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "glm-5",
+      "display": "GLM-5",
+      "promoted_at": "2026-06-22",
+      "creator": "Z AI",
+      "template_provider": "zhipu-glm-5.1",
+      "release_date": "2026-02-11",
+      "max_intel": 49.8,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "gpt-5.3-codex",
+      "display": "GPT-5.3 Codex",
+      "promoted_at": "2026-06-22",
+      "creator": "OpenAI",
+      "template_provider": "openai-gpt-5.5",
+      "release_date": "2026-02-05",
+      "max_intel": 53.6,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "claude-opus-4.6",
+      "display": "Claude Opus 4.6",
+      "promoted_at": "2026-06-22",
+      "creator": "Anthropic",
+      "template_provider": "anthropic-sonnet-4.6",
+      "release_date": "2026-02-05",
+      "max_intel": 52.9,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "kimi-k2.5",
+      "display": "Kimi K2.5",
+      "promoted_at": "2026-06-22",
+      "creator": "Kimi",
+      "template_provider": "moonshot-kimi-k2.6",
+      "release_date": "2026-01-27",
+      "max_intel": 46.8,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "qwen3-max-thinking",
+      "display": "Qwen3 Max Thinking",
+      "promoted_at": "2026-06-22",
+      "creator": "Alibaba",
+      "template_provider": "alibaba-qwen-3.6-max",
+      "release_date": "2026-01-26",
+      "max_intel": 39.8,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "minimax-m2.1",
+      "display": "MiniMax-M2.1",
+      "promoted_at": "2026-06-22",
+      "creator": "MiniMax",
+      "template_provider": "minimax-template",
+      "release_date": "2025-12-23",
+      "max_intel": 39.4,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "glm-4.7",
+      "display": "GLM-4.7",
+      "promoted_at": "2026-06-22",
+      "creator": "Z AI",
+      "template_provider": "zhipu-glm-5.1",
+      "release_date": "2025-12-22",
+      "max_intel": 42.1,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "gemini-3-flash-preview",
+      "display": "Gemini 3 Flash Preview",
+      "promoted_at": "2026-06-22",
+      "creator": "Google",
+      "template_provider": "google-gemini-3.5-flash",
+      "release_date": "2025-12-17",
+      "max_intel": 46.4,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "mimo-v2-flash",
+      "display": "MiMo-V2-Flash",
+      "promoted_at": "2026-06-22",
+      "creator": "Xiaomi",
+      "template_provider": "xiaomi-template",
+      "release_date": "2025-12-16",
+      "max_intel": 41.5,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "gpt-5.2",
+      "display": "GPT-5.2",
+      "promoted_at": "2026-06-22",
+      "creator": "OpenAI",
+      "template_provider": "openai-gpt-5.5",
+      "release_date": "2025-12-11",
+      "max_intel": 51.3,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "gpt-5.2-codex",
+      "display": "GPT-5.2 Codex",
+      "promoted_at": "2026-06-22",
+      "creator": "OpenAI",
+      "template_provider": "openai-gpt-5.5",
+      "release_date": "2025-12-11",
+      "max_intel": 49,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "deepseek-v3.2",
+      "display": "DeepSeek V3.2",
+      "promoted_at": "2026-06-22",
+      "creator": "DeepSeek",
+      "template_provider": "deepseek-v4-pro",
+      "release_date": "2025-12-01",
+      "max_intel": 41.7,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "nova-2.0-pro-preview",
+      "display": "Nova 2.0 Pro Preview",
+      "promoted_at": "2026-06-22",
+      "creator": "Amazon",
+      "template_provider": "amazon-template",
+      "release_date": "2025-11-27",
+      "max_intel": 35.7,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "claude-opus-4.5",
+      "display": "Claude Opus 4.5",
+      "promoted_at": "2026-06-22",
+      "creator": "Anthropic",
+      "template_provider": "anthropic-sonnet-4.6",
+      "release_date": "2025-11-24",
+      "max_intel": 49.7,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "grok-4.1-fast",
+      "display": "Grok 4.1 Fast",
+      "promoted_at": "2026-06-22",
+      "creator": "xAI",
+      "template_provider": "xai-template",
+      "release_date": "2025-11-19",
+      "max_intel": 38.6,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "gemini-3-pro-preview",
+      "display": "Gemini 3 Pro Preview",
+      "promoted_at": "2026-06-22",
+      "creator": "Google",
+      "template_provider": "google-gemini-3.5-flash",
+      "release_date": "2025-11-18",
+      "max_intel": 48.4,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "gpt-5.1",
+      "display": "GPT-5.1",
+      "promoted_at": "2026-06-22",
+      "creator": "OpenAI",
+      "template_provider": "openai-gpt-5.5",
+      "release_date": "2025-11-13",
+      "max_intel": 47.7,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "gpt-5.1-codex",
+      "display": "GPT-5.1 Codex",
+      "promoted_at": "2026-06-22",
+      "creator": "OpenAI",
+      "template_provider": "openai-gpt-5.5",
+      "release_date": "2025-11-13",
+      "max_intel": 43.1,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "gpt-5.1-codex-mini",
+      "display": "GPT-5.1 Codex mini",
+      "promoted_at": "2026-06-22",
+      "creator": "OpenAI",
+      "template_provider": "openai-gpt-5.5",
+      "release_date": "2025-11-13",
+      "max_intel": 38.6,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "kimi-k2-thinking",
+      "display": "Kimi K2 Thinking",
+      "promoted_at": "2026-06-22",
+      "creator": "Kimi",
+      "template_provider": "moonshot-kimi-k2.6",
+      "release_date": "2025-11-06",
+      "max_intel": 40.9,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "minimax-m2",
+      "display": "MiniMax-M2",
+      "promoted_at": "2026-06-22",
+      "creator": "MiniMax",
+      "template_provider": "minimax-template",
+      "release_date": "2025-10-26",
+      "max_intel": 36.1,
+      "data_coverage": [
+        "aa",
+        "arena"
+      ]
+    },
+    {
+      "canonical": "claude-4.5-sonnet",
+      "display": "Claude 4.5 Sonnet",
+      "promoted_at": "2026-06-22",
+      "creator": "Anthropic",
+      "template_provider": "anthropic-sonnet-4.6",
+      "release_date": "2025-09-29",
+      "max_intel": 43,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "gpt-5-codex",
+      "display": "GPT-5 Codex",
+      "promoted_at": "2026-06-22",
+      "creator": "OpenAI",
+      "template_provider": "openai-gpt-5.5",
+      "release_date": "2025-09-23",
+      "max_intel": 44.6,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "grok-4-fast",
+      "display": "Grok 4 Fast",
+      "promoted_at": "2026-06-22",
+      "creator": "xAI",
+      "template_provider": "xai-template",
+      "release_date": "2025-09-19",
+      "max_intel": 35.1,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "gpt-5",
+      "display": "GPT-5",
+      "promoted_at": "2026-06-22",
+      "creator": "OpenAI",
+      "template_provider": "openai-gpt-5.5",
+      "release_date": "2025-08-07",
+      "max_intel": 44.6,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "gpt-5-mini",
+      "display": "GPT-5 mini",
+      "promoted_at": "2026-06-22",
+      "creator": "OpenAI",
+      "template_provider": "openai-gpt-5.5",
+      "release_date": "2025-08-07",
+      "max_intel": 41.2,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "claude-4.1-opus",
+      "display": "Claude 4.1 Opus",
+      "promoted_at": "2026-06-22",
+      "creator": "Anthropic",
+      "template_provider": "anthropic-sonnet-4.6",
+      "release_date": "2025-08-05",
+      "max_intel": 42,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "grok-4",
+      "display": "Grok 4",
+      "promoted_at": "2026-06-22",
+      "creator": "xAI",
+      "template_provider": "xai-template",
+      "release_date": "2025-07-10",
+      "max_intel": 41.5,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "o3-pro",
+      "display": "o3-pro",
+      "promoted_at": "2026-06-22",
+      "creator": "OpenAI",
+      "template_provider": "openai-gpt-5.5",
+      "release_date": "2025-06-10",
+      "max_intel": 40.7,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "claude-4-opus",
+      "display": "Claude 4 Opus",
+      "promoted_at": "2026-06-22",
+      "creator": "Anthropic",
+      "template_provider": "anthropic-sonnet-4.6",
+      "release_date": "2025-05-22",
+      "max_intel": 39,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "claude-4-sonnet",
+      "display": "Claude 4 Sonnet",
+      "promoted_at": "2026-06-22",
+      "creator": "Anthropic",
+      "template_provider": "anthropic-sonnet-4.6",
+      "release_date": "2025-05-22",
+      "max_intel": 38.7,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "o3",
+      "display": "o3",
+      "promoted_at": "2026-06-22",
+      "creator": "OpenAI",
+      "template_provider": "openai-gpt-5.5",
+      "release_date": "2025-04-16",
+      "max_intel": 38.4,
+      "data_coverage": [
+        "aa"
+      ]
+    }
+  ],
+  "decisions": [
+    "  \u2713 Nemotron 3 Ultra 550B A55B: promoted as PREVIEW (template=nvidia-template, coverage=['aa'])",
+    "  \u2713 MiniMax-M3: promoted as PREVIEW (template=minimax-template, coverage=['aa', 'arena'])",
+    "  \u2713 Qwen3.7 Plus: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa'])",
+    "  \u2713 Command A+: promoted as PREVIEW (template=cohere-template, coverage=['aa'])",
+    "  \u2713 Qwen3.7 Max: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa'])",
+    "  \u2713 Grok 4.3: promoted as PREVIEW (template=xai-template, coverage=['aa', 'arena'])",
+    "  \u2713 Mistral Medium 3.5: promoted as PREVIEW (template=mistral-template, coverage=['aa', 'arena'])",
+    "  \u2713 MiMo-V2.5-Pro: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena'])",
+    "  \u2713 MiMo-V2.5: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena'])",
+    "  \u2713 Qwen3.6 27B: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa'])",
+    "  \u2713 Qwen3.6 35B A3B: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa'])",
+    "  \u2713 Muse Spark: promoted as PREVIEW (template=meta-template, coverage=['aa', 'arena'])",
+    "  \u2713 Grok 4.20 0309 v2: promoted as PREVIEW (template=xai-template, coverage=['aa'])",
+    "  \u2713 Qwen3.6 Plus: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa', 'arena'])",
+    "  \u2713 Gemma 4 31B: promoted as PREVIEW (template=google-gemini-3.5-flash, coverage=['aa', 'arena'])",
+    "  \u2713 GLM 5V Turbo: promoted as PREVIEW (template=zhipu-glm-5.1, coverage=['aa'])",
+    "  \u2713 Qwen3.5 Omni Plus: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa'])",
+    "  \u2713 MiMo-V2-Omni-0327: promoted as PREVIEW (template=xiaomi-template, coverage=['aa'])",
+    "  \u2713 MiMo-V2-Omni: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena'])",
+    "  \u2713 MiniMax-M2.7: promoted as PREVIEW (template=minimax-template, coverage=['aa', 'arena'])",
+    "  \u2713 MiMo-V2-Pro: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena'])",
+    "  \u2713 GLM-5-Turbo: promoted as PREVIEW (template=zhipu-glm-5.1, coverage=['aa'])",
+    "  \u2713 NVIDIA Nemotron 3 Super 120B A12B: promoted as PREVIEW (template=nvidia-template, coverage=['aa'])",
+    "  \u2713 Grok 4.20 0309: promoted as PREVIEW (template=xai-template, coverage=['aa'])",
+    "  \u2713 Qwen3.5 27B: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa', 'arena'])",
+    "  \u2713 Qwen3.5 122B A10B: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa', 'arena'])",
+    "  \u2713 Qwen3.5 35B A3B: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa', 'arena'])",
+    "  \u2713 Qwen3.5 397B A17B: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa', 'arena'])",
+    "  \u2713 MiniMax-M2.5: promoted as PREVIEW (template=minimax-template, coverage=['aa', 'arena'])",
+    "  \u2713 GLM-5: promoted as PREVIEW (template=zhipu-glm-5.1, coverage=['aa', 'arena'])",
+    "  \u2713 GPT-5.3 Codex: promoted as PREVIEW (template=openai-gpt-5.5, coverage=['aa'])",
+    "  \u2713 Claude Opus 4.6: promoted as PREVIEW (template=anthropic-sonnet-4.6, coverage=['aa'])",
+    "  \u2713 Kimi K2.5: promoted as PREVIEW (template=moonshot-kimi-k2.6, coverage=['aa'])",
+    "  \u2713 Qwen3 Max Thinking: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa'])",
+    "  \u2713 MiniMax-M2.1: promoted as PREVIEW (template=minimax-template, coverage=['aa'])",
+    "  \u2713 GLM-4.7: promoted as PREVIEW (template=zhipu-glm-5.1, coverage=['aa', 'arena'])",
+    "  \u2713 Gemini 3 Flash Preview: promoted as PREVIEW (template=google-gemini-3.5-flash, coverage=['aa'])",
+    "  \u2713 MiMo-V2-Flash: promoted as PREVIEW (template=xiaomi-template, coverage=['aa'])",
+    "  \u2713 GPT-5.2: promoted as PREVIEW (template=openai-gpt-5.5, coverage=['aa', 'arena'])",
+    "  \u2713 GPT-5.2 Codex: promoted as PREVIEW (template=openai-gpt-5.5, coverage=['aa', 'arena'])",
+    "  \u2713 DeepSeek V3.2: promoted as PREVIEW (template=deepseek-v4-pro, coverage=['aa', 'arena'])",
+    "  \u2713 Nova 2.0 Pro Preview: promoted as PREVIEW (template=amazon-template, coverage=['aa'])",
+    "  \u2713 Claude Opus 4.5: promoted as PREVIEW (template=anthropic-sonnet-4.6, coverage=['aa'])",
+    "  \u2713 Grok 4.1 Fast: promoted as PREVIEW (template=xai-template, coverage=['aa'])",
+    "  \u2713 Gemini 3 Pro Preview: promoted as PREVIEW (template=google-gemini-3.5-flash, coverage=['aa'])",
+    "  \u2713 GPT-5.1: promoted as PREVIEW (template=openai-gpt-5.5, coverage=['aa', 'arena'])",
+    "  \u2713 GPT-5.1 Codex: promoted as PREVIEW (template=openai-gpt-5.5, coverage=['aa', 'arena'])",
+    "  \u2713 GPT-5.1 Codex mini: promoted as PREVIEW (template=openai-gpt-5.5, coverage=['aa', 'arena'])",
+    "  \u2713 Kimi K2 Thinking: promoted as PREVIEW (template=moonshot-kimi-k2.6, coverage=['aa'])",
+    "  \u2713 MiniMax-M2: promoted as PREVIEW (template=minimax-template, coverage=['aa', 'arena'])",
+    "  \u2713 Claude 4.5 Sonnet: promoted as PREVIEW (template=anthropic-sonnet-4.6, coverage=['aa'])",
+    "  \u2713 GPT-5 Codex: promoted as PREVIEW (template=openai-gpt-5.5, coverage=['aa'])",
+    "  \u2713 Grok 4 Fast: promoted as PREVIEW (template=xai-template, coverage=['aa'])",
+    "  \u2713 GPT-5: promoted as PREVIEW (template=openai-gpt-5.5, coverage=['aa'])",
+    "  \u2713 GPT-5 mini: promoted as PREVIEW (template=openai-gpt-5.5, coverage=['aa'])",
+    "  \u2713 Claude 4.1 Opus: promoted as PREVIEW (template=anthropic-sonnet-4.6, coverage=['aa'])",
+    "  \u2713 Grok 4: promoted as PREVIEW (template=xai-template, coverage=['aa'])",
+    "  \u2713 o3-pro: promoted as PREVIEW (template=openai-gpt-5.5, coverage=['aa'])",
+    "  \u2713 Claude 4 Opus: promoted as PREVIEW (template=anthropic-sonnet-4.6, coverage=['aa'])",
+    "  \u2713 Claude 4 Sonnet: promoted as PREVIEW (template=anthropic-sonnet-4.6, coverage=['aa'])",
+    "  \u2713 o3: promoted as PREVIEW (template=openai-gpt-5.5, coverage=['aa'])"
+  ]
 }
