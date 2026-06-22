@@ -308,12 +308,12 @@
     /* Sidebar is hidden by default on mobile; promoted to bottom sheet on demand */
     aside{display:none}
     /* Sticky summary chips at the very top of content */
-    #mobile-summary{display:flex;gap:6px;position:sticky;top:0;z-index:60;background:var(--bg);padding:10px 0 8px;margin:-16px -14px 10px;padding-left:14px;padding-right:14px;border-bottom:1px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch}
-    .mob-chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--text);font-size:11.5px;cursor:pointer;min-height:34px;font-family:inherit}
+    #mobile-summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;position:sticky;top:0;z-index:60;background:var(--bg);padding:10px 14px 8px;margin:-16px -14px 10px;border-bottom:1px solid var(--line)}
+    .mob-chip{display:flex;flex-direction:column;align-items:flex-start;gap:2px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px 9px;color:var(--text);cursor:pointer;font-family:inherit;min-width:0;text-align:left;position:relative}
     .mob-chip:hover,.mob-chip:focus{border-color:var(--accent)}
-    .mob-chip .mob-lbl{color:var(--dim);font-size:10px;text-transform:uppercase;letter-spacing:.04em}
-    .mob-chip .mob-val{color:var(--text);font-weight:600;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-    .mob-chip .mob-caret{color:var(--dim);font-size:9px;margin-left:1px}
+    .mob-chip .mob-lbl{color:var(--dim);font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;line-height:1}
+    .mob-chip .mob-val{color:var(--text);font-weight:600;font-size:12px;line-height:1.2;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:10px}
+    .mob-chip .mob-caret{position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:9px}
     /* When a sheet is open: show sidebar as a fixed bottom sheet, with backdrop */
     body.sheet-open .mob-sheet-bg{display:block;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:90}
     body.sheet-open aside{display:block;position:fixed;left:0;right:0;bottom:0;top:auto;max-height:82vh;overflow:auto;z-index:100;border:none;border-top:1px solid var(--line);border-radius:18px 18px 0 0;padding:14px 16px 80px;background:var(--panel);box-shadow:0 -8px 30px rgba(0,0,0,.5);animation:sheetUp .22s ease-out}
