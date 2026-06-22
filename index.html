@@ -32,10 +32,18 @@
   header .ttl .freshness .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(110,231,183,.18);animation:pulse 2s ease-in-out infinite}
   header .ttl .freshness b{color:var(--accent);font-weight:600}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
-  header .hdr-act{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  header .hdr-act{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
   header .hdr-act button{background:var(--panel2);color:var(--dim);border:1px solid var(--line);border-radius:5px;padding:6px 10px;font-size:var(--fs-button);cursor:pointer;white-space:nowrap}
   header .hdr-act button:hover{color:var(--accent);border-color:var(--accent)}
   header .hdr-act button.on{background:var(--accent-dim);color:var(--accent);border-color:var(--accent)}
+  /* Help dropdown: hidden on desktop (reference buttons live inline);
+     shown on mobile, where it collapses 3 reference buttons under one ❔ icon. */
+  .hdr-help{position:relative;display:none}
+  .hdr-help #hdr-help-btn{width:32px;height:32px;padding:0;border-radius:50%;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center}
+  .hdr-help-menu{display:none;position:absolute;top:calc(100% + 6px);right:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:5px;min-width:170px;box-shadow:0 8px 24px rgba(0,0,0,.45);z-index:80}
+  .hdr-help.open .hdr-help-menu{display:flex;flex-direction:column;gap:3px}
+  .hdr-help-menu button{background:transparent;border:1px solid transparent;text-align:left;width:100%;padding:9px 10px;border-radius:5px;color:var(--ink);font-size:var(--fs-body)}
+  .hdr-help-menu button:hover,.hdr-help-menu button:focus{background:var(--panel2);color:var(--accent);border-color:var(--line)}
 
   main{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 80px)}
   aside{background:var(--panel);border-right:1px solid var(--line);padding:18px 16px;font-size:var(--fs-body);overflow-y:auto;position:relative}
@@ -286,8 +294,11 @@
     header .ttl h1{font-size:var(--fs-h1);margin:0 0 2px}
     header .ttl .meta{font-size:var(--fs-caption);gap:8px}
     header .ttl .freshness{font-size:var(--fs-caption);padding:4px 9px}
-    header .hdr-act{width:100%;justify-content:flex-start}
+    header .hdr-act{width:100%;justify-content:flex-start;flex-wrap:nowrap}
     header .hdr-act button{font-size:var(--fs-button);padding:5px 9px}
+    /* Mobile: tuck reference buttons under a ❔ icon to reclaim space */
+    header .hdr-act .hdr-secondary{display:none}
+    header .hdr-act .hdr-help{display:block;margin-left:auto}
     /* Recommender cards stack vertically — phone screen too narrow for 3 columns.
        Gap is 22px because each card has a rank badge (#N cheapest) positioned -9px
        above its top edge; a tight gap makes the badge visually crash into the
@@ -406,11 +417,19 @@
     <div class="meta" id="meta"></div>
   </div>
   <div class="hdr-act">
-    <button id="show-onb">📖 How to use</button>
-    <button id="show-costing">💰 Costing</button>
-    <button id="show-scoring">🎯 Scoring</button>
-    <button id="show-quality">📏 Quality floor</button>
     <button id="show-features">📋 Features</button>
+    <button id="show-quality">📏 Quality floor</button>
+    <button id="show-onb" class="hdr-secondary">📖 How to use</button>
+    <button id="show-costing" class="hdr-secondary">💰 Costing</button>
+    <button id="show-scoring" class="hdr-secondary">🎯 Scoring</button>
+    <div class="hdr-help" id="hdr-help">
+      <button id="hdr-help-btn" aria-label="Help and reference" aria-haspopup="true" aria-expanded="false">❔</button>
+      <div class="hdr-help-menu" id="hdr-help-menu" role="menu">
+        <button data-target="show-onb" role="menuitem">📖 How to use</button>
+        <button data-target="show-costing" role="menuitem">💰 Costing</button>
+        <button data-target="show-scoring" role="menuitem">🎯 Scoring</button>
+      </div>
+    </div>
   </div>
 </header>
 
@@ -1665,6 +1684,19 @@ $('#show-features').addEventListener('click',()=>toggleModal('features'));
 
 // ── onboarding card ──
 $('#show-onb').addEventListener('click',()=>toggleModal('howto'));
+
+// ── help dropdown (mobile) — collapses How to use / Costing / Scoring under one ❔ icon ──
+(function(){
+  const wrap=document.querySelector('#hdr-help');
+  const btn=document.querySelector('#hdr-help-btn');
+  if(!wrap||!btn)return;
+  const close=()=>{wrap.classList.remove('open');btn.setAttribute('aria-expanded','false');};
+  btn.addEventListener('click',e=>{e.stopPropagation();const open=wrap.classList.toggle('open');btn.setAttribute('aria-expanded',open?'true':'false');});
+  wrap.querySelectorAll('[data-target]').forEach(item=>{
+    item.addEventListener('click',e=>{e.stopPropagation();close();document.getElementById(item.dataset.target)?.click();});
+  });
+  document.addEventListener('click',e=>{if(!wrap.contains(e.target))close();});
+})();
 
 // ── input wiring ──
 $$('input,select').forEach(i=>i.addEventListener('input',(e)=>{
