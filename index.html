@@ -102,8 +102,10 @@
   /* RECOMMENDER */
   .rec-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
   .rec-head .floor{flex:1;min-width:200px}
-  .floor-bar{display:flex;justify-content:space-between;align-items:center;font-size:var(--fs-button);color:var(--dim)}
+  .floor-bar{display:flex;justify-content:space-between;align-items:center;font-size:var(--fs-button);color:var(--dim);gap:14px}
   .floor-bar a{cursor:pointer;text-decoration:underline;text-decoration-style:dotted}
+  .floor-lbl{display:flex;flex-direction:column;line-height:1.2}
+  .floor-sub{color:var(--dim);font-size:var(--fs-eyebrow);text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
   /* Editable floor value — large bold number that doubles as an input. */
   #floorV{background:transparent;border:none;border-bottom:1px dashed var(--line);color:var(--ink);font-size:var(--fs-metric);font-weight:700;width:56px;padding:1px 4px;font-family:inherit;text-align:center;cursor:pointer;-moz-appearance:textfield;margin-left:4px;vertical-align:-3px}
   #floorV::-webkit-inner-spin-button,#floorV::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
@@ -314,7 +316,10 @@
     /* Wizard takeover (in costing modal) — fits modal width */
     .wiz{width:100%}
     /* Quality floor input + slider — touch friendly */
-    #floorV{font-size:var(--fs-h1);width:54px}
+    /* Quality floor number takes the empty right space — make it the visual anchor */
+    #floorV{font-size:44px;width:auto;min-width:72px;line-height:1;padding:0;margin:0;border-bottom-color:var(--line);text-align:right}
+    .floor-lbl{font-size:var(--fs-body);color:var(--ink);font-weight:500}
+    .floor-sub{font-size:9.5px}
     input[type=range]{height:24px}
     /* Active filters chip row — smaller and wraps cleaner */
     .active-filters{font-size:var(--fs-caption);padding:8px 10px;line-height:1.7}
@@ -503,7 +508,7 @@
       <h2>🎯 Routing recommender <button class="info-btn" data-pop="recommender">i</button></h2>
       <div class="rec-head">
         <div class="floor">
-          <div class="floor-bar"><span>Quality floor (min task score) <input id="floorV" type="number" min="0" max="100" value="0" title="Click to type a custom value"></span></div>
+          <div class="floor-bar"><span class="floor-lbl">Quality floor <span class="floor-sub">min task score</span></span><input id="floorV" type="number" min="0" max="100" value="0" title="Click to type a custom value"></div>
           <input type="range" id="floor" min="0" max="100" value="0">
         </div>
       </div>
