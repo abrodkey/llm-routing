@@ -122,7 +122,11 @@
   /* auto-fit so cards wrap instead of overflowing when the content column is narrow
      (the 300px sidebar + a mid-width viewport used to crush 3 columns past their edges) */
   .recs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-  .rec{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:13px 14px;position:relative}
+  /* min-width:0 lets a card shrink to its grid track instead of forcing the track wider
+     (grid/flex items default to min-width:auto, which is what blew the 3rd card past the
+     content edge and got it clipped by .content's overflow-x:hidden). overflow-wrap
+     breaks any long unbreakable token rather than expanding the card. */
+  .rec{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:13px 14px;position:relative;min-width:0;overflow-wrap:anywhere}
   .rec.win{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
   .rec .rank{position:absolute;top:-9px;left:12px;background:var(--accent);color:#04110b;font-size:var(--fs-eyebrow);font-weight:700;padding:2px 7px;border-radius:10px}
   .rec .name{font-weight:600;font-size:var(--fs-h2);margin-bottom:2px}
