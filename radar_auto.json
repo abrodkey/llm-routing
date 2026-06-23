@@ -1,14 +1,38 @@
 {
-  "generated_at": "2026-06-22T19:45:30+00:00",
+  "generated_at": "2026-06-23T08:59:30+00:00",
   "promoted": [
+    {
+      "canonical": "glm-5.2",
+      "display": "GLM-5.2",
+      "promoted_at": "2026-06-23",
+      "creator": "Z AI",
+      "template_provider": "zhipu-glm-5.1",
+      "release_date": "2026-06-16",
+      "max_intel": 51.1,
+      "data_coverage": [
+        "aa"
+      ]
+    },
+    {
+      "canonical": "kimi-k2.7-code",
+      "display": "Kimi K2.7 Code",
+      "promoted_at": "2026-06-23",
+      "creator": "Kimi",
+      "template_provider": "moonshot-kimi-k2.6",
+      "release_date": "2026-06-12",
+      "max_intel": 41.9,
+      "data_coverage": [
+        "aa"
+      ]
+    },
     {
       "canonical": "nemotron-3-ultra-550b-a55b",
       "display": "Nemotron 3 Ultra 550B A55B",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "NVIDIA",
       "template_provider": "nvidia-template",
       "release_date": "2026-06-04",
-      "max_intel": 47.7,
+      "max_intel": 37.8,
       "data_coverage": [
         "aa"
       ]
@@ -16,11 +40,11 @@
     {
       "canonical": "minimax-m3",
       "display": "MiniMax-M3",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "MiniMax",
       "template_provider": "minimax-template",
       "release_date": "2026-06-01",
-      "max_intel": 54.7,
+      "max_intel": 44.4,
       "data_coverage": [
         "aa",
         "arena"
@@ -29,23 +53,11 @@
     {
       "canonical": "qwen3.7-plus",
       "display": "Qwen3.7 Plus",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "Alibaba",
       "template_provider": "alibaba-qwen-3.6-max",
       "release_date": "2026-06-01",
-      "max_intel": 53.3,
-      "data_coverage": [
-        "aa"
-      ]
-    },
-    {
-      "canonical": "command-a",
-      "display": "Command A+",
-      "promoted_at": "2026-06-22",
-      "creator": "Cohere",
-      "template_provider": "cohere-template",
-      "release_date": "2026-05-20",
-      "max_intel": 37.2,
+      "max_intel": 39,
       "data_coverage": [
         "aa"
       ]
@@ -53,11 +65,11 @@
     {
       "canonical": "qwen3.7-max",
       "display": "Qwen3.7 Max",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "Alibaba",
       "template_provider": "alibaba-qwen-3.6-max",
       "release_date": "2026-05-19",
-      "max_intel": 56.6,
+      "max_intel": 46,
       "data_coverage": [
         "aa"
       ]
@@ -65,24 +77,11 @@
     {
       "canonical": "grok-4.3",
       "display": "Grok 4.3",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "xAI",
       "template_provider": "xai-template",
       "release_date": "2026-04-30",
-      "max_intel": 53.2,
-      "data_coverage": [
-        "aa",
-        "arena"
-      ]
-    },
-    {
-      "canonical": "mistral-medium-3.5",
-      "display": "Mistral Medium 3.5",
-      "promoted_at": "2026-06-22",
-      "creator": "Mistral",
-      "template_provider": "mistral-template",
-      "release_date": "2026-04-29",
-      "max_intel": 39.2,
+      "max_intel": 37.6,
       "data_coverage": [
         "aa",
         "arena"
@@ -91,11 +90,11 @@
     {
       "canonical": "mimo-v2.5-pro",
       "display": "MiMo-V2.5-Pro",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "Xiaomi",
       "template_provider": "xiaomi-template",
       "release_date": "2026-04-22",
-      "max_intel": 53.8,
+      "max_intel": 42.2,
       "data_coverage": [
         "aa",
         "arena"
@@ -104,11 +103,11 @@
     {
       "canonical": "mimo-v2.5",
       "display": "MiMo-V2.5",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "Xiaomi",
       "template_provider": "xiaomi-template",
       "release_date": "2026-04-22",
-      "max_intel": 49,
+      "max_intel": 40.1,
       "data_coverage": [
         "aa",
         "arena"
@@ -117,11 +116,11 @@
     {
       "canonical": "qwen3.6-27b",
       "display": "Qwen3.6 27B",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "Alibaba",
       "template_provider": "alibaba-qwen-3.6-max",
       "release_date": "2026-04-22",
-      "max_intel": 45.8,
+      "max_intel": 37.1,
       "data_coverage": [
         "aa"
       ]
@@ -129,11 +128,11 @@
     {
       "canonical": "muse-spark",
       "display": "Muse Spark",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "Meta",
       "template_provider": "meta-template",
       "release_date": "2026-04-08",
-      "max_intel": 52.2,
+      "max_intel": 43.1,
       "data_coverage": [
         "aa",
         "arena"
@@ -142,11 +141,11 @@
     {
       "canonical": "grok-4.20-0309-v2",
       "display": "Grok 4.20 0309 v2",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "xAI",
       "template_provider": "xai-template",
       "release_date": "2026-04-07",
-      "max_intel": 49.3,
+      "max_intel": 37,
       "data_coverage": [
         "aa"
       ]
@@ -154,11 +153,11 @@
     {
       "canonical": "mimo-v2-omni-0327",
       "display": "MiMo-V2-Omni-0327",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "Xiaomi",
       "template_provider": "xiaomi-template",
       "release_date": "2026-03-27",
-      "max_intel": 44.9,
+      "max_intel": 36.4,
       "data_coverage": [
         "aa"
       ]
@@ -166,24 +165,11 @@
     {
       "canonical": "mimo-v2-omni",
       "display": "MiMo-V2-Omni",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "Xiaomi",
       "template_provider": "xiaomi-template",
       "release_date": "2026-03-19",
-      "max_intel": 43.4,
-      "data_coverage": [
-        "aa",
-        "arena"
-      ]
-    },
-    {
-      "canonical": "minimax-m2.7",
-      "display": "MiniMax-M2.7",
-      "promoted_at": "2026-06-22",
-      "creator": "MiniMax",
-      "template_provider": "minimax-template",
-      "release_date": "2026-03-18",
-      "max_intel": 49.6,
+      "max_intel": 35,
       "data_coverage": [
         "aa",
         "arena"
@@ -192,147 +178,50 @@
     {
       "canonical": "mimo-v2-pro",
       "display": "MiMo-V2-Pro",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "Xiaomi",
       "template_provider": "xiaomi-template",
       "release_date": "2026-03-18",
-      "max_intel": 49.2,
+      "max_intel": 40.3,
       "data_coverage": [
         "aa",
         "arena"
       ]
     },
     {
-      "canonical": "nvidia-nemotron-3-super-120b-a12b",
-      "display": "NVIDIA Nemotron 3 Super 120B A12B",
-      "promoted_at": "2026-06-22",
-      "creator": "NVIDIA",
-      "template_provider": "nvidia-template",
-      "release_date": "2026-03-11",
-      "max_intel": 36,
+      "canonical": "minimax-m2.7",
+      "display": "MiniMax-M2.7",
+      "promoted_at": "2026-06-23",
+      "creator": "MiniMax",
+      "template_provider": "minimax-template",
+      "release_date": "2026-03-18",
+      "max_intel": 38.1,
       "data_coverage": [
-        "aa"
+        "aa",
+        "arena"
       ]
     },
     {
       "canonical": "grok-4.20-0309",
       "display": "Grok 4.20 0309",
-      "promoted_at": "2026-06-22",
+      "promoted_at": "2026-06-23",
       "creator": "xAI",
       "template_provider": "xai-template",
       "release_date": "2026-03-10",
-      "max_intel": 48.5,
-      "data_coverage": [
-        "aa"
-      ]
-    },
-    {
-      "canonical": "minimax-m2.5",
-      "display": "MiniMax-M2.5",
-      "promoted_at": "2026-06-22",
-      "creator": "MiniMax",
-      "template_provider": "minimax-template",
-      "release_date": "2026-02-12",
-      "max_intel": 41.9,
-      "data_coverage": [
-        "aa",
-        "arena"
-      ]
-    },
-    {
-      "canonical": "minimax-m2.1",
-      "display": "MiniMax-M2.1",
-      "promoted_at": "2026-06-22",
-      "creator": "MiniMax",
-      "template_provider": "minimax-template",
-      "release_date": "2025-12-23",
-      "max_intel": 39.4,
-      "data_coverage": [
-        "aa"
-      ]
-    },
-    {
-      "canonical": "mimo-v2-flash",
-      "display": "MiMo-V2-Flash",
-      "promoted_at": "2026-06-22",
-      "creator": "Xiaomi",
-      "template_provider": "xiaomi-template",
-      "release_date": "2025-12-16",
-      "max_intel": 41.5,
-      "data_coverage": [
-        "aa"
-      ]
-    },
-    {
-      "canonical": "nova-2.0-pro-preview",
-      "display": "Nova 2.0 Pro Preview",
-      "promoted_at": "2026-06-22",
-      "creator": "Amazon",
-      "template_provider": "amazon-template",
-      "release_date": "2025-11-27",
-      "max_intel": 35.7,
-      "data_coverage": [
-        "aa"
-      ]
-    },
-    {
-      "canonical": "grok-4.1-fast",
-      "display": "Grok 4.1 Fast",
-      "promoted_at": "2026-06-22",
-      "creator": "xAI",
-      "template_provider": "xai-template",
-      "release_date": "2025-11-19",
-      "max_intel": 38.6,
-      "data_coverage": [
-        "aa"
-      ]
-    },
-    {
-      "canonical": "minimax-m2",
-      "display": "MiniMax-M2",
-      "promoted_at": "2026-06-22",
-      "creator": "MiniMax",
-      "template_provider": "minimax-template",
-      "release_date": "2025-10-26",
-      "max_intel": 36.1,
-      "data_coverage": [
-        "aa",
-        "arena"
-      ]
-    },
-    {
-      "canonical": "grok-4-fast",
-      "display": "Grok 4 Fast",
-      "promoted_at": "2026-06-22",
-      "creator": "xAI",
-      "template_provider": "xai-template",
-      "release_date": "2025-09-19",
-      "max_intel": 35.1,
-      "data_coverage": [
-        "aa"
-      ]
-    },
-    {
-      "canonical": "grok-4",
-      "display": "Grok 4",
-      "promoted_at": "2026-06-22",
-      "creator": "xAI",
-      "template_provider": "xai-template",
-      "release_date": "2025-07-10",
-      "max_intel": 41.5,
+      "max_intel": 36.5,
       "data_coverage": [
         "aa"
       ]
     }
   ],
   "decisions": [
+    "  \u2713 GLM-5.2: promoted as PREVIEW (template=zhipu-glm-5.1, coverage=['aa'])",
+    "  \u2713 Kimi K2.7 Code: promoted as PREVIEW (template=moonshot-kimi-k2.6, coverage=['aa'])",
     "  \u2713 Nemotron 3 Ultra 550B A55B: promoted as PREVIEW (template=nvidia-template, coverage=['aa'])",
     "  \u2713 MiniMax-M3: promoted as PREVIEW (template=minimax-template, coverage=['aa', 'arena'])",
     "  \u2713 Qwen3.7 Plus: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa'])",
-    "  \u2713 Command A+: promoted as PREVIEW (template=cohere-template, coverage=['aa'])",
     "  \u2713 Qwen3.7 Max: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa'])",
     "  \u2713 Grok 4.3: promoted as PREVIEW (template=xai-template, coverage=['aa', 'arena'])",
-    "  \u2713 Mistral Medium 3.5: promoted as PREVIEW (template=mistral-template, coverage=['aa', 'arena'])",
     "  \u2713 MiMo-V2.5-Pro: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena'])",
     "  \u2713 MiMo-V2.5: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena'])",
     "  \u2713 Qwen3.6 27B: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa'])",
@@ -340,17 +229,8 @@
     "  \u2713 Grok 4.20 0309 v2: promoted as PREVIEW (template=xai-template, coverage=['aa'])",
     "  \u2713 MiMo-V2-Omni-0327: promoted as PREVIEW (template=xiaomi-template, coverage=['aa'])",
     "  \u2713 MiMo-V2-Omni: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena'])",
-    "  \u2713 MiniMax-M2.7: promoted as PREVIEW (template=minimax-template, coverage=['aa', 'arena'])",
     "  \u2713 MiMo-V2-Pro: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena'])",
-    "  \u2713 NVIDIA Nemotron 3 Super 120B A12B: promoted as PREVIEW (template=nvidia-template, coverage=['aa'])",
-    "  \u2713 Grok 4.20 0309: promoted as PREVIEW (template=xai-template, coverage=['aa'])",
-    "  \u2713 MiniMax-M2.5: promoted as PREVIEW (template=minimax-template, coverage=['aa', 'arena'])",
-    "  \u2713 MiniMax-M2.1: promoted as PREVIEW (template=minimax-template, coverage=['aa'])",
-    "  \u2713 MiMo-V2-Flash: promoted as PREVIEW (template=xiaomi-template, coverage=['aa'])",
-    "  \u2713 Nova 2.0 Pro Preview: promoted as PREVIEW (template=amazon-template, coverage=['aa'])",
-    "  \u2713 Grok 4.1 Fast: promoted as PREVIEW (template=xai-template, coverage=['aa'])",
-    "  \u2713 MiniMax-M2: promoted as PREVIEW (template=minimax-template, coverage=['aa', 'arena'])",
-    "  \u2713 Grok 4 Fast: promoted as PREVIEW (template=xai-template, coverage=['aa'])",
-    "  \u2713 Grok 4: promoted as PREVIEW (template=xai-template, coverage=['aa'])"
+    "  \u2713 MiniMax-M2.7: promoted as PREVIEW (template=minimax-template, coverage=['aa', 'arena'])",
+    "  \u2713 Grok 4.20 0309: promoted as PREVIEW (template=xai-template, coverage=['aa'])"
   ]
 }

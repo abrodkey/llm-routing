@@ -1,4 +1,97 @@
 {
   "threshold": 45,
-  "candidates": []
+  "candidates": [
+    {
+      "base": "GLM-5.2",
+      "creator": "Z AI",
+      "max_intel": 51.1,
+      "release_date": "2026-06-16",
+      "newer_than_our": "2026-04-07",
+      "sources": [
+        "aa",
+        "hf"
+      ],
+      "hf_id": "zai-org/GLM-5.2"
+    },
+    {
+      "base": "GLM-5.2-FP8",
+      "creator": "Z AI",
+      "max_intel": null,
+      "release_date": "2026-06-16",
+      "newer_than_our": null,
+      "sources": [
+        "hf"
+      ],
+      "hf_id": "zai-org/GLM-5.2-FP8",
+      "hf_downloads": 395290
+    },
+    {
+      "base": "FastContext-1.0-4B-RL",
+      "creator": "Microsoft",
+      "max_intel": null,
+      "release_date": "2026-06-14",
+      "newer_than_our": null,
+      "sources": [
+        "hf"
+      ],
+      "hf_id": "microsoft/FastContext-1.0-4B-RL",
+      "hf_downloads": 3063
+    },
+    {
+      "base": "FastContext-1.0-4B-SFT",
+      "creator": "Microsoft",
+      "max_intel": null,
+      "release_date": "2026-06-14",
+      "newer_than_our": null,
+      "sources": [
+        "hf"
+      ],
+      "hf_id": "microsoft/FastContext-1.0-4B-SFT",
+      "hf_downloads": 4391
+    },
+    {
+      "base": "diffusiongemma-26B-A4B-it-NVFP4",
+      "creator": "NVIDIA",
+      "max_intel": null,
+      "release_date": "2026-06-10",
+      "newer_than_our": null,
+      "sources": [
+        "hf"
+      ],
+      "hf_id": "nvidia/diffusiongemma-26B-A4B-it-NVFP4",
+      "hf_downloads": 770554
+    },
+    {
+      "base": "SCAIL-2",
+      "creator": "Z AI",
+      "max_intel": null,
+      "release_date": "2026-06-09",
+      "newer_than_our": null,
+      "sources": [
+        "hf"
+      ],
+      "hf_id": "zai-org/SCAIL-2",
+      "hf_downloads": 0
+    },
+    {
+      "base": "Claude Mythos 5",
+      "creator": "Anthropic",
+      "max_intel": null,
+      "release_date": "2026-06-09",
+      "newer_than_our": null,
+      "sources": [
+        "epoch"
+      ]
+    },
+    {
+      "base": "North Mini Code",
+      "creator": "Cohere",
+      "max_intel": null,
+      "release_date": "2026-06-09",
+      "newer_than_our": null,
+      "sources": [
+        "epoch"
+      ]
+    }
+  ]
 }
