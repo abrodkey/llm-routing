@@ -465,17 +465,17 @@
     <div class="meta" id="meta"></div>
   </div>
   <div class="hdr-act">
-    <button id="show-features">📋 Features</button>
-    <button id="show-quality">📏 Quality floor</button>
-    <button id="show-onb" class="hdr-secondary">📖 How to use</button>
-    <button id="show-costing" class="hdr-secondary">💰 Costing</button>
-    <button id="show-scoring" class="hdr-secondary">🎯 Scoring</button>
+    <button id="show-features">Features</button>
+    <button id="show-quality">Quality floor</button>
+    <button id="show-onb" class="hdr-secondary">How to use</button>
+    <button id="show-costing" class="hdr-secondary">Costing</button>
+    <button id="show-scoring" class="hdr-secondary">Scoring</button>
     <div class="hdr-help" id="hdr-help">
-      <button id="hdr-help-btn" aria-label="Help and reference" aria-haspopup="true" aria-expanded="false">❔</button>
+      <button id="hdr-help-btn" aria-label="Help and reference" aria-haspopup="true" aria-expanded="false">?</button>
       <div class="hdr-help-menu" id="hdr-help-menu" role="menu">
-        <button data-target="show-onb" role="menuitem">📖 How to use</button>
-        <button data-target="show-costing" role="menuitem">💰 Costing</button>
-        <button data-target="show-scoring" role="menuitem">🎯 Scoring</button>
+        <button data-target="show-onb" role="menuitem">How to use</button>
+        <button data-target="show-costing" role="menuitem">Costing</button>
+        <button data-target="show-scoring" role="menuitem">Scoring</button>
       </div>
     </div>
   </div>
@@ -485,7 +485,7 @@
   <aside id="sidebar">
     <!-- COST MODEL -->
     <div class="sec" data-sec="cost">
-      <div class="sec-h"><span class="em">💰</span><span class="ttl">Cost model</span><button class="info-btn" data-pop="cost">i</button></div>
+      <div class="sec-h"><span class="ttl">Cost model</span><button class="info-btn" data-pop="cost">i</button></div>
       <div class="btn-row" id="presets">
         <button class="btn" data-cache="0"  data-batch="0">List</button>
         <button class="btn" data-cache="50" data-batch="0">Chat</button>
@@ -501,13 +501,13 @@
         <input type="range" id="batch" min="0" max="100" value="0">
       </div>
       <label style="margin-top:6px"><input type="checkbox" id="enterprise"> Enterprise (committed) base <button class="info-btn" data-pop="enterprise" style="margin-left:auto">i</button></label>
-      <button class="btn-block" id="open-wiz">📊 Not sure what to pick? Walk me through it →</button>
+      <button class="btn-block" id="open-wiz">Not sure what to pick? Walk me through it →</button>
       <style>#open-wiz{display:none}</style>
     </div>
 
     <!-- TASK -->
     <div class="sec" data-sec="task">
-      <div class="sec-h"><span class="em">🎯</span><span class="ttl">Task</span><button class="info-btn" data-pop="task">i</button></div>
+      <div class="sec-h"><span class="ttl">Task</span><button class="info-btn" data-pop="task">i</button></div>
       <div style="font-size:var(--fs-eyebrow);color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin:0 0 4px">General</div>
       <label><input type="radio" name="task" value="overall" checked> Overall intelligence</label>
       <label><input type="radio" name="task" value="research"> Research</label>
@@ -519,17 +519,17 @@
       <label><input type="radio" name="task" value="classification"> Classification</label>
       <label><input type="radio" name="task" value="summarization"> Summarization</label>
       <div style="font-size:var(--fs-eyebrow);color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin:14px 0 4px;display:flex;align-items:center;gap:6px">Industry verticals <button class="info-btn" data-pop="verticals" style="width:14px;height:14px;font-size:8px">i</button></div>
-      <label><input type="radio" name="task" value="business"> 💼 Business / RevOps</label>
-      <label><input type="radio" name="task" value="legal"> ⚖️ Legal</label>
-      <label><input type="radio" name="task" value="healthcare"> 🏥 Healthcare</label>
-      <label><input type="radio" name="task" value="software_engineering"> 💻 Software engineering</label>
-      <label><input type="radio" name="task" value="expert"> 🎓 Expert reasoning</label>
-      <label><input type="radio" name="task" value="sales_coaching"> 💬 Sales coaching</label>
+      <label><input type="radio" name="task" value="business"> Business / RevOps</label>
+      <label><input type="radio" name="task" value="legal"> Legal</label>
+      <label><input type="radio" name="task" value="healthcare"> Healthcare</label>
+      <label><input type="radio" name="task" value="software_engineering"> Software engineering</label>
+      <label><input type="radio" name="task" value="expert"> Expert reasoning</label>
+      <label><input type="radio" name="task" value="sales_coaching"> Sales coaching</label>
     </div>
 
     <!-- CONSTRAINTS -->
     <div class="sec" data-sec="constraints">
-      <div class="sec-h"><span class="em">🚧</span><span class="ttl">Constraints</span><button class="info-btn" data-pop="constraints">i</button></div>
+      <div class="sec-h"><span class="ttl">Constraints</span><button class="info-btn" data-pop="constraints">i</button></div>
       <div style="font-size:var(--fs-caption);color:var(--dim);margin-bottom:6px">Capabilities the model must support</div>
       <label><input type="checkbox" class="cap" value="vision"> Vision required <span class="cap-count" data-cap="vision"></span></label>
       <label><input type="checkbox" class="cap" value="function_calling"> Function calling <span class="cap-count" data-cap="function_calling"></span></label>
@@ -583,7 +583,7 @@
 
     <!-- RECOMMENDER -->
     <div class="card">
-      <h2>🎯 Routing recommender <button class="info-btn" data-pop="recommender">i</button></h2>
+      <h2>Routing recommender <button class="info-btn" data-pop="recommender">i</button></h2>
       <div class="rec-head">
         <div class="floor">
           <div class="floor-bar"><span class="floor-lbl">Quality floor <span class="floor-sub">min task score</span></span><input id="floorV" type="number" min="0" max="100" value="0" title="Click to type a custom value"></div>
@@ -690,12 +690,12 @@ const TASK_METRICS_INFO={
 };
 
 const SCENARIOS=[
-  {id:'chatbot',label:'💬 Live chatbot / Q&A',task:'chat',cache:65,batch:0,desc:'Customer asks a question, model replies right away. System prompt repeats every call.'},
-  {id:'email',label:'✉️ Drafting outreach emails',task:'writing_email',cache:70,batch:80,desc:'Brand voice + templates stay the same. Usually a queued job, not a live chat.'},
-  {id:'enrich',label:'🗂️ Enriching CRM data (bulk)',task:'data_synthesis',cache:55,batch:100,desc:'Overnight: enrich thousands of records. Schema stable, content varies, nobody is waiting.'},
-  {id:'summarize',label:'📄 Summarizing calls / docs',task:'data_synthesis',cache:30,batch:50,desc:'Each call is a fresh transcript, so little caching. Some live, some background.'},
-  {id:'research',label:'🔎 Research agent (browses)',task:'web_research',cache:75,batch:0,desc:'Long stable tool definitions + system prompt. Interactive — user is waiting.'},
-  {id:'classify',label:'🏷️ Classifying / routing',task:'data_synthesis',cache:80,batch:30,desc:'Same prompt every call ("classify into A/B/C"), input changes. Often background.'},
+  {id:'chatbot',label:'Live chatbot / Q&A',task:'chat',cache:65,batch:0,desc:'Customer asks a question, model replies right away. System prompt repeats every call.'},
+  {id:'email',label:'Drafting outreach emails',task:'writing_email',cache:70,batch:80,desc:'Brand voice + templates stay the same. Usually a queued job, not a live chat.'},
+  {id:'enrich',label:'Enriching CRM data (bulk)',task:'data_synthesis',cache:55,batch:100,desc:'Overnight: enrich thousands of records. Schema stable, content varies, nobody is waiting.'},
+  {id:'summarize',label:'Summarizing calls / docs',task:'data_synthesis',cache:30,batch:50,desc:'Each call is a fresh transcript, so little caching. Some live, some background.'},
+  {id:'research',label:'Research agent (browses)',task:'web_research',cache:75,batch:0,desc:'Long stable tool definitions + system prompt. Interactive — user is waiting.'},
+  {id:'classify',label:'Classifying / routing',task:'data_synthesis',cache:80,batch:30,desc:'Same prompt every call ("classify into A/B/C"), input changes. Often background.'},
 ];
 
 let MODELS=[],META={};
@@ -923,10 +923,10 @@ async function load(){
       const intel=r.max_intel!=null?` · intel <b>${r.max_intel}</b>`:'';
       return `<div style="padding:6px 0;border-bottom:1px solid var(--line)"><b>${r.base}</b><div style="color:var(--dim);font-size:var(--fs-caption);margin-top:2px">${r.creator||'unknown'} · released ${dt}${intel}</div></div>`;
     }).join('');
-    POP_CONTENT.radar=`<h4>🛰 New models on the radar</h4><p>These models appeared in upstream sources (Artificial Analysis, OpenRouter, LMArena) but aren't wired into this dashboard yet. Add them to <code>aliases.json</code> + <code>providers.json</code> to surface them.</p>${rows}`;
+    POP_CONTENT.radar=`<h4>New models on the radar</h4><p>These models appeared in upstream sources (Artificial Analysis, OpenRouter, LMArena) but aren't wired into this dashboard yet. Add them to <code>aliases.json</code> + <code>providers.json</code> to surface them.</p>${rows}`;
   }
   // Radar lives on the SAME line as Data Sources (one logical span; wraps within itself if needed).
-  const radarBit=radar?` · <span class="warn" data-pop="radar" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted">🛰 ${radar} new model(s) flagged</span>`:'';
+  const radarBit=radar?` · <span class="warn" data-pop="radar" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted">${radar} new model(s) flagged</span>`:'';
   $('#meta').innerHTML=`<span><span class="ds-prefix">Data Sources:</span> Artificial Analysis · Epoch · OpenRouter · LMArena · Hugging Face · salesevals<span id="meta-fielded"></span></span>`;
   readState();
   // Seed the floor-undo baseline AFTER readState so the initial loaded value isn't pushed onto the history.
@@ -1333,9 +1333,9 @@ function updatePreliminaryNotice(){
     const srcs=(r.sources||['aa']).map(s=>({aa:'AA',hf:'Hugging Face',epoch:'Epoch'})[s]||s).join(' + ');
     return `<div style="padding:7px 0;border-bottom:1px solid var(--line)"><b>${r.base}</b><div style="color:var(--dim);font-size:var(--fs-caption);margin-top:2px">${r.creator||'unknown'} · released ${dt}${intel} · seen on ${srcs}</div></div>`;
   }).join('');
-  const sectionB = radar.length ? `<h4 style="margin-top:14px">🛰 Detected upstream — awaiting benchmark data</h4><p>Found in Hugging Face / Epoch / AA's catalog but no full benchmark score yet, so we can't rank them. We'll auto-promote each into the dashboard as soon as AA publishes a score.</p>${radarRows}` : '';
-  POP_CONTENT.fielded=`<h4>🆕 Recently fielded — last ${FIELDED_WINDOW_DAYS} days</h4><p>Models with a release date in this window. The <span class="tag preview" style="margin:0">preliminary</span> tag marks ones where the data source backing this task's score is still thin. Preliminary models are excluded from the recommender top-3.</p>${inDashboardRows||'<div style="color:var(--dim)">No new models in dashboard window yet.</div>'}${sectionB}`;
-  el.innerHTML=` · <span class="warn" data-pop="fielded" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted">🆕 ${total} new model${total===1?'':'s'} fielded</span>`;
+  const sectionB = radar.length ? `<h4 style="margin-top:14px">Detected upstream — awaiting benchmark data</h4><p>Found in Hugging Face / Epoch / AA's catalog but no full benchmark score yet, so we can't rank them. We'll auto-promote each into the dashboard as soon as AA publishes a score.</p>${radarRows}` : '';
+  POP_CONTENT.fielded=`<h4>Recently fielded — last ${FIELDED_WINDOW_DAYS} days</h4><p>Models with a release date in this window. The <span class="tag preview" style="margin:0">preliminary</span> tag marks ones where the data source backing this task's score is still thin. Preliminary models are excluded from the recommender top-3.</p>${inDashboardRows||'<div style="color:var(--dim)">No new models in dashboard window yet.</div>'}${sectionB}`;
+  el.innerHTML=` · <span class="warn" data-pop="fielded" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted">${total} new model${total===1?'':'s'} fielded</span>`;
 }
 function syncMobileSummary(){
   const task=taskSel();
@@ -1398,7 +1398,7 @@ function undoFloor(){
 
 // ── popover system ──
 const POP_CONTENT={
-  cost:`<h4>💰 Cost model</h4>
+  cost:`<h4>Cost model</h4>
     <p>This panel controls <b>what cost number</b> the dashboard uses to rank models. Three layers stack:</p>
     <p><b>1. The base price</b> — list (default) or your negotiated enterprise rate (Enterprise toggle).</p>
     <p><b>2. Caching discount</b> — most agents resend the same system prompt every call. The cache slider says what % of input repeats.</p>
@@ -1416,12 +1416,12 @@ const POP_CONTENT={
     <p>Flips the base price from public list to <b>illustrative</b> negotiated rates — Anthropic ~22% off, OpenAI ~32%, Google ~25%. These are band-midpoints, not quotes; real numbers require a sales conversation.</p>
     <p><b>Open-weight models don't change</b> — they're already at floor prices.</p>
     <p><b>Answers Ryan's #1 customer objection:</b> "why not use Claude/ChatGPT direct?" Even at committed rates, frontier models stay ~15× pricier than a good-enough cheap model. <i>Routing beats negotiating.</i></p>`,
-  task:`<h4>🎯 Task</h4>
+  task:`<h4>Task</h4>
     <p>Sets the <b>capability axis</b> used for the recommender's quality score, the scatter Y-axis, and the table's "Task score" column.</p>
     <p><b>General tasks</b> score via AA's per-task sub-indices (gpqa, ifbench, livecodebench, etc.) — see the ⓘ on the Quality floor for the formula breakdown.</p>
     <p><b>Industry verticals</b> use LMArena's human-preference Elo for the matching industry leaderboard, normalized to a 0–100 score. These directly answer <i>"is this model preferred by humans for this kind of work."</i></p>
     <p>"Overall" uses AA's aggregate intelligence index. The other tasks are <b>more specific and often more useful</b> — a model can be middling overall but top-tier at a vertical.</p>`,
-  verticals:`<h4>🏭 Industry verticals</h4>
+  verticals:`<h4>Industry verticals</h4>
     <p>These task buckets are backed by <b>LMArena's per-industry human-preference rankings</b> — actual humans voting on which model's output is better for that industry's prompts.</p>
     <p>Each vertical maps to one LMArena category:</p>
     <div class="row"><span>Business / RevOps</span><b>industry_business_and_management_and_financial_operations</b></div>
@@ -1431,12 +1431,12 @@ const POP_CONTENT={
     <div class="row"><span>Expert reasoning</span><b>expert (general nuanced)</b></div>
     <p style="margin-top:10px"><b>Score normalization:</b> Arena Elo (typically 1300–1600) is mapped to 0–100 as <code>(elo − 1300) / 3</code>, so an Elo of 1450 reads as a score of 50.</p>
     <p><b>Coverage note:</b> some verticals may show "—" until the next monthly Arena pull completes. The category data is on a paginated endpoint with rate limits.</p>`,
-  constraints:`<h4>🚧 Constraints</h4>
+  constraints:`<h4>Constraints</h4>
     <p><b>Capabilities:</b> hard requirements — vision, function calling, structured output, fine-tuning. A model that doesn't support these is filtered out (not just ranked lower).</p>
     <p><b>Policy:</b> US-origin only, no-train policy required, US-hosted available, chat-fast (TTFT&lt;5s).</p>
     <p><b>Pricing tier:</b> filter the universe to specific price bands.</p>
     <p>Constraints turn the recommender into an <b>"acceptable picks"</b> ranking — not just "cheapest" but "cheapest that I can actually use."</p>`,
-  recommender:`<h4>🎯 Routing recommender</h4>
+  recommender:`<h4>Routing recommender</h4>
     <p>Shows the <b>top-3 cheapest models that clear your quality floor</b> for the selected task + constraints.</p>
     <p>Each card shows: model name, score on the task, effective cost, % cheaper than the top-capability pick, and <b>trade-off receipts</b> (origin, train policy, cheapest host, TTFT, Arena rank).</p>
     <p>The #1 card is the answer to "cheapest model good enough for this." The others give you fallbacks if #1 violates an unstated requirement.</p>`,
@@ -1609,15 +1609,15 @@ const TAB_HOWTO=()=>{const badge=n=>`<span style="display:inline-block;width:22p
   const row=(n,title,body)=>`<tr><td style="padding-right:14px;vertical-align:top;width:32px">${badge(n)}</td><td style="padding:0"><b>${title}</b><div style="color:var(--dim);margin-top:2px">${body}</div></td></tr>`;
   return `<h4>Three steps to get an answer</h4>
   <table style="font-size:var(--fs-body);margin:8px 0;border-collapse:separate;border-spacing:0 8px">
-    ${row(1,"Tell us what you're building",`Click <b style="color:var(--ink)">💰 Costing</b> above — pick the scenario that sounds like your AI feature (chatbot, email drafter, CRM enrichment, etc.). The cost model presets and cache/batch settings get inferred for you.`)}
-    ${row(2,"Pick your quality bar",`Use the <b style="color:var(--ink)">Quality floor</b> slider on the recommender card. Not sure what level to set? Click <b style="color:var(--ink)">📏 Quality floor</b> above for a 3-question wizard that picks one based on your stakes.`)}
+    ${row(1,"Tell us what you're building",`Click <b style="color:var(--ink)">Costing</b> above — pick the scenario that sounds like your AI feature (chatbot, email drafter, CRM enrichment, etc.). The cost model presets and cache/batch settings get inferred for you.`)}
+    ${row(2,"Pick your quality bar",`Use the <b style="color:var(--ink)">Quality floor</b> slider on the recommender card. Not sure what level to set? Click <b style="color:var(--ink)">Quality floor</b> above for a 3-question wizard that picks one based on your stakes.`)}
     ${row(3,"Read the top-3",`The recommender shows the <b style="color:var(--ink)">cheapest models that clear your bar</b>, with savings vs. defaulting to the frontier and trade-off receipts (origin, train policy, cheapest host, hallucination, uptime). Tap any <b style="color:var(--ink)">ⓘ</b> for more.`)}
   </table>
   <h4>What the header buttons do</h4>
-  <p><b>📖 How to use</b> — this guide.<br>
-  <b>💰 Costing</b> — explains how list price + caching + batch + reasoning penalty combine into the "effective cost" the dashboard uses; includes the "walk me through it" wizard.<br>
-  <b>🎯 Scoring</b> — explains how each task score is calculated, what each score level means, and how agentic scoring works.<br>
-  <b>📏 Quality floor</b> — 3-question wizard that picks a quality floor based on who sees the output, what happens if it's wrong, and how often it runs.</p>
+  <p><b>How to use</b> — this guide.<br>
+  <b>Costing</b> — explains how list price + caching + batch + reasoning penalty combine into the "effective cost" the dashboard uses; includes the "walk me through it" wizard.<br>
+  <b>Scoring</b> — explains how each task score is calculated, what each score level means, and how agentic scoring works.<br>
+  <b>Quality floor</b> — 3-question wizard that picks a quality floor based on who sees the output, what happens if it's wrong, and how often it runs.</p>
   <h4>Best practice</h4>
   <p>Ask these questions <b>per feature of your product</b>, not for the company overall. A live customer chatbot and an overnight CRM enrichment job have very different floors — same product, different routing.</p>`;};
 const TAB_COSTING=()=>`<h4>How the cost model works</h4>
@@ -1672,20 +1672,20 @@ const TAB_FEATURES=()=>{
     <p style="color:var(--dim);font-size:var(--fs-caption);margin-top:14px"><b style="color:var(--ink)">Honest caveat:</b> "Sufficient" here means "the task score in the top X% of tracked models for the matching task bucket" — derived from public benchmarks, not from Intelligent Noise's own evals. For high-stakes features, validate the top-3 recommendations against your own prompts before shipping.</p>`;
 };
 const SCENES={
-  howto:{title:'👋 How to use this tool',
+  howto:{title:'How to use this tool',
     tabs:{howto:{label:'',render:TAB_HOWTO}},
     default:'howto'},
-  features:{title:'📋 Feature profiles — Intelligent Noise routing taxonomy',
+  features:{title:'Feature profiles — Intelligent Noise routing taxonomy',
     tabs:{features:{label:'',render:TAB_FEATURES}},
     default:'features'},
-  costing:{title:'💰 Costing — how to model what you actually pay',
+  costing:{title:'Costing — how to model what you actually pay',
     tabs:{'cost-model':{label:'How the cost model works',render:TAB_COSTING},
           'wizard':{label:'Walk me through it',render:TAB_COSTING_WIZARD}},
     default:'cost-model'},
-  scoring:{title:'🎯 Scoring — how task scores are calculated',
+  scoring:{title:'Scoring — how task scores are calculated',
     tabs:{how:{label:'How calculated',render:TAB_HOW},levels:{label:'Score levels',render:TAB_LEVELS},agentic:{label:'Agentic scoring',render:TAB_AGENTIC}},
     default:'how'},
-  quality:{title:'📏 Quality floor — pick the right bar for your feature',
+  quality:{title:'Quality floor — pick the right bar for your feature',
     tabs:{pick:{label:'',render:TAB_PICK}},
     default:'pick'},
 };
@@ -1820,7 +1820,6 @@ function renderActiveFeature(){
     ? `<div class="af-derivation">ⓘ Quality floor set to <b>${d.floor}</b>: "${d.intelLabel}" maps to <b>top ${100-d.pct}%</b> of ${d.totalModels} tracked models for ${d.taskLabel}. Drag the slider below to override.</div>`
     : `<div class="af-derivation">ⓘ Quality floor set to <b>0</b>: "${d.intelLabel}" intelligence requires no minimum filter. Drag the slider below to tighten.</div>`):'';
   chip.innerHTML=`<div class="af-head">
-      <div class="af-icon">📋</div>
       <div class="af-title">
         <div class="af-name" title="${f.name}">${f.name}</div>
         <div class="af-area">${area}</div>
