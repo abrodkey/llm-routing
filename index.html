@@ -678,12 +678,16 @@ const TASK_METRICS_INFO={
   summarization:{metrics:['ifbench (×100)','intelligence_index'],note:'Summarization fidelity. No direct AA benchmark; proxy via instruction-following + intelligence. Vectara hallucination rate (shown as a chip) is the production-relevant cross-check.'},
 };
 
+// `live:true` → someone is waiting on the response, so we auto-apply the TTFT<5s gate
+// (the "latency trap": high-effort reasoning configs run 90–190s TTFT, unusable for chat).
+// TTFT is 37/39 covered, so this hard filter is safe; hallucination (11/39) is NOT, so
+// we never auto-filter on it — we surface an advisory instead (see renderActiveFeature).
 const SCENARIOS=[
-  {id:'chatbot',label:'Live chatbot / Q&A',task:'chat',cache:65,batch:0,desc:'Customer asks a question, model replies right away. System prompt repeats every call.'},
+  {id:'chatbot',label:'Live chatbot / Q&A',task:'chat',cache:65,batch:0,live:true,desc:'Customer asks a question, model replies right away. System prompt repeats every call.'},
   {id:'email',label:'Drafting outreach emails',task:'writing_email',cache:70,batch:80,desc:'Brand voice + templates stay the same. Usually a queued job, not a live chat.'},
   {id:'enrich',label:'Enriching CRM data (bulk)',task:'data_synthesis',cache:55,batch:100,desc:'Overnight: enrich thousands of records. Schema stable, content varies, nobody is waiting.'},
   {id:'summarize',label:'Summarizing calls / docs',task:'data_synthesis',cache:30,batch:50,desc:'Each call is a fresh transcript, so little caching. Some live, some background.'},
-  {id:'research',label:'Research agent (browses)',task:'web_research',cache:75,batch:0,desc:'Long stable tool definitions + system prompt. Interactive — user is waiting.'},
+  {id:'research',label:'Research agent (browses)',task:'web_research',cache:75,batch:0,live:true,desc:'Long stable tool definitions + system prompt. Interactive — user is waiting.'},
   {id:'classify',label:'Classifying / routing',task:'data_synthesis',cache:80,batch:30,desc:'Same prompt every call ("classify into A/B/C"), input changes. Often background.'},
 ];
 
@@ -958,7 +962,32 @@ function renderRecommender(){
     if(isVert&&!anyData){
       box.innerHTML=`<div class="rec-empty">⏳ <b>${TASK_LABEL[task]}</b> vertical data isn’t available yet — LMArena’s per-industry leaderboard for this category will populate after the next monthly refresh (rate-limit constrained today). Pick a general task or another vertical that has data.</div>`;
     } else {
-      box.innerHTML=`<div class="rec-empty">No model clears a ${floor} quality floor for ${TASK_LABEL[task]} under these constraints. Lower the floor or relax a constraint.</div>`;
+      // Diagnose WHICH constraints are binding. The builder auto-applies several hidden
+      // filters (fast-chat, no-train, US-hosted, capabilities), so a bare "relax a
+      // constraint" leaves the user guessing. Count how many floor-clearing models each
+      // active constraint rules out, and name the most restrictive.
+      const base=MODELS.filter(m=>!isPreliminary(m,task)).map(m=>({m,cap:capValue(m,task)}))
+                       .filter(x=>x.cap!=null&&x.cap>=floor);
+      if(!base.length){
+        box.innerHTML=`<div class="rec-empty">No model — even unconstrained — clears a ${floor} quality floor for ${TASK_LABEL[task]}. The floor is above the best tracked score for this task; lower it.</div>`;
+      } else {
+        const active=[
+          C.tiers.size<4 ? ['the cost tier', m=>!C.tiers.has(m.tier)] : null,
+          C.notrain ? ['no-train policy', m=>m.policy.train_policy!=='no-train-default'] : null,
+          C.ushosted ? ['US-hosted', m=>!m.policy.us_hosted_option] : null,
+          C.usonly ? ['US-origin', m=>!(m.provenance.country||'').includes('United States')] : null,
+          C.fastchat ? ['fast-chat (TTFT &lt; 5s)', m=>!(m.ttft_seconds!=null&&m.ttft_seconds<5)] : null,
+          C.caps.length ? [`capabilities (${C.caps.map(c=>CAP_LABEL[c]||c).join(' + ')})`, m=>!C.caps.every(c=>m.capabilities[c])] : null,
+          C.upMin>0 ? ['min uptime', m=>!((m.reliability||{}).best_uptime_1d!=null&&m.reliability.best_uptime_1d>=C.upMin)] : null,
+          C.hallMax<100 ? ['max hallucination', m=>!((m.hallucination||{}).hallucination_rate!=null&&m.hallucination.hallucination_rate<=C.hallMax)] : null,
+        ].filter(Boolean);
+        const ruledOut=active.map(([label,fn])=>[label,base.filter(x=>fn(x.m)).length])
+                             .filter(([,n])=>n>0).sort((a,b)=>b[1]-a[1]);
+        const binders=ruledOut.length
+          ? ` Most restrictive: ${ruledOut.slice(0,3).map(([l,n])=>`<b>${l}</b> (rules out ${n})`).join(', ')}.`
+          : '';
+        box.innerHTML=`<div class="rec-empty">${base.length} model${base.length>1?'s':''} clear the ${floor} floor for ${TASK_LABEL[task]}, but your constraints exclude ${base.length>1?'them all':'it'}.${binders} Relax one above, or lower the floor.</div>`;
+      }
     }
   }
   const isSales=task==='sales_coaching';
@@ -1620,45 +1649,79 @@ const BUILDER_Q=[
     {label:'High volume — thousands of calls/day',sub:'cost dominates — lean to the cheapest that clears',v:'high'},
     {label:'Moderate — hundreds/day',sub:'balance cost and quality',v:'mod'},
     {label:'Low — occasional / human-triggered',sub:'quality first, cost barely matters',v:'low'}]},
+  // Compliance: the one axis you CAN'T infer from task+stakes+volume. Decides whether the
+  // cheap China-origin value tier is even eligible — flips the answer, not just the order.
+  {key:'compliance',q:'4 · What data flows through it?',opts:[
+    {label:'Public or internal data — no restrictions',sub:'every model eligible',v:'none'},
+    {label:'Customer data — a no-train API is enough',sub:'provider must not train on our prompts',v:'notrain'},
+    {label:'Regulated / PII / contractual US-only',sub:'data must stay with a US-hosted, no-train provider',v:'strict'}]},
+  // Optional, multi-select. Hard capability gates — a model that can't do these is
+  // disqualified regardless of score (e.g. a research agent needs function calling).
+  {key:'caps',multi:true,optional:true,q:'5 · Must the model be able to… (optional)',opts:[
+    {label:'Read images / PDFs',sub:'vision input',v:'vision'},
+    {label:'Call tools / functions',sub:'agentic tool use',v:'function_calling'},
+    {label:'Return strict JSON',sub:'structured output',v:'structured_output'}]},
 ];
 const VOL_MAP={high:{cost:'Very High',freq:'Very High',label:'high'},mod:{cost:'High',freq:'High',label:'moderate'},low:{cost:'Moderate',freq:'Low-Medium',label:'low'}};
+// Compliance answer → which sidebar hard-filters to set. 'strict' uses no-train + US-hosted
+// (keeps US-hosted open weights like DeepSeek-on-Bedrock) rather than US-origin-only, which
+// would over-exclude. Vendor-nationality requirements remain a manual sidebar toggle.
+const COMPLIANCE_MAP={
+  none:   {notrain:false, ushosted:false, label:'No restrictions'},
+  notrain:{notrain:true,  ushosted:false, label:'No-train API'},
+  strict: {notrain:true,  ushosted:true,  label:'US-hosted + no-train'},
+};
+const CAP_LABEL={vision:'Vision',function_calling:'Tool calling',structured_output:'Structured output'};
 let builderAns={};
 const TAB_BUILDER=()=>`<h4>Build your feature</h4>
-  <p style="color:var(--dim);font-size:var(--fs-button);margin:6px 0 12px">Answer 3 questions about your AI feature. We route it to the right task, set a quality floor from the stakes, pick a cost-sensitivity tier from the volume, and infer cache/batch — then show the cheapest models that clear the bar. Override anything afterward.</p>
+  <p style="color:var(--dim);font-size:var(--fs-button);margin:6px 0 12px">Answer a few questions about your AI feature. We route it to the right task, set a quality floor from the stakes, pick a cost-sensitivity tier from the volume, apply your data-compliance and capability constraints, and infer cache/batch — then show the cheapest models that clear the bar. Override anything afterward.</p>
   <input id="builder-name" type="text" placeholder="Name this feature (optional)" style="width:100%;box-sizing:border-box;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:9px 11px;color:var(--ink);font-size:var(--fs-body);font-family:inherit;margin-bottom:6px">
   <div id="builder-body"></div>`;
 function renderBuilder(){
   const body=document.querySelector('#builder-body'); if(!body)return;
   body.innerHTML='';
   BUILDER_Q.forEach(qq=>{
-    body.insertAdjacentHTML('beforeend',`<div class="qwiz-q">${qq.q}</div><div class="qwiz-opts" data-q="${qq.key}">${qq.opts.map(o=>`<button data-v="${o.v}" class="${builderAns[qq.key]===o.v?'sel':''}">${o.label}${o.sub?`<span style="display:block;color:var(--dim);font-size:var(--fs-caption);margin-top:3px">${o.sub}</span>`:''}</button>`).join('')}</div>`);
+    const isSel=v=>qq.multi?(builderAns[qq.key]||[]).includes(v):builderAns[qq.key]===v;
+    body.insertAdjacentHTML('beforeend',`<div class="qwiz-q">${qq.q}</div><div class="qwiz-opts" data-q="${qq.key}"${qq.multi?' data-multi="1"':''}>${qq.opts.map(o=>`<button data-v="${o.v}" class="${isSel(o.v)?'sel':''}">${o.label}${o.sub?`<span style="display:block;color:var(--dim);font-size:var(--fs-caption);margin-top:3px">${o.sub}</span>`:''}</button>`).join('')}</div>`);
   });
   body.querySelectorAll('.qwiz-opts').forEach(grp=>{
-    const k=grp.dataset.q;
+    const k=grp.dataset.q, multi=grp.dataset.multi==='1';
     grp.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
-      builderAns[k]=b.dataset.v;
-      grp.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');
+      if(multi){
+        const set=new Set(builderAns[k]||[]);
+        if(set.has(b.dataset.v)){set.delete(b.dataset.v);b.classList.remove('sel');}
+        else{set.add(b.dataset.v);b.classList.add('sel');}
+        builderAns[k]=[...set];
+      } else {
+        builderAns[k]=b.dataset.v;
+        grp.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');
+      }
       maybeBuild();
     }));
   });
-  if(['scenario','stakes','volume'].every(k=>builderAns[k]!=null))maybeBuild();
+  maybeBuild();
 }
+// Required answers gate the "Build" button; caps (optional, multi) does not.
+const BUILDER_REQUIRED=['scenario','stakes','volume','compliance'];
 function maybeBuild(){
-  if(['scenario','stakes','volume'].some(k=>builderAns[k]==null))return;
+  if(BUILDER_REQUIRED.some(k=>builderAns[k]==null))return;
   document.querySelectorAll('#builder-body .qwiz-result').forEach(el=>el.remove());
   const scn=SCENARIOS.find(s=>s.id===builderAns.scenario), vm=VOL_MAP[builderAns.volume];
+  const comp=COMPLIANCE_MAP[builderAns.compliance], caps=builderAns.caps||[];
+  const capStr=caps.length?caps.map(c=>CAP_LABEL[c]).join(' + '):'none';
   document.querySelector('#builder-body').insertAdjacentHTML('beforeend',`
     <div class="qwiz-result">
       Ready: <b style="font-size:var(--fs-body)">${scn.label}</b>
-      <div style="color:var(--dim);font-size:var(--fs-button);margin-top:6px;line-height:1.6">Routes to <b style="color:var(--ink)">${TASK_LABEL[scn.task]||scn.task}</b> · floor from <b style="color:var(--ink)">${builderAns.stakes}</b> stakes · <b style="color:var(--ink)">${vm.cost}</b> cost sensitivity · cache ${scn.cache}% / batch ${scn.batch}%.</div>
+      <div style="color:var(--dim);font-size:var(--fs-button);margin-top:6px;line-height:1.6">Routes to <b style="color:var(--ink)">${TASK_LABEL[scn.task]||scn.task}</b> · floor from <b style="color:var(--ink)">${builderAns.stakes}</b> stakes · <b style="color:var(--ink)">${vm.cost}</b> cost sensitivity · compliance <b style="color:var(--ink)">${comp.label}</b>${scn.live?' · <b style="color:var(--ink)">fast-chat</b> (TTFT&lt;5s)':''} · capabilities <b style="color:var(--ink)">${capStr}</b> · cache ${scn.cache}% / batch ${scn.batch}%.</div>
       <button id="builder-apply">Build &amp; show recommendations →</button>
     </div>`);
   document.querySelector('#builder-apply').addEventListener('click',()=>{
     const nm=(document.querySelector('#builder-name')?.value||'').trim();
+    const compBits=[comp.label]; if(scn.live)compBits.push('fast-chat'); if(caps.length)compBits.push(capStr.toLowerCase());
     customFeature={id:'custom',name:nm||scn.label,area:'Custom feature',task_bucket:scn.task,
       intelligence_required:builderAns.stakes,cost_sensitivity:vm.cost,frequency:vm.freq,
-      notes:`Built from: ${scn.label.toLowerCase()} · ${builderAns.stakes.toLowerCase()} stakes · ${vm.label} volume.`,
-      _cache:scn.cache,_batch:scn.batch};
+      notes:`Built from: ${scn.label.toLowerCase()} · ${builderAns.stakes.toLowerCase()} stakes · ${vm.label} volume · ${compBits.join(', ').toLowerCase()}.`,
+      _cache:scn.cache,_batch:scn.batch,_compliance:builderAns.compliance,_caps:caps,_live:!!scn.live};
     builderAns={};
     applyFeatureProfile('custom');
   });
@@ -1739,7 +1802,17 @@ function applyFeatureProfile(featureId){
   //    so the builder also configures the cost model the old Costing wizard used to.
   if(f._cache!=null)$('#cache').value=f._cache;
   if(f._batch!=null)$('#batch').value=f._batch;
-  // 5. Track + re-render via standard input event
+  // 5. Hard constraints (builder-only). The feature OWNS these — set them fully so state
+  //    never goes stale across feature switches. Library features (no _compliance) reset
+  //    to OFF, matching their original task/floor/tier-only behavior. usonly is left to the
+  //    manual sidebar toggle (vendor-nationality is a separate, rarer requirement).
+  const comp=COMPLIANCE_MAP[f._compliance]||COMPLIANCE_MAP.none;
+  $('#notrain').checked=comp.notrain;
+  $('#ushosted').checked=comp.ushosted;
+  $('#fastchat').checked=!!f._live;          // latency derived from the scenario
+  const wantCaps=new Set(f._caps||[]);
+  document.querySelectorAll('.cap').forEach(cb=>{cb.checked=wantCaps.has(cb.value);});
+  // 6. Track + re-render via standard input event
   activeFeatureId=featureId;
   $('#cache').dispatchEvent(new Event('input',{bubbles:true}));
   closeModal();
@@ -1756,6 +1829,13 @@ function renderActiveFeature(){
   const derivLine=d?(d.pct>0
     ? `<div class="af-derivation">ⓘ Quality floor set to <b>${d.floor}</b>: "${d.intelLabel}" maps to <b>top ${100-d.pct}%</b> of ${d.totalModels} tracked models for ${d.taskLabel}. Drag the slider below to override.</div>`
     : `<div class="af-derivation">ⓘ Quality floor set to <b>0</b>: "${d.intelLabel}" intelligence requires no minimum filter. Drag the slider below to tighten.</div>`):'';
+  // Builder-only extras: compliance posture (+ derived fast-chat) and capability gates.
+  const compAttr=f._compliance?`<div class="af-attr"><span class="af-k">Compliance</span><span class="af-v">${(COMPLIANCE_MAP[f._compliance]||COMPLIANCE_MAP.none).label}${f._live?' · fast-chat':''}</span></div>`:'';
+  const capAttr=(f._caps&&f._caps.length)?`<div class="af-attr"><span class="af-k">Capabilities</span><span class="af-v">${f._caps.map(c=>CAP_LABEL[c]||c).join(' + ')}</span></div>`:'';
+  // Severe stakes → factuality matters, but only 11/39 models have Vectara data and the
+  // filter excludes untested models. So advise rather than silently filter.
+  const hallNote=(f._compliance&&f.intelligence_required==='Very High')
+    ? `<div class="af-derivation">⚠ Severe stakes: factuality matters. We did <b>not</b> auto-set a hallucination ceiling — only ~1 in 3 models is Vectara-tested, so the filter would hide strong untested models. Set <b>Max hallucination</b> in the sidebar manually if you need a hard cap.</div>` : '';
   chip.innerHTML=`<div class="af-head">
       <div class="af-title">
         <div class="af-name" title="${f.name}">${f.name}</div>
@@ -1768,9 +1848,12 @@ function renderActiveFeature(){
       <div class="af-attr"><span class="af-k">Intelligence</span><span class="af-v">${f.intelligence_required}</span></div>
       <div class="af-attr"><span class="af-k">Cost sensitivity</span><span class="af-v">${f.cost_sensitivity}</span></div>
       <div class="af-attr"><span class="af-k">Frequency</span><span class="af-v">${f.frequency}</span></div>
+      ${compAttr}
+      ${capAttr}
     </div>
     ${f.notes?`<div class="af-notes">${f.notes}</div>`:''}
-    ${derivLine}`;
+    ${derivLine}
+    ${hallNote}`;
   document.getElementById('clear-feature').addEventListener('click',clearFeatureProfile);
 }
 function closeModal(){
