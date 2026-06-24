@@ -802,15 +802,21 @@ function isPreliminary(m, task){
   if(task === 'sales_coaching') return !m.salesevals;
   // Tasks where the score IS an LMArena Elo (overall chat, writing, or industry verticals).
   if(ARENA_PREFERRED_TASKS.has(task) || ARENA_ONLY.has(task)) {
-    const catSlug = ARENA_CAT_FOR_TASK[task];
-    if(catSlug && m.arena_categories && m.arena_categories[catSlug]){
-      const cat = m.arena_categories[catSlug];
-      // Category slices are a SUBSET of total Arena battles, so their vote counts run
-      // ~10x lower than the overall board. A category model with 1000+ votes has a
-      // stable rank — only flag the genuinely-fresh entrants below that.
+    const cat = arenaCategoryRow(m, task);
+    if(cat && cat.rating != null){
+      // Score IS this category's Elo. Category slices are a SUBSET of total Arena
+      // battles, so vote counts run ~10x lower than the overall board. A category
+      // model with 1000+ votes has a stable rank — flag only fresher entrants.
       return (cat.votes||0) < ARENA_CATEGORY_MIN_VOTES;
     }
-    return !m.arena || m.arena.low_confidence;
+    // No usable category Elo for this model. For ARENA_PREFERRED tasks the score falls
+    // back to the AA proxy (see capValue), so judge confidence by AA — NOT by missing
+    // LMArena data. Otherwise long-shipped models (GLM-5.2, Qwen3.7 Max) get falsely
+    // flagged "preliminary" just because LMArena hasn't collected category votes for
+    // them yet, even though their score is the same settled AA index we trust elsewhere.
+    if(ARENA_PREFERRED_TASKS.has(task)) return m.intelligence_index == null;
+    // ARENA_ONLY verticals have no AA fallback — without category data there's no score.
+    return true;
   }
   // Everything else uses AA evaluations. Preliminary only if AA hasn’t published
   // intelligence data yet — once a score exists, AA considers it settled.
