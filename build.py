@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-build.py — merge AA + Epoch + OpenRouter + LMArena + provider overlay into models.json.
+build.py — merge AA + Epoch + OpenRouter + Arena + provider overlay into models.json.
 
 Sources (trust order for cost):
   1. providers.json (manual)  -> direct/committed price + train-policy [TRUTH for cost]
   2. Artificial Analysis API  -> intelligence + per-task sub-indices, speed, TTFT
   3. OpenRouter /models + /endpoints -> hosted price spread, cached-read, capability auto-detect
   4. Epoch AI CSV             -> country, open-weights, license, pub date
-  5. LMArena leaderboard      -> human-preference Elo by category (stub; see README)
+  5. Arena leaderboard      -> human-preference Elo by category (stub; see README)
 
 Also runs a NEW-MODEL RADAR: flags AA models >45 intelligence from tracked creators
 that aren't in aliases.json, writing data/radar.json (CI turns this into a GitHub issue).
@@ -38,7 +38,7 @@ AA_URL        = "https://artificialanalysis.ai/api/v2/data/llms/models"
 EPOCH_URL     = "https://epoch.ai/data/all_ai_models.csv"
 OR_MODELS_URL = "https://openrouter.ai/api/v1/models"
 OR_EP_URL     = "https://openrouter.ai/api/v1/models/{slug}/endpoints"
-# LMArena via the official HF leaderboard-dataset (no auth). first-rows returns the top ~100 by rank.
+# Arena via the official HF leaderboard-dataset (no auth). first-rows returns the top ~100 by rank.
 ARENA_BASE    = "https://datasets-server.huggingface.co/first-rows?dataset=lmarena-ai/leaderboard-dataset&config={config}&split=latest"
 ARENA_CONFIGS = {"overall_sc": "text_style_control", "overall_raw": "text", "coding": "webdev"}
 # Per-category pull via the HF parquet CDN (NOT the rate-limited /rows API).
@@ -178,7 +178,7 @@ RADAR_BLOCKLIST = set(json.loads(_BLOCKLIST_PATH.read_text())) if _BLOCKLIST_PAT
 
 # Per-task quality mapping. Each task -> list of (aa_evaluation_key, scale_to_100).
 # Index keys are already 0-100 (scale 1); raw benchmarks are 0-1 fractions (scale 100).
-# needs_arena flags buckets AA can't measure well (chat/writing) -> LMArena fills these.
+# needs_arena flags buckets AA can't measure well (chat/writing) -> Arena fills these.
 TASK_METRICS = {
     "research":       {"metrics": [("gpqa", 100), ("mmlu_pro", 100), ("hle", 100)], "needs_arena": False},
     "data_synthesis": {"metrics": [("gpqa", 100), ("mmlu_pro", 100), ("ifbench", 100)], "needs_arena": False},
@@ -305,7 +305,7 @@ def fetch_hallucination():
     return out
 
 def fetch_arena():
-    """Pull LMArena leaderboards (style-controlled overall, raw overall, webdev/coding) keyed by model_name."""
+    """Pull Arena leaderboards (style-controlled overall, raw overall, webdev/coding) keyed by model_name."""
     data = {}
     for field, config in ARENA_CONFIGS.items():
         dest = DATA / ("arena_" + config + ".json")
@@ -970,9 +970,9 @@ def main():
     print("[3/6] OpenRouter catalog + usage…")
     or_catalog = fetch_openrouter_catalog(); or_usage = fetch_or_usage()
     print(f"      -> {len(or_catalog)} models, {len(or_usage)} usage-ranked")
-    print("[4/6] LMArena overall + style-controlled + webdev…")
+    print("[4/6] Arena overall + style-controlled + webdev…")
     arena_data = fetch_arena();  print(f"      -> {len(arena_data)} models")
-    print("[4b/6] LMArena per-category (vertical task buckets)…")
+    print("[4b/6] Arena per-category (vertical task buckets)…")
     arena_cat_data, arena_cat_sizes = fetch_arena_categories()
     print(f"      -> {len(arena_cat_data)} models across {len(arena_cat_sizes)} categories")
     print("[5/6] Vectara hallucination…")
@@ -1010,7 +1010,7 @@ def main():
 
     # Note: "preliminary" status is now computed PER TASK in the UI, not as a static
     # field on the model. See isPreliminary() in index.html — a model can be settled
-    # for AA-driven tasks (coding, research) but preliminary for LMArena chat,
+    # for AA-driven tasks (coding, research) but preliminary for Arena chat,
     # depending on which data source backs each task's score.
 
     out = {

@@ -618,7 +618,7 @@
         <th class="num" data-sort="_ipd">Intel/$</th>
         <th class="num" data-sort="_hostmin">Cheapest host</th>
         <th class="num" data-sort="ttft_seconds">TTFT</th>
-        <th class="num" data-sort="_arena">LMArena SC</th>
+        <th class="num" data-sort="_arena">Arena SC</th>
         <th class="num" data-sort="_scd">Style δ</th>
         <th class="num" data-sort="_hall">Hall %</th>
         <th class="num" data-sort="_up">Uptime</th>
@@ -660,16 +660,16 @@ const TASK_METRICS_INFO={
   research:{metrics:['gpqa (×100)','mmlu_pro (×100)','hle (×100)'],note:'Graduate-level reasoning + broad knowledge + humanity\'s last exam.'},
   data_synthesis:{metrics:['gpqa (×100)','mmlu_pro (×100)','ifbench (×100)'],note:'Reasoning + knowledge + instruction-following (most directly relevant for CRM enrichment).'},
   web_research:{metrics:['tau2 (×100)','terminalbench_hard (×100)'],note:'Agentic tool-use benchmarks — the closest AA has to "browses the web and acts."'},
-  chat:{metrics:['LMArena Elo · multi_turn category (preferred)','AA: ifbench + intelligence_index (fallback)'],note:'AA has no direct chat benchmark, so the score is LMArena\'s multi_turn category Elo normalized to 0–100 ((elo − 1300) ÷ 3). If a model has no LMArena multi_turn data, falls back to AA\'s instruction-following + intelligence proxy.'},
+  chat:{metrics:['Arena Elo · multi_turn category (preferred)','AA: ifbench + intelligence_index (fallback)'],note:'AA has no direct chat benchmark, so the score is Arena\'s multi_turn category Elo normalized to 0–100 ((elo − 1300) ÷ 3). If a model has no Arena multi_turn data, falls back to AA\'s instruction-following + intelligence proxy.'},
   coding:{metrics:['coding_index','livecodebench (×100)'],note:'AA\'s coding aggregate + a live competitive-coding benchmark.'},
   math:{metrics:['math_index','aime_25 (×100)'],note:'AA\'s math aggregate + AIME 2025. Often sparse for newest models.'},
-  writing_email:{metrics:['LMArena Elo · creative_writing category (preferred)','AA: ifbench + intelligence_index (fallback)'],note:'AA has no direct writing benchmark, so the score is LMArena\'s creative_writing category Elo normalized to 0–100. Falls back to AA proxy when LMArena data is missing.'},
-  // Vertical buckets — backed by LMArena human-preference Elo for the matching industry category.
-  legal:{metrics:['LMArena Elo · industry_legal_and_government (normalized 0–100)'],note:'Human-preference rank from real LMArena votes on legal-domain prompts. Score = (elo − 1300) ÷ 3, clamped 0–100.'},
-  healthcare:{metrics:['LMArena Elo · industry_medicine_and_healthcare'],note:'Human-preference rank on healthcare/medical prompts. Score = (elo − 1300) ÷ 3.'},
-  business:{metrics:['LMArena Elo · industry_business_and_management_and_financial_operations'],note:'Human-preference rank on business/RevOps/finance prompts. Score = (elo − 1300) ÷ 3.'},
-  software_engineering:{metrics:['LMArena Elo · industry_software_and_it_services'],note:'Human-preference rank on software-engineering prompts. Score = (elo − 1300) ÷ 3.'},
-  expert:{metrics:['LMArena Elo · expert (general high-nuance reasoning)'],note:'Human-preference rank on hard expert prompts. Score = (elo − 1300) ÷ 3.'},
+  writing_email:{metrics:['Arena Elo · creative_writing category (preferred)','AA: ifbench + intelligence_index (fallback)'],note:'AA has no direct writing benchmark, so the score is Arena\'s creative_writing category Elo normalized to 0–100. Falls back to AA proxy when Arena data is missing.'},
+  // Vertical buckets — backed by Arena human-preference Elo for the matching industry category.
+  legal:{metrics:['Arena Elo · industry_legal_and_government (normalized 0–100)'],note:'Human-preference rank from real Arena votes on legal-domain prompts. Score = (elo − 1300) ÷ 3, clamped 0–100.'},
+  healthcare:{metrics:['Arena Elo · industry_medicine_and_healthcare'],note:'Human-preference rank on healthcare/medical prompts. Score = (elo − 1300) ÷ 3.'},
+  business:{metrics:['Arena Elo · industry_business_and_management_and_financial_operations'],note:'Human-preference rank on business/RevOps/finance prompts. Score = (elo − 1300) ÷ 3.'},
+  software_engineering:{metrics:['Arena Elo · industry_software_and_it_services'],note:'Human-preference rank on software-engineering prompts. Score = (elo − 1300) ÷ 3.'},
+  expert:{metrics:['Arena Elo · expert (general high-nuance reasoning)'],note:'Human-preference rank on hard expert prompts. Score = (elo − 1300) ÷ 3.'},
   // Sales coaching — backed by salesevals.com (NOT AA, NOT Arena).
   sales_coaching:{metrics:['salesevals.com overall score (0–100)'],note:'Sales-call coaching benchmark: 50 synthetic calls scored 0–100 by hidden ground truth. Score is used as-is. Cost on this task is $/call (real measured), not $/1M tokens.'},
   // Buckets added for Intelligent Noise feature profiles (Source Relevance Routing, Pre-Approval Classifier, Conversation Compaction).
@@ -746,7 +746,7 @@ function arenaCategoryRow(m,task){const cat=ARENA_CAT_FOR_TASK[task];if(!cat)ret
 // We prefer Arena here (matching the vertical-bucket pattern), falling back to the AA proxy only
 // when Arena data is missing.
 const ARENA_PREFERRED_TASKS=new Set(['chat','writing_email']);
-// Min votes for a per-category LMArena Elo to count as settled. Category slices are a
+// Min votes for a per-category Arena Elo to count as settled. Category slices are a
 // subset of total battles (~10x fewer votes than the overall 5000-vote board), so this
 // is tuned lower. Below it, the category rank is still moving and we mark it preliminary.
 const ARENA_CATEGORY_MIN_VOTES=1000;
@@ -754,8 +754,8 @@ const ARENA_CATEGORY_MIN_VOTES=1000;
 // understand why a model with a worse Arena rank can still score higher (different signal).
 function scoreSourceLabel(task){
   if(SALESEVALS_ONLY.has(task))return 'salesevals.com score';
-  if(ARENA_PREFERRED_TASKS.has(task))return 'LMArena '+(ARENA_CAT_FOR_TASK[task]||'category')+' Elo';
-  if(ARENA_ONLY.has(task))return 'LMArena '+(ARENA_CAT_FOR_TASK[task]||'category')+' Elo';
+  if(ARENA_PREFERRED_TASKS.has(task))return 'Arena '+(ARENA_CAT_FOR_TASK[task]||'category')+' Elo';
+  if(ARENA_ONLY.has(task))return 'Arena '+(ARENA_CAT_FOR_TASK[task]||'category')+' Elo';
   if(task==='overall')return 'AA intelligence index';
   if(task==='coding')return 'AA coding index';
   if(task==='research'||task==='data_synthesis'||task==='web_research')return 'AA reasoning + intel';
@@ -798,12 +798,12 @@ const taskSel=()=>document.querySelector('input[name=task]:checked').value;
 
 // Source-aware preliminary check. Returns TRUE when the data source backing THIS task’s
 // score is too thin/preliminary to trust. A model can be settled for AA-scored tasks
-// (coding, research) but preliminary for LMArena-scored chat — depends on which signal
+// (coding, research) but preliminary for Arena-scored chat — depends on which signal
 // drives the current score.
 function isPreliminary(m, task){
   // Sales coaching: real-call score from salesevals.com.
   if(task === 'sales_coaching') return !m.salesevals;
-  // Tasks where the score IS an LMArena Elo (overall chat, writing, or industry verticals).
+  // Tasks where the score IS an Arena Elo (overall chat, writing, or industry verticals).
   if(ARENA_PREFERRED_TASKS.has(task) || ARENA_ONLY.has(task)) {
     const cat = arenaCategoryRow(m, task);
     if(cat && cat.rating != null){
@@ -814,8 +814,8 @@ function isPreliminary(m, task){
     }
     // No usable category Elo for this model. For ARENA_PREFERRED tasks the score falls
     // back to the AA proxy (see capValue), so judge confidence by AA — NOT by missing
-    // LMArena data. Otherwise long-shipped models (GLM-5.2, Qwen3.7 Max) get falsely
-    // flagged "preliminary" just because LMArena hasn't collected category votes for
+    // Arena data. Otherwise long-shipped models (GLM-5.2, Qwen3.7 Max) get falsely
+    // flagged "preliminary" just because Arena hasn't collected category votes for
     // them yet, even though their score is the same settled AA index we trust elsewhere.
     if(ARENA_PREFERRED_TASKS.has(task)) return m.intelligence_index == null;
     // ARENA_ONLY verticals have no AA fallback — without category data there's no score.
@@ -937,7 +937,7 @@ async function load(){
   }
   // Radar lives on the SAME line as Data Sources (one logical span; wraps within itself if needed).
   const radarBit=radar?` · <span class="warn" data-pop="radar" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted">${radar} new model(s) flagged</span>`:'';
-  $('#meta').innerHTML=`<span><span class="ds-prefix">Data Sources:</span> <a href="https://artificialanalysis.ai" target="_blank" rel="noopener">Artificial Analysis</a> · <a href="https://epoch.ai/data" target="_blank" rel="noopener">Epoch</a> · <a href="https://openrouter.ai/models" target="_blank" rel="noopener">OpenRouter</a> · <a href="https://lmarena.ai" target="_blank" rel="noopener">LMArena</a> · <a href="https://huggingface.co/models" target="_blank" rel="noopener">Hugging Face</a> · <a href="https://github.com/vectara/hallucination-leaderboard" target="_blank" rel="noopener">Vectara</a> · <a href="https://salesevals.com" target="_blank" rel="noopener">salesevals</a><span id="meta-fielded"></span></span>`;
+  $('#meta').innerHTML=`<span><span class="ds-prefix">Data Sources:</span> <a href="https://artificialanalysis.ai" target="_blank" rel="noopener">Artificial Analysis</a> · <a href="https://epoch.ai/data" target="_blank" rel="noopener">Epoch</a> · <a href="https://openrouter.ai/models" target="_blank" rel="noopener">OpenRouter</a> · <a href="https://lmarena.ai" target="_blank" rel="noopener">Arena</a> · <a href="https://huggingface.co/models" target="_blank" rel="noopener">Hugging Face</a> · <a href="https://github.com/vectara/hallucination-leaderboard" target="_blank" rel="noopener">Vectara</a> · <a href="https://salesevals.com" target="_blank" rel="noopener">salesevals</a><span id="meta-fielded"></span></span>`;
   readState();
   // Seed the floor-undo baseline AFTER readState so the initial loaded value isn’t pushed onto the history.
   lastCapturedFloor=$('#floor').value;
@@ -948,7 +948,7 @@ async function load(){
 function renderRecommender(){
   const task=taskSel(), C=constraints(), floor=+$('#floor').value, cF=cacheFrac(), bF=batchFrac();
   const box=$('#recs'); box.innerHTML='';
-  // Recommender top-3 excludes PRELIMINARY models — their LMArena signal is thin (no rank
+  // Recommender top-3 excludes PRELIMINARY models — their Arena signal is thin (no rank
   // or <5000 votes), so the score may shift as community votes accumulate. They still
   // appear in scatter + table so users can see them, just not as routing recommendations.
   const scored=MODELS.filter(m=>!isPreliminary(m,task) && passes(m,C)).map(m=>({m,cap:capValue(m,task),eff:effective(m,cF,bF)}))
@@ -959,7 +959,7 @@ function renderRecommender(){
     const isVert=ARENA_ONLY.has(task);
     const anyData=MODELS.some(m=>capValue(m,task)!=null);
     if(isVert&&!anyData){
-      box.innerHTML=`<div class="rec-empty">⏳ <b>${TASK_LABEL[task]}</b> vertical data isn’t available yet — LMArena’s per-industry leaderboard for this category will populate after the next monthly refresh (rate-limit constrained today). Pick a general task or another vertical that has data.</div>`;
+      box.innerHTML=`<div class="rec-empty">⏳ <b>${TASK_LABEL[task]}</b> vertical data isn’t available yet — Arena’s per-industry leaderboard for this category will populate after the next monthly refresh (rate-limit constrained today). Pick a general task or another vertical that has data.</div>`;
     } else {
       // Diagnose WHICH constraints are binding. The builder auto-applies several hidden
       // filters (fast-chat, no-train, US-hosted, capabilities), so a bare "relax a
@@ -1054,10 +1054,10 @@ function renderRecommender(){
   // Message depends on which signal actually drives the score for this task.
   if(ARENA_PREFERRED_TASKS.has(task)){
     const catSlug=ARENA_CAT_FOR_TASK[task]||'(none)';
-    $('#recArena').innerHTML = `ℹ ${TASK_LABEL[task]} score = <b>LMArena ${catSlug} category Elo</b> normalized to 0–100 (the real human-preference signal). AA has no direct benchmark for this task; the score above already reflects LMArena, not an AA proxy.`;
+    $('#recArena').innerHTML = `ℹ ${TASK_LABEL[task]} score = <b>Arena ${catSlug} category Elo</b> normalized to 0–100 (the real human-preference signal). AA has no direct benchmark for this task; the score above already reflects Arena, not an AA proxy.`;
   } else {
     const an=MODELS.length&&META.models.find(m=>m.task_scores[task]?.needs_arena);
-    $('#recArena').innerHTML = an ? `ℹ ${TASK_LABEL[task]} has no direct AA benchmark — score uses an AA proxy. The LMArena human-preference rank on each card is the real signal.` : '';
+    $('#recArena').innerHTML = an ? `ℹ ${TASK_LABEL[task]} has no direct AA benchmark — score uses an AA proxy. The Arena human-preference rank on each card is the real signal.` : '';
   }
 }
 function receipts(m,task){
@@ -1073,9 +1073,9 @@ function receipts(m,task){
   if(m.ttft_seconds!=null)out.push(`TTFT ${m.ttft_seconds.toFixed(1)}s${m.ttft_seconds>30?' ⚠ slow for chat':''}`);
   // Vertical-specific Arena rank takes precedence over the overall rank when a vertical task is selected.
   const catRow=arenaCategoryRow(m,task);
-  if(catRow&&catRow.rank){const tot=catRow.total_in_cat?` of ${catRow.total_in_cat}`:'';out.push(`LMArena #${catRow.rank}${tot} in ${TASK_LABEL[task]}`);}
-  else if(m.arena)out.push(`LMArena human-pref #${m.arena.rank}${m.arena.low_confidence?' (low votes)':''}`);
-  else out.push('LMArena: not in top 100 overall');
+  if(catRow&&catRow.rank){const tot=catRow.total_in_cat?` of ${catRow.total_in_cat}`:'';out.push(`Arena #${catRow.rank}${tot} in ${TASK_LABEL[task]}`);}
+  else if(m.arena)out.push(`Arena human-pref #${m.arena.rank}${m.arena.low_confidence?' (low votes)':''}`);
+  else out.push('Arena: not in top 100 overall');
   const h=m.hallucination&&m.hallucination.hallucination_rate;
   if(h!=null)out.push(`Hallucinates ${h}% (Vectara)${h<=4?' ✓ best-in-class':h>=15?' ⚠ high':''}`);
   const rel=m.reliability;
@@ -1198,9 +1198,9 @@ function showTip(e,m,task){
     <div class="r"><span class="l">Hosted spread</span><span>${sp?`$${sp.input_min}–$${sp.input_max} (${sp.host_count})`:'—'}</span></div>
     <div class="r"><span class="l">Vision / FC / Struct</span><span>${b(m.capabilities.vision)}/${b(m.capabilities.function_calling)}/${b(m.capabilities.structured_output)}</span></div>
     <div class="r"><span class="l">Origin · train</span><span>${flagFor(m.provenance.country)||'—'} · ${m.policy.train_policy||'—'}</span></div>`
-    +(m.arena?`<div class="r"><span class="l">LMArena SC (rank)</span><span>${m.arena.elo_overall_sc} (#${m.arena.rank})${m.arena.low_confidence?' ⚠ low votes':''}</span></div>
-       <div class="r"><span class="l">LMArena style δ</span><span>${m.arena.sc_delta!=null?(m.arena.sc_delta>0?'+':'')+m.arena.sc_delta:'—'}</span></div>`
-     :`<div class="r"><span class="l">LMArena</span><span>not in top 100</span></div>`);
+    +(m.arena?`<div class="r"><span class="l">Arena SC (rank)</span><span>${m.arena.elo_overall_sc} (#${m.arena.rank})${m.arena.low_confidence?' ⚠ low votes':''}</span></div>
+       <div class="r"><span class="l">Arena style δ</span><span>${m.arena.sc_delta!=null?(m.arena.sc_delta>0?'+':'')+m.arena.sc_delta:'—'}</span></div>`
+     :`<div class="r"><span class="l">Arena</span><span>not in top 100</span></div>`);
   // Show first so we can measure, then clamp into viewport (8px gutter on all sides).
   t.style.opacity=1;t.style.left='0px';t.style.top='0px';
   const vw=window.innerWidth,vh=window.innerHeight,gap=8,offset=14;
@@ -1255,7 +1255,7 @@ function renderTable(){
     const dimmed=!keep.has(m.canonical)?' dim':'';
     const score=m._cap?.toFixed?.(0)??'—';
     const effTxt=m._eff!=null?'$'+m._eff.toFixed(2)+'/1M':'—';
-    const arenaTxt=m.arena?`LMArena #${m.arena.rank}`:'';
+    const arenaTxt=m.arena?`Arena #${m.arena.rank}`:'';
     const upTxt=m._up!=null?m._up+'% up':'';
     const hallTxt=m._hall!=null?m._hall+'% hall':'';
     const origin=flagFor(m.provenance.country);
@@ -1282,7 +1282,7 @@ function renderFindings(){
   const china=MODELS.filter(m=>(m.provenance.country||'').toLowerCase().includes('china'));
   if(china.length)f(`<b>Compliance collision:</b> ${china.length} best-value models are China-origin (${china.map(m=>m.display).join(', ')}). All have a US-hosted path (Bedrock/Together/Fireworks) for no-train compliance.`);
   const scd=MODELS.filter(m=>m.arena&&m.arena.sc_delta!=null).sort((a,b)=>a.arena.sc_delta-b.arena.sc_delta);
-  if(scd.length&&scd[0].arena.sc_delta<-5)f(`<b>Vibes vs. substance:</b> ${scd[0].display} loses ${Math.abs(scd[0].arena.sc_delta)} Elo under LMArena style-control — part of its human-preference edge is length/formatting, not substance.`);
+  if(scd.length&&scd[0].arena.sc_delta<-5)f(`<b>Vibes vs. substance:</b> ${scd[0].display} loses ${Math.abs(scd[0].arena.sc_delta)} Elo under Arena style-control — part of its human-preference edge is length/formatting, not substance.`);
   const halluRanked=MODELS.filter(m=>m.hallucination&&m.hallucination.hallucination_rate!=null).sort((a,b)=>a.hallucination.hallucination_rate-b.hallucination.hallucination_rate);
   if(halluRanked.length>=3){const best=halluRanked[0],front2=halluRanked.find(m=>m.tier==='frontier');
     if(front2&&best.canonical!==front2.canonical&&best.hallucination.hallucination_rate<front2.hallucination.hallucination_rate)
@@ -1460,18 +1460,18 @@ const POP_CONTENT={
   task:`<h4>Task</h4>
     <p>Sets the <b>capability axis</b> used for the recommender’s quality score, the scatter Y-axis, and the table’s "Task score" column.</p>
     <p><b>General tasks</b> score via AA’s per-task sub-indices (gpqa, ifbench, livecodebench, etc.) — see the ⓘ on the Quality floor for the formula breakdown.</p>
-    <p><b>Industry verticals</b> use LMArena’s human-preference Elo for the matching industry leaderboard, normalized to a 0–100 score. These directly answer <i>"is this model preferred by humans for this kind of work."</i></p>
+    <p><b>Industry verticals</b> use Arena’s human-preference Elo for the matching industry leaderboard, normalized to a 0–100 score. These directly answer <i>"is this model preferred by humans for this kind of work."</i></p>
     <p>"Overall" uses AA’s aggregate intelligence index. The other tasks are <b>more specific and often more useful</b> — a model can be middling overall but top-tier at a vertical.</p>`,
   verticals:`<h4>Industry verticals</h4>
-    <p>These task buckets are backed by <b>LMArena’s per-industry human-preference rankings</b> — actual humans voting on which model’s output is better for that industry’s prompts.</p>
-    <p>Each vertical maps to one LMArena category:</p>
+    <p>These task buckets are backed by <b>Arena’s per-industry human-preference rankings</b> — actual humans voting on which model’s output is better for that industry’s prompts.</p>
+    <p>Each vertical maps to one Arena category:</p>
     <div class="row"><span>Business / RevOps</span><b>industry_business_and_management_and_financial_operations</b></div>
     <div class="row"><span>Legal</span><b>industry_legal_and_government</b></div>
     <div class="row"><span>Healthcare</span><b>industry_medicine_and_healthcare</b></div>
     <div class="row"><span>Software engineering</span><b>industry_software_and_it_services</b></div>
     <div class="row"><span>Expert reasoning</span><b>expert (general nuanced)</b></div>
-    <p style="margin-top:10px"><b>Score normalization:</b> LMArena Elo (typically 1300–1600) is mapped to 0–100 as <code>(elo − 1300) / 3</code>, so an Elo of 1450 reads as a score of 50.</p>
-    <p><b>Coverage note:</b> some verticals may show "—" until the next monthly LMArena pull completes. The category data is on a paginated endpoint with rate limits.</p>`,
+    <p style="margin-top:10px"><b>Score normalization:</b> Arena Elo (typically 1300–1600) is mapped to 0–100 as <code>(elo − 1300) / 3</code>, so an Elo of 1450 reads as a score of 50.</p>
+    <p><b>Coverage note:</b> some verticals may show "—" until the next monthly Arena pull completes. The category data is on a paginated endpoint with rate limits.</p>`,
   constraints:`<h4>Constraints</h4>
     <p><b>Capabilities:</b> hard requirements — vision, function calling, structured output, fine-tuning. A model that doesn’t support these is filtered out (not just ranked lower).</p>
     <p><b>Policy:</b> US-origin only, no-train policy required, US-hosted available, chat-fast (TTFT&lt;5s).</p>
@@ -1479,7 +1479,7 @@ const POP_CONTENT={
     <p>Constraints turn the recommender into an <b>"acceptable picks"</b> ranking — not just "cheapest" but "cheapest that I can actually use."</p>`,
   recommender:`<h4>Routing recommender</h4>
     <p>Shows the <b>top-3 cheapest models that clear your quality floor</b> for the selected task + constraints.</p>
-    <p>Each card shows: model name, score on the task, effective cost, % cheaper than the top-capability pick, and <b>trade-off receipts</b> (origin, train policy, cheapest host, TTFT, LMArena rank).</p>
+    <p>Each card shows: model name, score on the task, effective cost, % cheaper than the top-capability pick, and <b>trade-off receipts</b> (origin, train policy, cheapest host, TTFT, Arena rank).</p>
     <p>The #1 card is the answer to "cheapest model good enough for this." The others give you fallbacks if #1 violates an unstated requirement.</p>`,
   reliability:`<h4>Reliability &amp; truthfulness</h4>
     <p><b>Min uptime:</b> best-host uptime over the last 24h, from OpenRouter’s per-provider data. Filters out models whose best available host is flaky.</p>
@@ -1534,7 +1534,7 @@ const TAB_HOW=()=>{
     ${score!=null?renderWorkedExample(ex,task):`<p style="color:var(--warn)">No data for this combination — try a different model or task.</p>`}
     <h4>Limitations</h4>
     <p>1. Missing metrics get skipped, not penalized — a model with sparse data may average just one or two inputs.</p>
-    <p>2. <b>Chat and Email/writing have no direct AA benchmark</b> — they use instruction-following + intelligence as a proxy. The LMArena human-preference rank shown alongside is the real signal.</p>
+    <p>2. <b>Chat and Email/writing have no direct AA benchmark</b> — they use instruction-following + intelligence as a proxy. The Arena human-preference rank shown alongside is the real signal.</p>
     <p>3. <b>Sales coaching</b> uses salesevals.com’s hidden-ground-truth score directly (no formula). Cost is $/call (real measured), not $/1M tokens.</p>
     <p>4. For a high-stakes decision, test the top-3 the recommender returns against your own examples.</p>`;
 };
@@ -1563,7 +1563,7 @@ const TAB_LEVELS=()=>{
 const TAB_AGENTIC=()=>`<h4>What is "agentic scoring"?</h4>
   <p>Standard LLM benchmarks (MMLU, GPQA, HumanEval, etc.) test isolated language tasks: answer this question, complete this code. They don’t measure whether a model can <b>run a multi-step workflow</b> — pick a tool, call it, recover from errors, and finish a real job. That’s what agentic scoring captures.</p>
   <h4>Where it comes from in this dashboard</h4>
-  <p>For the agentic-flavored task buckets (<b>Web research, Coding, Software engineering, Expert reasoning</b>, and the verticals), the score blends AA’s agentic sub-indices — <code>tau2</code> (tool-use), <code>terminalbench_hard</code> (multi-step terminal tasks), <code>livecodebench</code> — with the <b>LMArena</b> human-preference rank for the matching industry. AA gives you the benchmark number; LMArena tells you whether humans actually prefer the model’s output in real work.</p>
+  <p>For the agentic-flavored task buckets (<b>Web research, Coding, Software engineering, Expert reasoning</b>, and the verticals), the score blends AA’s agentic sub-indices — <code>tau2</code> (tool-use), <code>terminalbench_hard</code> (multi-step terminal tasks), <code>livecodebench</code> — with the <b>Arena</b> human-preference rank for the matching industry. AA gives you the benchmark number; Arena tells you whether humans actually prefer the model’s output in real work.</p>
   <h4>Agent Arena’s methodology (<a href="https://arena.ai/blog/agent-arena-methodology/" target="_blank">arena.ai</a>)</h4>
   <p>Arena’s agent leaderboard uses <b>causal tracing</b>, not pairwise voting. Instead of asking "which response do you prefer?", it tracks real user sessions on arena.ai (~160K agent tasks in a recent week — coding, financial analysis, research, doc creation) and measures five concrete signals:</p>
   <table style="font-size:var(--fs-button);margin:8px 0">
@@ -1576,7 +1576,7 @@ const TAB_AGENTIC=()=>`<h4>What is "agentic scoring"?</h4>
   <p>Statistically it’s a multi-intervention randomized controlled trial: sessions randomly sample different orchestrator models and the system computes <b>net improvement</b> with 95% confidence intervals, weighted toward recent data.</p>
   <h4>Why this matters for routing</h4>
   <p>An agentic score isn’t just "smarter model = better." A frontier model that <i>doesn’t recover well from bash errors</i> loses to a cheaper model that does. That’s why <b>DeepSeek V4 Flash</b> can rank surprisingly well for web research despite being floor-tier on overall intelligence — it’s measured on the right things for the task.</p>
-  <p style="color:var(--dim);font-size:var(--fs-button)">⚠ As of this snapshot, agent-specific Elos aren’t separately exposed in the LMArena public dataset we pull — we use the closest industry/use-case categories instead. When agent-specific data lands, we’ll wire it in.</p>`;
+  <p style="color:var(--dim);font-size:var(--fs-button)">⚠ As of this snapshot, agent-specific Elos aren’t separately exposed in the Arena public dataset we pull — we use the closest industry/use-case categories instead. When agent-specific data lands, we’ll wire it in.</p>`;
 const TAB_HOWTO=()=>{const badge=n=>`<span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#04110b;text-align:center;font-weight:700;line-height:22px;font-size:var(--fs-caption)">${n}</span>`;
   const row=(n,title,body)=>`<tr><td style="padding-right:14px;vertical-align:top;width:32px">${badge(n)}</td><td style="padding:0"><b>${title}</b><div style="color:var(--dim);margin-top:2px">${body}</div></td></tr>`;
   return `<h4>Three steps to get an answer</h4>
