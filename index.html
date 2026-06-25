@@ -937,7 +937,7 @@ async function load(){
   }
   // Radar lives on the SAME line as Data Sources (one logical span; wraps within itself if needed).
   const radarBit=radar?` · <span class="warn" data-pop="radar" style="cursor:pointer;text-decoration:underline;text-decoration-style:dotted">${radar} new model(s) flagged</span>`:'';
-  $('#meta').innerHTML=`<span><span class="ds-prefix">Data Sources:</span> Artificial Analysis · Epoch · OpenRouter · LMArena · Hugging Face · salesevals<span id="meta-fielded"></span></span>`;
+  $('#meta').innerHTML=`<span><span class="ds-prefix">Data Sources:</span> <a href="https://artificialanalysis.ai" target="_blank" rel="noopener">Artificial Analysis</a> · <a href="https://epoch.ai/data" target="_blank" rel="noopener">Epoch</a> · <a href="https://openrouter.ai/models" target="_blank" rel="noopener">OpenRouter</a> · <a href="https://lmarena.ai" target="_blank" rel="noopener">LMArena</a> · <a href="https://huggingface.co/models" target="_blank" rel="noopener">Hugging Face</a> · <a href="https://github.com/vectara/hallucination-leaderboard" target="_blank" rel="noopener">Vectara</a> · <a href="https://salesevals.com" target="_blank" rel="noopener">salesevals</a><span id="meta-fielded"></span></span>`;
   readState();
   // Seed the floor-undo baseline AFTER readState so the initial loaded value isn’t pushed onto the history.
   lastCapturedFloor=$('#floor').value;
