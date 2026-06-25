@@ -15,7 +15,7 @@ jobs:
         env:
           AA_API_KEY: ${{ secrets.AA_API_KEY }}
         run: |
-          python3 - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          python3 - <<'PY' | tee -a "$GITHUB_STEP_SUMMARY"
           import os, json, urllib.request
           key = os.environ["AA_API_KEY"]
           def probe(url):
