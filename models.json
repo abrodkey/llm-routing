@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-25T08:47:59+00:00",
+  "generated_at": "2026-06-25T14:51:30+00:00",
   "sources": {
     "aa": {
       "url": "https://artificialanalysis.ai/api/v2/data/llms/models",
@@ -76,7 +76,29 @@
         "hf"
       ],
       "hf_id": "nvidia/MiniMax-M3-NVFP4",
-      "hf_downloads": 12
+      "hf_downloads": 185
+    },
+    {
+      "base": "Nano Banana 2 (Gemini 3.1 Flash Image)",
+      "creator": "Google",
+      "max_intel": null,
+      "release_date": "2026-06-18",
+      "newer_than_our": "2026-05-19",
+      "sources": [
+        "openrouter"
+      ],
+      "or_id": "google/gemini-3.1-flash-image"
+    },
+    {
+      "base": "Nano Banana Pro (Gemini 3 Pro Image)",
+      "creator": "Google",
+      "max_intel": null,
+      "release_date": "2026-06-18",
+      "newer_than_our": "2026-05-19",
+      "sources": [
+        "openrouter"
+      ],
+      "or_id": "google/gemini-3-pro-image"
     },
     {
       "base": "GLM-5.2",
@@ -100,7 +122,18 @@
         "hf"
       ],
       "hf_id": "zai-org/GLM-5.2-FP8",
-      "hf_downloads": 445304
+      "hf_downloads": 477681
+    },
+    {
+      "base": "GLM 5.2",
+      "creator": "Z AI",
+      "max_intel": null,
+      "release_date": "2026-06-16",
+      "newer_than_our": "2026-04-07",
+      "sources": [
+        "openrouter"
+      ],
+      "or_id": "z-ai/glm-5.2"
     },
     {
       "base": "FastContext-1.0-4B-RL",
@@ -112,7 +145,7 @@
         "hf"
       ],
       "hf_id": "microsoft/FastContext-1.0-4B-RL",
-      "hf_downloads": 3353
+      "hf_downloads": 3533
     },
     {
       "base": "FastContext-1.0-4B-SFT",
@@ -124,7 +157,18 @@
         "hf"
       ],
       "hf_id": "microsoft/FastContext-1.0-4B-SFT",
-      "hf_downloads": 4805
+      "hf_downloads": 5276
+    },
+    {
+      "base": "Kimi K2.7 Code",
+      "creator": "Moonshot",
+      "max_intel": null,
+      "release_date": "2026-06-12",
+      "newer_than_our": null,
+      "sources": [
+        "openrouter"
+      ],
+      "or_id": "moonshotai/kimi-k2.7-code"
     }
   ],
   "task_buckets": [
@@ -517,7 +561,7 @@
       "coding_index": 74.3,
       "math_index": null,
       "output_tok_per_sec": 65.691,
-      "ttft_seconds": 23.583,
+      "ttft_seconds": 20.207,
       "task_scores": {
         "research": {
           "score": 68.8,
@@ -617,12 +661,12 @@
           "cheapest_provider": "Google",
           "cheapest_in": 5.0,
           "cheapest_out": 25.0,
-          "cheapest_uptime_1d": 99.94,
+          "cheapest_uptime_1d": 99.89,
           "best_uptime_1d": 100.0
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 99.94,
+        "cheapest_uptime_1d": 99.89,
         "best_uptime_1d": 100.0
       },
       "usage_rank": 18,
@@ -836,7 +880,7 @@
       "coding_index": 63,
       "math_index": null,
       "output_tok_per_sec": 68.352,
-      "ttft_seconds": 72.548,
+      "ttft_seconds": 79.559,
       "task_scores": {
         "research": {
           "score": 58.8,
@@ -936,13 +980,13 @@
           "cheapest_provider": "Amazon Bedrock",
           "cheapest_in": 3.0,
           "cheapest_out": 15.0,
-          "cheapest_uptime_1d": 100,
-          "best_uptime_1d": 100
+          "cheapest_uptime_1d": 99.99,
+          "best_uptime_1d": 99.99
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 100,
-        "best_uptime_1d": 100
+        "cheapest_uptime_1d": 99.99,
+        "best_uptime_1d": 99.99
       },
       "usage_rank": 102,
       "hallucination": {
@@ -1159,7 +1203,7 @@
       "coding_index": null,
       "math_index": null,
       "output_tok_per_sec": 60.63,
-      "ttft_seconds": 1.188,
+      "ttft_seconds": 1.122,
       "task_scores": {
         "research": {
           "score": 46.6,
@@ -1257,13 +1301,13 @@
           "cheapest_provider": "Amazon Bedrock",
           "cheapest_in": 3.0,
           "cheapest_out": 15.0,
-          "cheapest_uptime_1d": 99.96,
-          "best_uptime_1d": 99.97
+          "cheapest_uptime_1d": 99.99,
+          "best_uptime_1d": 99.99
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 99.96,
-        "best_uptime_1d": 99.97
+        "cheapest_uptime_1d": 99.99,
+        "best_uptime_1d": 99.99
       },
       "usage_rank": 102,
       "hallucination": {
@@ -1479,8 +1523,8 @@
       "intelligence_index": 29.6,
       "coding_index": 43.9,
       "math_index": 83.7,
-      "output_tok_per_sec": 170.421,
-      "ttft_seconds": 13.493,
+      "output_tok_per_sec": 154.126,
+      "ttft_seconds": 13.719,
       "task_scores": {
         "research": {
           "score": 51.0,
@@ -1635,8 +1679,8 @@
       "intelligence_index": 53.1,
       "coding_index": 71.6,
       "math_index": null,
-      "output_tok_per_sec": 74.258,
-      "ttft_seconds": 12.762,
+      "output_tok_per_sec": 78.254,
+      "ttft_seconds": 12.716,
       "task_scores": {
         "research": {
           "score": 68.1,
@@ -1736,13 +1780,13 @@
           "cheapest_provider": "OpenAI",
           "cheapest_in": 5.0,
           "cheapest_out": 30.0,
-          "cheapest_uptime_1d": 94.25,
-          "best_uptime_1d": 99.46
+          "cheapest_uptime_1d": 93.83,
+          "best_uptime_1d": 98.82
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 94.25,
-        "best_uptime_1d": 99.46
+        "cheapest_uptime_1d": 93.83,
+        "best_uptime_1d": 98.82
       },
       "usage_rank": 49,
       "hallucination": {
@@ -2057,13 +2101,13 @@
           "cheapest_provider": "OpenAI",
           "cheapest_in": 5.0,
           "cheapest_out": 30.0,
-          "cheapest_uptime_1d": 94.24,
-          "best_uptime_1d": 99.46
+          "cheapest_uptime_1d": 93.83,
+          "best_uptime_1d": 98.81
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 94.24,
-        "best_uptime_1d": 99.46
+        "cheapest_uptime_1d": 93.83,
+        "best_uptime_1d": 98.81
       },
       "usage_rank": 49,
       "hallucination": {
@@ -2274,7 +2318,7 @@
       "coding_index": 71.1,
       "math_index": null,
       "output_tok_per_sec": 159.31,
-      "ttft_seconds": 99.76,
+      "ttft_seconds": 95.902,
       "task_scores": {
         "research": {
           "score": 66.8,
@@ -2374,13 +2418,13 @@
           "cheapest_provider": "OpenAI",
           "cheapest_in": 2.5,
           "cheapest_out": 15.0,
-          "cheapest_uptime_1d": 99.64,
-          "best_uptime_1d": 99.95
+          "cheapest_uptime_1d": 99.74,
+          "best_uptime_1d": 99.93
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 99.64,
-        "best_uptime_1d": 99.95
+        "cheapest_uptime_1d": 99.74,
+        "best_uptime_1d": 99.93
       },
       "usage_rank": 87,
       "hallucination": {
@@ -2596,8 +2640,8 @@
       "intelligence_index": 40,
       "coding_index": 56.1,
       "math_index": null,
-      "output_tok_per_sec": 184.659,
-      "ttft_seconds": 4.202,
+      "output_tok_per_sec": 178.695,
+      "ttft_seconds": 3.913,
       "task_scores": {
         "research": {
           "score": 57.0,
@@ -2697,13 +2741,13 @@
           "cheapest_provider": "OpenAI",
           "cheapest_in": 0.75,
           "cheapest_out": 4.5,
-          "cheapest_uptime_1d": 89.11,
-          "best_uptime_1d": 99.9
+          "cheapest_uptime_1d": 95.5,
+          "best_uptime_1d": 99.89
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 89.11,
-        "best_uptime_1d": 99.9
+        "cheapest_uptime_1d": 95.5,
+        "best_uptime_1d": 99.89
       },
       "usage_rank": 79,
       "hallucination": {
@@ -2914,7 +2958,7 @@
       "coding_index": 56.1,
       "math_index": null,
       "output_tok_per_sec": 169.707,
-      "ttft_seconds": 3.141,
+      "ttft_seconds": 2.953,
       "task_scores": {
         "research": {
           "score": 54.1,
@@ -3014,13 +3058,13 @@
           "cheapest_provider": "Azure",
           "cheapest_in": 0.2,
           "cheapest_out": 1.25,
-          "cheapest_uptime_1d": 99.42,
-          "best_uptime_1d": 99.42
+          "cheapest_uptime_1d": 99.23,
+          "best_uptime_1d": 99.23
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 99.42,
-        "best_uptime_1d": 99.42
+        "cheapest_uptime_1d": 99.23,
+        "best_uptime_1d": 99.23
       },
       "usage_rank": 78,
       "hallucination": {
@@ -3065,8 +3109,8 @@
       "intelligence_index": 50.2,
       "coding_index": 70.1,
       "math_index": null,
-      "output_tok_per_sec": 220.853,
-      "ttft_seconds": 13.036,
+      "output_tok_per_sec": 216.664,
+      "ttft_seconds": 13.84,
       "task_scores": {
         "research": {
           "score": 66.6,
@@ -3166,13 +3210,13 @@
           "cheapest_provider": "Google",
           "cheapest_in": 1.5,
           "cheapest_out": 9.0,
-          "cheapest_uptime_1d": 99.0,
-          "best_uptime_1d": 99.81
+          "cheapest_uptime_1d": 98.96,
+          "best_uptime_1d": 99.82
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 99.0,
-        "best_uptime_1d": 99.81
+        "cheapest_uptime_1d": 98.96,
+        "best_uptime_1d": 99.82
       },
       "usage_rank": 21,
       "hallucination": null,
@@ -3366,7 +3410,7 @@
       "intelligence_index": 46.5,
       "coding_index": 68.8,
       "math_index": null,
-      "output_tok_per_sec": 144.988,
+      "output_tok_per_sec": 141.688,
       "ttft_seconds": 29.762,
       "task_scores": {
         "research": {
@@ -3467,13 +3511,13 @@
           "cheapest_provider": "Google",
           "cheapest_in": 2.0,
           "cheapest_out": 12.0,
-          "cheapest_uptime_1d": 96.7,
-          "best_uptime_1d": 99.54
+          "cheapest_uptime_1d": 94.99,
+          "best_uptime_1d": 99.63
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 96.7,
-        "best_uptime_1d": 99.54
+        "cheapest_uptime_1d": 94.99,
+        "best_uptime_1d": 99.63
       },
       "usage_rank": 101,
       "hallucination": {
@@ -3790,13 +3834,13 @@
           "cheapest_provider": "Decart",
           "cheapest_in": 0.66,
           "cheapest_out": 3.41,
-          "cheapest_uptime_1d": 99.43,
-          "best_uptime_1d": 99.95
+          "cheapest_uptime_1d": 99.4,
+          "best_uptime_1d": 99.98
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 99.43,
-        "best_uptime_1d": 99.95
+        "cheapest_uptime_1d": 99.4,
+        "best_uptime_1d": 99.98
       },
       "usage_rank": 60,
       "hallucination": {
@@ -4008,8 +4052,8 @@
       "intelligence_index": 44.3,
       "coding_index": 59.4,
       "math_index": null,
-      "output_tok_per_sec": 65.7,
-      "ttft_seconds": 1.174,
+      "output_tok_per_sec": 61.298,
+      "ttft_seconds": 1.016,
       "task_scores": {
         "research": {
           "score": 62.3,
@@ -4333,8 +4377,8 @@
       "intelligence_index": 40.3,
       "coding_index": 56.2,
       "math_index": null,
-      "output_tok_per_sec": 124.089,
-      "ttft_seconds": 1.39,
+      "output_tok_per_sec": 125.819,
+      "ttft_seconds": 1.016,
       "task_scores": {
         "research": {
           "score": 60.8,
@@ -4434,13 +4478,13 @@
           "cheapest_provider": "Wafer",
           "cheapest_in": 0.09,
           "cheapest_out": 0.18,
-          "cheapest_uptime_1d": 96.77,
-          "best_uptime_1d": 99.89
+          "cheapest_uptime_1d": 96.43,
+          "best_uptime_1d": 99.92
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 96.77,
-        "best_uptime_1d": 99.89
+        "cheapest_uptime_1d": 96.43,
+        "best_uptime_1d": 99.92
       },
       "usage_rank": 51,
       "hallucination": null,
@@ -4646,8 +4690,8 @@
       "intelligence_index": 40,
       "coding_index": null,
       "math_index": null,
-      "output_tok_per_sec": 41.298,
-      "ttft_seconds": 2.158,
+      "output_tok_per_sec": 39.689,
+      "ttft_seconds": 2.191,
       "task_scores": {
         "research": {
           "score": 58.8,
@@ -4939,8 +4983,8 @@
       "intelligence_index": 40.2,
       "coding_index": 55.8,
       "math_index": null,
-      "output_tok_per_sec": 80.841,
-      "ttft_seconds": 0.797,
+      "output_tok_per_sec": 82.801,
+      "ttft_seconds": 0.789,
       "task_scores": {
         "research": {
           "score": 57.4,
@@ -5040,12 +5084,12 @@
           "cheapest_provider": "GMICloud",
           "cheapest_in": 0.98,
           "cheapest_out": 3.08,
-          "cheapest_uptime_1d": 97.93,
+          "cheapest_uptime_1d": 98.16,
           "best_uptime_1d": 99.99
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 97.93,
+        "cheapest_uptime_1d": 98.16,
         "best_uptime_1d": 99.99
       },
       "usage_rank": 63,
@@ -5325,13 +5369,13 @@
           "cheapest_provider": "OpenAI",
           "cheapest_in": 2.5,
           "cheapest_out": 15.0,
-          "cheapest_uptime_1d": 99.64,
-          "best_uptime_1d": 99.95
+          "cheapest_uptime_1d": 99.74,
+          "best_uptime_1d": 99.93
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 99.64,
-        "best_uptime_1d": 99.95
+        "cheapest_uptime_1d": 99.74,
+        "best_uptime_1d": 99.93
       },
       "usage_rank": 87,
       "hallucination": null,
@@ -5543,8 +5587,8 @@
       "intelligence_index": 54.8,
       "coding_index": 74.9,
       "math_index": null,
-      "output_tok_per_sec": 66.347,
-      "ttft_seconds": 25.352,
+      "output_tok_per_sec": 69.191,
+      "ttft_seconds": 23.512,
       "task_scores": {
         "research": {
           "score": 68.9,
@@ -5644,13 +5688,13 @@
           "cheapest_provider": "OpenAI",
           "cheapest_in": 5.0,
           "cheapest_out": 30.0,
-          "cheapest_uptime_1d": 94.25,
-          "best_uptime_1d": 99.46
+          "cheapest_uptime_1d": 93.83,
+          "best_uptime_1d": 98.82
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 94.25,
-        "best_uptime_1d": 99.46
+        "cheapest_uptime_1d": 93.83,
+        "best_uptime_1d": 98.82
       },
       "usage_rank": 49,
       "hallucination": null,
@@ -5695,8 +5739,8 @@
       "intelligence_index": 35.4,
       "coding_index": 56.5,
       "math_index": null,
-      "output_tok_per_sec": 60.214,
-      "ttft_seconds": 0.966,
+      "output_tok_per_sec": 61.304,
+      "ttft_seconds": 0.931,
       "task_scores": {
         "research": {
           "score": 44.7,
@@ -5796,13 +5840,13 @@
           "cheapest_provider": "OpenAI",
           "cheapest_in": 5.0,
           "cheapest_out": 30.0,
-          "cheapest_uptime_1d": 94.25,
-          "best_uptime_1d": 99.46
+          "cheapest_uptime_1d": 93.83,
+          "best_uptime_1d": 98.82
         }
       },
       "reliability": {
-        "cheapest_uptime_1d": 94.25,
-        "best_uptime_1d": 99.46
+        "cheapest_uptime_1d": 93.83,
+        "best_uptime_1d": 98.82
       },
       "usage_rank": 49,
       "hallucination": null,
@@ -6116,12 +6160,12 @@
           "cheapest_in": 5.0,
           "cheapest_out": 25.0,
           "cheapest_uptime_1d": null,
-          "best_uptime_1d": 99.99
+          "best_uptime_1d": 100
         }
       },
       "reliability": {
         "cheapest_uptime_1d": null,
-        "best_uptime_1d": 99.99
+        "best_uptime_1d": 100
       },
       "usage_rank": 61,
       "hallucination": null,
@@ -6595,16 +6639,15 @@
       "canonical": "glm-5.2",
       "display": "GLM-5.2",
       "warnings": [
-        "Epoch match not found for 'GLM-5.2'",
-        "OpenRouter match not found for 'None'"
+        "Epoch match not found for 'GLM-5.2'"
       ],
       "aa_name_raw": "GLM-5.2 (max)",
       "aa_is_preview": false,
       "intelligence_index": 51.1,
       "coding_index": 68.8,
       "math_index": null,
-      "output_tok_per_sec": 122.39,
-      "ttft_seconds": 0.99,
+      "output_tok_per_sec": 121.397,
+      "ttft_seconds": 0.982,
       "task_scores": {
         "research": {
           "score": 64.8,
@@ -6688,17 +6731,39 @@
         "direct_blended_3_to_1": 2.15
       },
       "intel_per_dollar": 23.77,
-      "openrouter": null,
-      "reliability": null,
-      "usage_rank": null,
+      "openrouter": {
+        "slug": "z-ai/glm-5.2",
+        "context_length": 1048576,
+        "max_output": 32768,
+        "cached_read_per_1m": 0.18,
+        "spread": {
+          "host_count": 22,
+          "input_min": 0.95,
+          "input_median": 1.395,
+          "input_max": 1.68,
+          "output_min": 3.0,
+          "output_median": 4.4,
+          "output_max": 5.28,
+          "cheapest_provider": "DeepInfra",
+          "cheapest_in": 0.95,
+          "cheapest_out": 3.0,
+          "cheapest_uptime_1d": 94.1,
+          "best_uptime_1d": 99.93
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 94.1,
+        "best_uptime_1d": 99.93
+      },
+      "usage_rank": 5,
       "hallucination": null,
       "capabilities": {
-        "vision": null,
-        "function_calling": null,
-        "structured_output": null,
+        "vision": false,
+        "function_calling": true,
+        "structured_output": true,
         "fine_tuning": true,
         "multilingual_tier": 2,
-        "caps_source": "manual-only (no OpenRouter match)"
+        "caps_source": "openrouter+manual"
       },
       "provenance": {
         "provider": "Z.ai (Zhipu)",
@@ -6725,7 +6790,8 @@
         "release_date": "2026-06-16",
         "max_intel": 51.1,
         "data_coverage": [
-          "aa"
+          "aa",
+          "openrouter"
         ]
       }
     },
@@ -6742,7 +6808,7 @@
       "coding_index": 60.8,
       "math_index": null,
       "output_tok_per_sec": 52.712,
-      "ttft_seconds": 1.115,
+      "ttft_seconds": 1.157,
       "task_scores": {
         "research": {
           "score": 61.2,
@@ -6882,16 +6948,15 @@
       "canonical": "nemotron-3-ultra-550b-a55b",
       "display": "Nemotron 3 Ultra 550B A55B",
       "warnings": [
-        "Epoch match not found for 'Nemotron 3 Ultra 550B A55B'",
-        "OpenRouter match not found for 'None'"
+        "Epoch match not found for 'Nemotron 3 Ultra 550B A55B'"
       ],
       "aa_name_raw": "Nemotron 3 Ultra 550B A55B (Reasoning)",
       "aa_is_preview": false,
       "intelligence_index": 37.8,
       "coding_index": 49.3,
       "math_index": null,
-      "output_tok_per_sec": 141.249,
-      "ttft_seconds": 1.041,
+      "output_tok_per_sec": 141.626,
+      "ttft_seconds": 1.059,
       "task_scores": {
         "research": {
           "score": 56.7,
@@ -6975,17 +7040,39 @@
         "direct_blended_3_to_1": 1.05
       },
       "intel_per_dollar": 36.0,
-      "openrouter": null,
-      "reliability": null,
-      "usage_rank": null,
+      "openrouter": {
+        "slug": "nvidia/nemotron-3-ultra-550b-a55b",
+        "context_length": 1000000,
+        "max_output": 16384,
+        "cached_read_per_1m": 0.1,
+        "spread": {
+          "host_count": 3,
+          "input_min": 0.5,
+          "input_median": 0.6,
+          "input_max": 1.0,
+          "output_min": 2.2,
+          "output_median": 3.0,
+          "output_max": 3.6,
+          "cheapest_provider": "DeepInfra",
+          "cheapest_in": 0.5,
+          "cheapest_out": 2.2,
+          "cheapest_uptime_1d": 96.85,
+          "best_uptime_1d": 96.85
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 96.85,
+        "best_uptime_1d": 96.85
+      },
+      "usage_rank": 13,
       "hallucination": null,
       "capabilities": {
-        "vision": null,
-        "function_calling": null,
-        "structured_output": null,
+        "vision": false,
+        "function_calling": true,
+        "structured_output": true,
         "fine_tuning": true,
         "multilingual_tier": 3,
-        "caps_source": "manual-only (no OpenRouter match)"
+        "caps_source": "openrouter+manual"
       },
       "provenance": {
         "provider": "NVIDIA",
@@ -7012,23 +7099,22 @@
         "release_date": "2026-06-04",
         "max_intel": 37.8,
         "data_coverage": [
-          "aa"
+          "aa",
+          "openrouter"
         ]
       }
     },
     {
       "canonical": "minimax-m3",
       "display": "MiniMax-M3",
-      "warnings": [
-        "OpenRouter match not found for 'None'"
-      ],
+      "warnings": [],
       "aa_name_raw": "MiniMax-M3",
       "aa_is_preview": false,
       "intelligence_index": 44.4,
       "coding_index": 58.6,
       "math_index": null,
-      "output_tok_per_sec": 64.22,
-      "ttft_seconds": 1.823,
+      "output_tok_per_sec": 64.742,
+      "ttft_seconds": 1.775,
       "task_scores": {
         "research": {
           "score": 65.0,
@@ -7112,17 +7198,39 @@
         "direct_blended_3_to_1": 0.85
       },
       "intel_per_dollar": 52.24,
-      "openrouter": null,
-      "reliability": null,
-      "usage_rank": null,
+      "openrouter": {
+        "slug": "minimax/minimax-m3",
+        "context_length": 1048576,
+        "max_output": 512000,
+        "cached_read_per_1m": 0.06,
+        "spread": {
+          "host_count": 7,
+          "input_min": 0.3,
+          "input_median": 0.3,
+          "input_max": 0.6,
+          "output_min": 1.2,
+          "output_median": 1.2,
+          "output_max": 2.4,
+          "cheapest_provider": "Minimax",
+          "cheapest_in": 0.3,
+          "cheapest_out": 1.2,
+          "cheapest_uptime_1d": 99.29,
+          "best_uptime_1d": 99.29
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 99.29,
+        "best_uptime_1d": 99.29
+      },
+      "usage_rank": 15,
       "hallucination": null,
       "capabilities": {
-        "vision": null,
-        "function_calling": null,
-        "structured_output": null,
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
         "fine_tuning": false,
         "multilingual_tier": 3,
-        "caps_source": "manual-only (no OpenRouter match)"
+        "caps_source": "openrouter+manual"
       },
       "provenance": {
         "provider": "MiniMax",
@@ -7311,7 +7419,8 @@
         "max_intel": 44.4,
         "data_coverage": [
           "aa",
-          "arena"
+          "arena",
+          "openrouter"
         ]
       }
     },
@@ -7319,15 +7428,14 @@
       "canonical": "qwen3.7-plus",
       "display": "Qwen3.7 Plus",
       "warnings": [
-        "Epoch match not found for 'Qwen3.7 Plus'",
-        "OpenRouter match not found for 'None'"
+        "Epoch match not found for 'Qwen3.7 Plus'"
       ],
       "aa_name_raw": "Qwen3.7 Plus",
       "aa_is_preview": false,
       "intelligence_index": 39,
       "coding_index": 55.9,
       "math_index": null,
-      "output_tok_per_sec": 50.742,
+      "output_tok_per_sec": 50.345,
       "ttft_seconds": 1.733,
       "task_scores": {
         "research": {
@@ -7412,17 +7520,39 @@
         "direct_blended_3_to_1": 2.925
       },
       "intel_per_dollar": 13.33,
-      "openrouter": null,
-      "reliability": null,
-      "usage_rank": null,
+      "openrouter": {
+        "slug": "qwen/qwen3.7-plus",
+        "context_length": 1000000,
+        "max_output": 65536,
+        "cached_read_per_1m": 0.064,
+        "spread": {
+          "host_count": 1,
+          "input_min": 0.32,
+          "input_median": 0.32,
+          "input_max": 0.32,
+          "output_min": 1.28,
+          "output_median": 1.28,
+          "output_max": 1.28,
+          "cheapest_provider": "Alibaba",
+          "cheapest_in": 0.32,
+          "cheapest_out": 1.28,
+          "cheapest_uptime_1d": 99.97,
+          "best_uptime_1d": 99.97
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 99.97,
+        "best_uptime_1d": 99.97
+      },
+      "usage_rank": 14,
       "hallucination": null,
       "capabilities": {
-        "vision": null,
-        "function_calling": null,
-        "structured_output": null,
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
         "fine_tuning": true,
         "multilingual_tier": 3,
-        "caps_source": "manual-only (no OpenRouter match)"
+        "caps_source": "openrouter+manual"
       },
       "provenance": {
         "provider": "Alibaba",
@@ -7449,7 +7579,8 @@
         "release_date": "2026-06-01",
         "max_intel": 39,
         "data_coverage": [
-          "aa"
+          "aa",
+          "openrouter"
         ]
       }
     },
@@ -7457,8 +7588,7 @@
       "canonical": "qwen3.7-max",
       "display": "Qwen3.7 Max",
       "warnings": [
-        "Epoch match not found for 'Qwen3.7 Max'",
-        "OpenRouter match not found for 'None'"
+        "Epoch match not found for 'Qwen3.7 Max'"
       ],
       "aa_name_raw": "Qwen3.7 Max",
       "aa_is_preview": false,
@@ -7466,7 +7596,7 @@
       "coding_index": 66,
       "math_index": null,
       "output_tok_per_sec": 204.039,
-      "ttft_seconds": 1.617,
+      "ttft_seconds": 1.667,
       "task_scores": {
         "research": {
           "score": 65.2,
@@ -7550,17 +7680,39 @@
         "direct_blended_3_to_1": 2.925
       },
       "intel_per_dollar": 15.73,
-      "openrouter": null,
-      "reliability": null,
-      "usage_rank": null,
+      "openrouter": {
+        "slug": "qwen/qwen3.7-max",
+        "context_length": 1000000,
+        "max_output": 65536,
+        "cached_read_per_1m": 0.25,
+        "spread": {
+          "host_count": 1,
+          "input_min": 1.25,
+          "input_median": 1.25,
+          "input_max": 1.25,
+          "output_min": 3.75,
+          "output_median": 3.75,
+          "output_max": 3.75,
+          "cheapest_provider": "Alibaba",
+          "cheapest_in": 1.25,
+          "cheapest_out": 3.75,
+          "cheapest_uptime_1d": 100,
+          "best_uptime_1d": 100
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 100,
+        "best_uptime_1d": 100
+      },
+      "usage_rank": 19,
       "hallucination": null,
       "capabilities": {
-        "vision": null,
-        "function_calling": null,
-        "structured_output": null,
+        "vision": false,
+        "function_calling": true,
+        "structured_output": true,
         "fine_tuning": true,
         "multilingual_tier": 3,
-        "caps_source": "manual-only (no OpenRouter match)"
+        "caps_source": "openrouter+manual"
       },
       "provenance": {
         "provider": "Alibaba",
@@ -7587,23 +7739,22 @@
         "release_date": "2026-05-19",
         "max_intel": 46,
         "data_coverage": [
-          "aa"
+          "aa",
+          "openrouter"
         ]
       }
     },
     {
       "canonical": "grok-4.3",
       "display": "Grok 4.3",
-      "warnings": [
-        "OpenRouter match not found for 'None'"
-      ],
+      "warnings": [],
       "aa_name_raw": "Grok 4.3 (low)",
       "aa_is_preview": false,
       "intelligence_index": 35.4,
       "coding_index": null,
       "math_index": null,
-      "output_tok_per_sec": 128.066,
-      "ttft_seconds": 5.711,
+      "output_tok_per_sec": 132.599,
+      "ttft_seconds": 5.58,
       "task_scores": {
         "research": {
           "score": 50.8,
@@ -7685,17 +7836,39 @@
         "direct_blended_3_to_1": 6.0
       },
       "intel_per_dollar": 5.9,
-      "openrouter": null,
-      "reliability": null,
-      "usage_rank": null,
+      "openrouter": {
+        "slug": "x-ai/grok-4.3",
+        "context_length": 1000000,
+        "max_output": null,
+        "cached_read_per_1m": 0.2,
+        "spread": {
+          "host_count": 1,
+          "input_min": 1.25,
+          "input_median": 1.25,
+          "input_max": 1.25,
+          "output_min": 2.5,
+          "output_median": 2.5,
+          "output_max": 2.5,
+          "cheapest_provider": "xAI",
+          "cheapest_in": 1.25,
+          "cheapest_out": 2.5,
+          "cheapest_uptime_1d": 100.0,
+          "best_uptime_1d": 100.0
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 100.0,
+        "best_uptime_1d": 100.0
+      },
+      "usage_rank": 27,
       "hallucination": null,
       "capabilities": {
-        "vision": null,
-        "function_calling": null,
-        "structured_output": null,
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
         "fine_tuning": false,
         "multilingual_tier": 2,
-        "caps_source": "manual-only (no OpenRouter match)"
+        "caps_source": "openrouter+manual"
       },
       "provenance": {
         "provider": "xAI",
@@ -7890,23 +8063,22 @@
         "max_intel": 37.6,
         "data_coverage": [
           "aa",
-          "arena"
+          "arena",
+          "openrouter"
         ]
       }
     },
     {
       "canonical": "mimo-v2.5-pro",
       "display": "MiMo-V2.5-Pro",
-      "warnings": [
-        "OpenRouter match not found for 'None'"
-      ],
+      "warnings": [],
       "aa_name_raw": "MiMo-V2.5-Pro (Non-reasoning)",
       "aa_is_preview": false,
       "intelligence_index": 27.9,
       "coding_index": null,
       "math_index": null,
-      "output_tok_per_sec": 48.721,
-      "ttft_seconds": 1.481,
+      "output_tok_per_sec": 49.024,
+      "ttft_seconds": 1.497,
       "task_scores": {
         "research": {
           "score": 44.8,
@@ -7988,17 +8160,39 @@
         "direct_blended_3_to_1": 0.525
       },
       "intel_per_dollar": 53.14,
-      "openrouter": null,
-      "reliability": null,
-      "usage_rank": null,
+      "openrouter": {
+        "slug": "xiaomi/mimo-v2.5-pro",
+        "context_length": 1048576,
+        "max_output": 131072,
+        "cached_read_per_1m": 0.0036,
+        "spread": {
+          "host_count": 4,
+          "input_min": 0.435,
+          "input_median": 0.561,
+          "input_max": 1.0,
+          "output_min": 0.87,
+          "output_median": 2.022,
+          "output_max": 3.0,
+          "cheapest_provider": "Xiaomi",
+          "cheapest_in": 0.435,
+          "cheapest_out": 0.87,
+          "cheapest_uptime_1d": 99.61,
+          "best_uptime_1d": 99.7
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 99.61,
+        "best_uptime_1d": 99.7
+      },
+      "usage_rank": 54,
       "hallucination": null,
       "capabilities": {
-        "vision": null,
-        "function_calling": null,
-        "structured_output": null,
+        "vision": false,
+        "function_calling": true,
+        "structured_output": true,
         "fine_tuning": true,
         "multilingual_tier": 3,
-        "caps_source": "manual-only (no OpenRouter match)"
+        "caps_source": "openrouter+manual"
       },
       "provenance": {
         "provider": "Xiaomi",
@@ -8193,23 +8387,22 @@
         "max_intel": 42.2,
         "data_coverage": [
           "aa",
-          "arena"
+          "arena",
+          "openrouter"
         ]
       }
     },
     {
       "canonical": "mimo-v2.5",
       "display": "MiMo-V2.5",
-      "warnings": [
-        "OpenRouter match not found for 'None'"
-      ],
+      "warnings": [],
       "aa_name_raw": "MiMo-V2.5",
       "aa_is_preview": false,
       "intelligence_index": 40.1,
       "coding_index": null,
       "math_index": null,
-      "output_tok_per_sec": 73.584,
-      "ttft_seconds": 1.945,
+      "output_tok_per_sec": 86.345,
+      "ttft_seconds": 1.893,
       "task_scores": {
         "research": {
           "score": 55.0,
@@ -8291,17 +8484,39 @@
         "direct_blended_3_to_1": 0.525
       },
       "intel_per_dollar": 76.38,
-      "openrouter": null,
-      "reliability": null,
-      "usage_rank": null,
+      "openrouter": {
+        "slug": "xiaomi/mimo-v2.5",
+        "context_length": 1048576,
+        "max_output": null,
+        "cached_read_per_1m": null,
+        "spread": {
+          "host_count": 3,
+          "input_min": 0.105,
+          "input_median": 0.14,
+          "input_max": 0.175,
+          "output_min": 0.28,
+          "output_median": 0.28,
+          "output_max": 0.35,
+          "cheapest_provider": "DigitalOcean",
+          "cheapest_in": 0.105,
+          "cheapest_out": 0.28,
+          "cheapest_uptime_1d": 97.47,
+          "best_uptime_1d": 99.64
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 97.47,
+        "best_uptime_1d": 99.64
+      },
+      "usage_rank": 55,
       "hallucination": null,
       "capabilities": {
-        "vision": null,
-        "function_calling": null,
-        "structured_output": null,
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
         "fine_tuning": true,
         "multilingual_tier": 3,
-        "caps_source": "manual-only (no OpenRouter match)"
+        "caps_source": "openrouter+manual"
       },
       "provenance": {
         "provider": "Xiaomi",
@@ -8496,7 +8711,8 @@
         "max_intel": 40.1,
         "data_coverage": [
           "aa",
-          "arena"
+          "arena",
+          "openrouter"
         ]
       }
     },
@@ -8504,8 +8720,7 @@
       "canonical": "qwen3.6-27b",
       "display": "Qwen3.6 27B",
       "warnings": [
-        "Epoch match not found for 'Qwen3.6 27B'",
-        "OpenRouter match not found for 'None'"
+        "Epoch match not found for 'Qwen3.6 27B'"
       ],
       "aa_name_raw": "Qwen3.6 27B (Non-reasoning)",
       "aa_is_preview": false,
@@ -8513,7 +8728,7 @@
       "coding_index": null,
       "math_index": null,
       "output_tok_per_sec": 62.635,
-      "ttft_seconds": 1.675,
+      "ttft_seconds": 1.642,
       "task_scores": {
         "research": {
           "score": 48.2,
@@ -8595,17 +8810,39 @@
         "direct_blended_3_to_1": 2.925
       },
       "intel_per_dollar": 10.02,
-      "openrouter": null,
-      "reliability": null,
-      "usage_rank": null,
+      "openrouter": {
+        "slug": "qwen/qwen3.6-27b",
+        "context_length": 262144,
+        "max_output": 262140,
+        "cached_read_per_1m": null,
+        "spread": {
+          "host_count": 9,
+          "input_min": 0.2885,
+          "input_median": 0.32,
+          "input_max": 0.6,
+          "output_min": 2.0,
+          "output_median": 3.17,
+          "output_max": 3.6,
+          "cheapest_provider": "Chutes",
+          "cheapest_in": 0.3,
+          "cheapest_out": 2.0,
+          "cheapest_uptime_1d": 97.33,
+          "best_uptime_1d": 99.53
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 97.33,
+        "best_uptime_1d": 99.53
+      },
+      "usage_rank": 47,
       "hallucination": null,
       "capabilities": {
-        "vision": null,
-        "function_calling": null,
-        "structured_output": null,
+        "vision": true,
+        "function_calling": true,
+        "structured_output": true,
         "fine_tuning": true,
         "multilingual_tier": 3,
-        "caps_source": "manual-only (no OpenRouter match)"
+        "caps_source": "openrouter+manual"
       },
       "provenance": {
         "provider": "Alibaba",
@@ -8632,7 +8869,8 @@
         "release_date": "2026-04-22",
         "max_intel": 37.1,
         "data_coverage": [
-          "aa"
+          "aa",
+          "openrouter"
         ]
       }
     },
@@ -8948,8 +9186,8 @@
       "intelligence_index": 37,
       "coding_index": null,
       "math_index": null,
-      "output_tok_per_sec": 255.093,
-      "ttft_seconds": 13.116,
+      "output_tok_per_sec": 243.311,
+      "ttft_seconds": 14.034,
       "task_scores": {
         "research": {
           "score": 61.7,
@@ -9084,8 +9322,8 @@
       "intelligence_index": 36.4,
       "coding_index": null,
       "math_index": null,
-      "output_tok_per_sec": 77.793,
-      "ttft_seconds": 2.003,
+      "output_tok_per_sec": 83.485,
+      "ttft_seconds": 1.98,
       "task_scores": {
         "research": {
           "score": 53.0,
@@ -9220,8 +9458,8 @@
       "intelligence_index": 35,
       "coding_index": null,
       "math_index": null,
-      "output_tok_per_sec": 73.787,
-      "ttft_seconds": 2.077,
+      "output_tok_per_sec": 78.302,
+      "ttft_seconds": 1.933,
       "task_scores": {
         "research": {
           "score": 51.4,
@@ -9524,7 +9762,7 @@
       "coding_index": null,
       "math_index": null,
       "output_tok_per_sec": 47.925,
-      "ttft_seconds": 1.939,
+      "ttft_seconds": 1.999,
       "task_scores": {
         "research": {
           "score": 57.6,
@@ -9819,8 +10057,7 @@
       "canonical": "minimax-m2.7",
       "display": "MiniMax-M2.7",
       "warnings": [
-        "Epoch match not found for 'MiniMax-M2.7'",
-        "OpenRouter match not found for 'None'"
+        "Epoch match not found for 'MiniMax-M2.7'"
       ],
       "aa_name_raw": "MiniMax-M2.7",
       "aa_is_preview": false,
@@ -9828,7 +10065,7 @@
       "coding_index": 52.6,
       "math_index": null,
       "output_tok_per_sec": 48.958,
-      "ttft_seconds": 1.712,
+      "ttft_seconds": 1.886,
       "task_scores": {
         "research": {
           "score": 57.8,
@@ -9912,17 +10149,39 @@
         "direct_blended_3_to_1": 0.85
       },
       "intel_per_dollar": 44.82,
-      "openrouter": null,
-      "reliability": null,
-      "usage_rank": null,
+      "openrouter": {
+        "slug": "minimax/minimax-m2.7",
+        "context_length": 204800,
+        "max_output": 196608,
+        "cached_read_per_1m": null,
+        "spread": {
+          "host_count": 11,
+          "input_min": 0.24,
+          "input_median": 0.3,
+          "input_max": 2.5,
+          "output_min": 0.96,
+          "output_median": 1.2,
+          "output_max": 7.0,
+          "cheapest_provider": "Mara",
+          "cheapest_in": 0.24,
+          "cheapest_out": 0.96,
+          "cheapest_uptime_1d": 92.97,
+          "best_uptime_1d": 99.76
+        }
+      },
+      "reliability": {
+        "cheapest_uptime_1d": 92.97,
+        "best_uptime_1d": 99.76
+      },
+      "usage_rank": 77,
       "hallucination": null,
       "capabilities": {
-        "vision": null,
-        "function_calling": null,
-        "structured_output": null,
+        "vision": false,
+        "function_calling": true,
+        "structured_output": true,
         "fine_tuning": false,
         "multilingual_tier": 3,
-        "caps_source": "manual-only (no OpenRouter match)"
+        "caps_source": "openrouter+manual"
       },
       "provenance": {
         "provider": "MiniMax",
@@ -10117,7 +10376,8 @@
         "max_intel": 38.1,
         "data_coverage": [
           "aa",
-          "arena"
+          "arena",
+          "openrouter"
         ]
       }
     },
@@ -10134,7 +10394,7 @@
       "coding_index": null,
       "math_index": null,
       "output_tok_per_sec": 243.668,
-      "ttft_seconds": 13.131,
+      "ttft_seconds": 12.751,
       "task_scores": {
         "research": {
           "score": 59.2,
@@ -10269,8 +10529,8 @@
       "intelligence_index": 39.8,
       "coding_index": 51.5,
       "math_index": null,
-      "output_tok_per_sec": 70.581,
-      "ttft_seconds": 0.401,
+      "output_tok_per_sec": 71.36,
+      "ttft_seconds": 0.404,
       "task_scores": {
         "research": {
           "score": 62.8,

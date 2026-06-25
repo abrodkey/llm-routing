@@ -11,7 +11,29 @@
         "hf"
       ],
       "hf_id": "nvidia/MiniMax-M3-NVFP4",
-      "hf_downloads": 12
+      "hf_downloads": 185
+    },
+    {
+      "base": "Nano Banana 2 (Gemini 3.1 Flash Image)",
+      "creator": "Google",
+      "max_intel": null,
+      "release_date": "2026-06-18",
+      "newer_than_our": "2026-05-19",
+      "sources": [
+        "openrouter"
+      ],
+      "or_id": "google/gemini-3.1-flash-image"
+    },
+    {
+      "base": "Nano Banana Pro (Gemini 3 Pro Image)",
+      "creator": "Google",
+      "max_intel": null,
+      "release_date": "2026-06-18",
+      "newer_than_our": "2026-05-19",
+      "sources": [
+        "openrouter"
+      ],
+      "or_id": "google/gemini-3-pro-image"
     },
     {
       "base": "GLM-5.2",
@@ -35,7 +57,18 @@
         "hf"
       ],
       "hf_id": "zai-org/GLM-5.2-FP8",
-      "hf_downloads": 445304
+      "hf_downloads": 477681
+    },
+    {
+      "base": "GLM 5.2",
+      "creator": "Z AI",
+      "max_intel": null,
+      "release_date": "2026-06-16",
+      "newer_than_our": "2026-04-07",
+      "sources": [
+        "openrouter"
+      ],
+      "or_id": "z-ai/glm-5.2"
     },
     {
       "base": "FastContext-1.0-4B-RL",
@@ -47,7 +80,7 @@
         "hf"
       ],
       "hf_id": "microsoft/FastContext-1.0-4B-RL",
-      "hf_downloads": 3353
+      "hf_downloads": 3533
     },
     {
       "base": "FastContext-1.0-4B-SFT",
@@ -59,7 +92,18 @@
         "hf"
       ],
       "hf_id": "microsoft/FastContext-1.0-4B-SFT",
-      "hf_downloads": 4805
+      "hf_downloads": 5276
+    },
+    {
+      "base": "Kimi K2.7 Code",
+      "creator": "Moonshot",
+      "max_intel": null,
+      "release_date": "2026-06-12",
+      "newer_than_our": null,
+      "sources": [
+        "openrouter"
+      ],
+      "or_id": "moonshotai/kimi-k2.7-code"
     }
   ]
 }

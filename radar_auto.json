@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-25T08:47:59+00:00",
+  "generated_at": "2026-06-25T14:51:30+00:00",
   "promoted": [
     {
       "canonical": "glm-5.2",
@@ -10,7 +10,8 @@
       "release_date": "2026-06-16",
       "max_intel": 51.1,
       "data_coverage": [
-        "aa"
+        "aa",
+        "openrouter"
       ]
     },
     {
@@ -35,7 +36,8 @@
       "release_date": "2026-06-04",
       "max_intel": 37.8,
       "data_coverage": [
-        "aa"
+        "aa",
+        "openrouter"
       ]
     },
     {
@@ -48,7 +50,8 @@
       "max_intel": 44.4,
       "data_coverage": [
         "aa",
-        "arena"
+        "arena",
+        "openrouter"
       ]
     },
     {
@@ -60,7 +63,8 @@
       "release_date": "2026-06-01",
       "max_intel": 39,
       "data_coverage": [
-        "aa"
+        "aa",
+        "openrouter"
       ]
     },
     {
@@ -72,7 +76,8 @@
       "release_date": "2026-05-19",
       "max_intel": 46,
       "data_coverage": [
-        "aa"
+        "aa",
+        "openrouter"
       ]
     },
     {
@@ -85,7 +90,8 @@
       "max_intel": 37.6,
       "data_coverage": [
         "aa",
-        "arena"
+        "arena",
+        "openrouter"
       ]
     },
     {
@@ -98,7 +104,8 @@
       "max_intel": 42.2,
       "data_coverage": [
         "aa",
-        "arena"
+        "arena",
+        "openrouter"
       ]
     },
     {
@@ -111,7 +118,8 @@
       "max_intel": 40.1,
       "data_coverage": [
         "aa",
-        "arena"
+        "arena",
+        "openrouter"
       ]
     },
     {
@@ -123,7 +131,8 @@
       "release_date": "2026-04-22",
       "max_intel": 37.1,
       "data_coverage": [
-        "aa"
+        "aa",
+        "openrouter"
       ]
     },
     {
@@ -199,7 +208,8 @@
       "max_intel": 38.1,
       "data_coverage": [
         "aa",
-        "arena"
+        "arena",
+        "openrouter"
       ]
     },
     {
@@ -228,22 +238,22 @@
     }
   ],
   "decisions": [
-    "  \u2713 GLM-5.2: promoted as PREVIEW (template=zhipu-glm-5.1, coverage=['aa'])",
+    "  \u2713 GLM-5.2: promoted as PREVIEW (template=zhipu-glm-5.1, coverage=['aa', 'openrouter'])",
     "  \u2713 Kimi K2.7 Code: promoted as PREVIEW (template=moonshot-kimi-k2.6, coverage=['aa', 'arena'])",
-    "  \u2713 Nemotron 3 Ultra 550B A55B: promoted as PREVIEW (template=nvidia-template, coverage=['aa'])",
-    "  \u2713 MiniMax-M3: promoted as PREVIEW (template=minimax-template, coverage=['aa', 'arena'])",
-    "  \u2713 Qwen3.7 Plus: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa'])",
-    "  \u2713 Qwen3.7 Max: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa'])",
-    "  \u2713 Grok 4.3: promoted as PREVIEW (template=xai-template, coverage=['aa', 'arena'])",
-    "  \u2713 MiMo-V2.5-Pro: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena'])",
-    "  \u2713 MiMo-V2.5: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena'])",
-    "  \u2713 Qwen3.6 27B: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa'])",
+    "  \u2713 Nemotron 3 Ultra 550B A55B: promoted as PREVIEW (template=nvidia-template, coverage=['aa', 'openrouter'])",
+    "  \u2713 MiniMax-M3: promoted as PREVIEW (template=minimax-template, coverage=['aa', 'arena', 'openrouter'])",
+    "  \u2713 Qwen3.7 Plus: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa', 'openrouter'])",
+    "  \u2713 Qwen3.7 Max: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa', 'openrouter'])",
+    "  \u2713 Grok 4.3: promoted as PREVIEW (template=xai-template, coverage=['aa', 'arena', 'openrouter'])",
+    "  \u2713 MiMo-V2.5-Pro: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena', 'openrouter'])",
+    "  \u2713 MiMo-V2.5: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena', 'openrouter'])",
+    "  \u2713 Qwen3.6 27B: promoted as PREVIEW (template=alibaba-qwen-3.6-max, coverage=['aa', 'openrouter'])",
     "  \u2713 Muse Spark: promoted as PREVIEW (template=meta-template, coverage=['aa', 'arena'])",
     "  \u2713 Grok 4.20 0309 v2: promoted as PREVIEW (template=xai-template, coverage=['aa'])",
     "  \u2713 MiMo-V2-Omni-0327: promoted as PREVIEW (template=xiaomi-template, coverage=['aa'])",
     "  \u2713 MiMo-V2-Omni: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena'])",
     "  \u2713 MiMo-V2-Pro: promoted as PREVIEW (template=xiaomi-template, coverage=['aa', 'arena'])",
-    "  \u2713 MiniMax-M2.7: promoted as PREVIEW (template=minimax-template, coverage=['aa', 'arena'])",
+    "  \u2713 MiniMax-M2.7: promoted as PREVIEW (template=minimax-template, coverage=['aa', 'arena', 'openrouter'])",
     "  \u2713 Grok 4.20 0309: promoted as PREVIEW (template=xai-template, coverage=['aa'])",
     "  \u2713 Grok Build 0.1 0616: promoted as PREVIEW (template=xai-template, coverage=['aa'])"
   ]
