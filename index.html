@@ -45,9 +45,13 @@
   header .ttl .freshness b{color:var(--accent);font-weight:600}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
   header .hdr-act{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
-  header .hdr-act button{background:var(--panel2);color:var(--dim);border:1px solid var(--line);border-radius:5px;padding:6px 10px;font-size:var(--fs-button);cursor:pointer;white-space:nowrap}
+  header .hdr-act button{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 13px;font-size:var(--fs-button);font-weight:500;cursor:pointer;white-space:nowrap}
   header .hdr-act button:hover{color:var(--accent);border-color:var(--accent)}
   header .hdr-act button.on{background:var(--accent-dim);color:var(--accent);border-color:var(--accent)}
+  /* Primary CTA — the main entry point gets a filled accent so it draws the eye first. */
+  header .hdr-act #show-features{background:var(--accent);color:#04110b;border-color:var(--accent);font-weight:700}
+  header .hdr-act #show-features:hover{filter:brightness(1.08);color:#04110b;border-color:var(--accent)}
+  header .hdr-act #show-features.on{background:var(--accent);color:#04110b;border-color:var(--accent)}
   /* Help dropdown: hidden on desktop (reference buttons live inline);
      shown on mobile, where it collapses 3 reference buttons under one ❔ icon. */
   .hdr-help{position:relative;display:none}
@@ -347,7 +351,7 @@
     header .ttl .meta{font-size:var(--fs-caption);gap:8px}
     header .ttl .freshness{font-size:var(--fs-caption);padding:4px 9px}
     header .hdr-act{width:100%;justify-content:flex-start;flex-wrap:nowrap}
-    header .hdr-act button{font-size:var(--fs-button);padding:5px 9px;min-height:40px}
+    header .hdr-act button{font-size:var(--fs-body);padding:10px 12px;min-height:46px;font-weight:600}
     /* Mobile tap targets: keep the ⓘ icons visually small but expand their clickable
        area to ~44px via a transparent overlay (Apple HIG / Material guidance). */
     .info-btn::after{content:'';position:absolute;inset:-13px}
@@ -383,8 +387,10 @@
     /* Cost preset buttons more compact */
     .btn{font-size:var(--fs-eyebrow);padding:5px 4px;min-width:48px}
     /* Modal goes near-fullscreen on mobile */
-    .modal-bg{padding:10px}
-    .modal{max-height:94vh}
+    /* Top-align + dynamic viewport height + safe-area padding so the modal header
+       (and its ✕) is never hidden behind the mobile URL bar / notch. */
+    .modal-bg{padding:10px;height:100dvh;align-items:flex-start;padding-top:max(14px, env(safe-area-inset-top))}
+    .modal{max-height:calc(100dvh - 28px)}
     .modal-h{padding:14px 16px}
     .modal-h h3{font-size:var(--fs-h2)}
     .tabs button{font-size:var(--fs-caption);padding:9px 10px}
@@ -470,7 +476,7 @@
   </div>
   <div class="hdr-act">
     <button id="show-onb">How to use</button>
-    <button id="show-features">Features</button>
+    <button id="show-features">Build a feature</button>
     <button id="show-costing" class="hdr-secondary">Costing</button>
     <button id="show-scoring" class="hdr-secondary">Scoring</button>
     <div class="hdr-help" id="hdr-help">
@@ -1581,13 +1587,13 @@ const TAB_HOWTO=()=>{const badge=n=>`<span style="display:inline-block;width:22p
   const row=(n,title,body)=>`<tr><td style="padding-right:14px;vertical-align:top;width:32px">${badge(n)}</td><td style="padding:0"><b>${title}</b><div style="color:var(--dim);margin-top:2px">${body}</div></td></tr>`;
   return `<h4>Three steps to get an answer</h4>
   <table style="font-size:var(--fs-body);margin:8px 0;border-collapse:separate;border-spacing:0 8px">
-    ${row(1,"Build your feature",`Click <b style="color:var(--ink)">Features</b> above and answer 5 questions about your AI feature (what it does, the stakes, the volume, the data it touches, and any must-have capabilities). The tool routes it to a task, sets a quality floor, picks a cost tier, applies your compliance + capability filters, and infers cache/batch — all at once.`)}
+    ${row(1,"Build a feature",`Click <b style="color:var(--ink)">Build a feature</b> above and answer 5 questions about your AI feature (what it does, the stakes, the volume, the data it touches, and any must-have capabilities). The tool routes it to a task, sets a quality floor, picks a cost tier, applies your compliance + capability filters, and infers cache/batch — all at once.`)}
     ${row(2,"Tune the bar if you want",`The build configures the <b style="color:var(--ink)">Quality floor</b> slider and the cost model for you. Drag the slider or adjust cache/batch on the recommender card to override anything.`)}
     ${row(3,"Read the top-3",`The recommender shows the <b style="color:var(--ink)">cheapest models that clear your bar</b>, with savings vs. defaulting to the frontier and trade-off receipts (origin, train policy, cheapest host, hallucination, uptime). Tap any <b style="color:var(--ink)">ⓘ</b> for more.`)}
   </table>
   <h4>What the header buttons do</h4>
   <p><b>How to use</b> — this guide.<br>
-  <b>Features</b> — build a feature in 5 questions; the answers set the task, quality floor, cost tier, compliance + capability filters, and cache/batch in one step.<br>
+  <b>Build a feature</b> — answer 5 questions; the answers set the task, quality floor, cost tier, compliance + capability filters, and cache/batch in one step.<br>
   <b>Costing</b> — explains how list price + caching + batch + reasoning penalty combine into the "effective cost" the dashboard uses.<br>
   <b>Scoring</b> — explains how each task score is calculated, what each score level means, and how agentic scoring works.</p>
   <h4>Best practice</h4>
@@ -1672,7 +1678,7 @@ const COMPLIANCE_MAP={
 };
 const CAP_LABEL={vision:'Vision',function_calling:'Tool calling',structured_output:'Structured output'};
 let builderAns={};
-const TAB_BUILDER=()=>`<h4>Build your feature</h4>
+const TAB_BUILDER=()=>`<h4>Build a feature</h4>
   <p style="color:var(--dim);font-size:var(--fs-button);margin:6px 0 12px">Answer a few questions about your AI feature. We route it to the right task, set a quality floor from the stakes, pick a cost-sensitivity tier from the volume, apply your data-compliance and capability constraints, and infer cache/batch — then show the cheapest models that clear the bar. Override anything afterward.</p>
   <input id="builder-name" type="text" placeholder="Name this feature (optional)" style="width:100%;box-sizing:border-box;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:9px 11px;color:var(--ink);font-size:var(--fs-body);font-family:inherit;margin-bottom:6px">
   <div id="builder-body"></div>`;
@@ -1730,7 +1736,7 @@ const SCENES={
     tabs:{howto:{label:'',render:TAB_HOWTO}},
     default:'howto'},
   features: CFG.showLibrary
-    ? {title:'Features — build one or pick from the Intelligent Noise library',
+    ? {title:'Build a feature — or pick from the Intelligent Noise library',
        tabs:{build:{label:'Build a feature',render:TAB_BUILDER},library:{label:'Intelligent Noise library',render:TAB_FEATURES}},
        default:'build'}
     : {title:'Build a feature',
