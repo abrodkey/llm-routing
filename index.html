@@ -1678,8 +1678,8 @@ const COMPLIANCE_MAP={
 };
 const CAP_LABEL={vision:'Vision',function_calling:'Tool calling',structured_output:'Structured output'};
 let builderAns={};
-const TAB_BUILDER=()=>`<h4>Build a feature</h4>
-  <p style="color:var(--dim);font-size:var(--fs-button);margin:6px 0 12px">Answer a few questions about your AI feature. We route it to the right task, set a quality floor from the stakes, pick a cost-sensitivity tier from the volume, apply your data-compliance and capability constraints, and infer cache/batch — then show the cheapest models that clear the bar. Override anything afterward.</p>
+const TAB_BUILDER=()=>`<h4>Answer a few questions about your AI feature</h4>
+  <p style="color:var(--dim);font-size:var(--fs-button);margin:6px 0 12px">We route it to the right task, set a quality floor from the stakes, pick a cost-sensitivity tier from the volume, apply your data-compliance and capability constraints, and infer cache/batch — then show the cheapest models that clear the bar. Override anything afterward.</p>
   <input id="builder-name" type="text" placeholder="Name this feature (optional)" style="width:100%;box-sizing:border-box;background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:9px 11px;color:var(--ink);font-size:var(--fs-body);font-family:inherit;margin-bottom:6px">
   <div id="builder-body"></div>`;
 function renderBuilder(){
