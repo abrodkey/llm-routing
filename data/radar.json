@@ -2,6 +2,43 @@
   "threshold": 45,
   "candidates": [
     {
+      "base": "Claude Sonnet 5",
+      "creator": "Anthropic",
+      "max_intel": 53.4,
+      "release_date": "2026-06-30",
+      "newer_than_our": "2026-05-28",
+      "sources": [
+        "aa",
+        "epoch",
+        "openrouter"
+      ],
+      "or_id": "anthropic/claude-sonnet-5"
+    },
+    {
+      "base": "tabfm-1.0.0-jax",
+      "creator": "Google",
+      "max_intel": null,
+      "release_date": "2026-06-29",
+      "newer_than_our": null,
+      "sources": [
+        "hf"
+      ],
+      "hf_id": "google/tabfm-1.0.0-jax",
+      "hf_downloads": 4
+    },
+    {
+      "base": "tabfm-1.0.0-pytorch",
+      "creator": "Google",
+      "max_intel": null,
+      "release_date": "2026-06-29",
+      "newer_than_our": null,
+      "sources": [
+        "hf"
+      ],
+      "hf_id": "google/tabfm-1.0.0-pytorch",
+      "hf_downloads": 3
+    },
+    {
       "base": "Qwen3.5-397B-A17B-NVFP4-V2",
       "creator": "NVIDIA",
       "max_intel": null,
@@ -11,7 +48,7 @@
         "hf"
       ],
       "hf_id": "nvidia/Qwen3.5-397B-A17B-NVFP4-V2",
-      "hf_downloads": 0
+      "hf_downloads": 3256
     },
     {
       "base": "eagle3_gemma4_12b_ttt7",
@@ -23,7 +60,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/eagle3_gemma4_12b_ttt7",
-      "hf_downloads": 23
+      "hf_downloads": 134
     },
     {
       "base": "eagle3_qwen3_14b_ttt7",
@@ -35,7 +72,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/eagle3_qwen3_14b_ttt7",
-      "hf_downloads": 21
+      "hf_downloads": 115
     },
     {
       "base": "eagle3_qwen3_8b_ttt7",
@@ -47,7 +84,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/eagle3_qwen3_8b_ttt7",
-      "hf_downloads": 20
+      "hf_downloads": 125
     },
     {
       "base": "eagle3_qwen3_4b_ttt7",
@@ -59,7 +96,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/eagle3_qwen3_4b_ttt7",
-      "hf_downloads": 19
+      "hf_downloads": 165
     },
     {
       "base": "dflash_gemma4_12b_block7",
@@ -71,7 +108,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/dflash_gemma4_12b_block7",
-      "hf_downloads": 27
+      "hf_downloads": 181
     },
     {
       "base": "dflash_qwen3_14b_block7",
@@ -83,7 +120,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/dflash_qwen3_14b_block7",
-      "hf_downloads": 23
+      "hf_downloads": 129
     },
     {
       "base": "dflash_qwen3_8b_block7",
@@ -95,7 +132,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/dflash_qwen3_8b_block7",
-      "hf_downloads": 26
+      "hf_downloads": 141
     },
     {
       "base": "dflash_qwen3_4b_block7",
@@ -107,7 +144,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/dflash_qwen3_4b_block7",
-      "hf_downloads": 32
+      "hf_downloads": 169
     },
     {
       "base": "dspark_gemma4_12b_block7",
@@ -119,7 +156,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/dspark_gemma4_12b_block7",
-      "hf_downloads": 32
+      "hf_downloads": 267
     },
     {
       "base": "dspark_qwen3_14b_block7",
@@ -131,7 +168,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/dspark_qwen3_14b_block7",
-      "hf_downloads": 27
+      "hf_downloads": 266
     },
     {
       "base": "dspark_qwen3_8b_block7",
@@ -143,7 +180,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/dspark_qwen3_8b_block7",
-      "hf_downloads": 27
+      "hf_downloads": 326
     },
     {
       "base": "dspark_qwen3_4b_block7",
@@ -155,7 +192,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/dspark_qwen3_4b_block7",
-      "hf_downloads": 81
+      "hf_downloads": 660
     },
     {
       "base": "DeepSeek-V4-Pro-DSpark",
@@ -167,7 +204,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/DeepSeek-V4-Pro-DSpark",
-      "hf_downloads": 6939
+      "hf_downloads": 7629
     },
     {
       "base": "DeepSeek-V4-Flash-DSpark",
@@ -179,7 +216,7 @@
         "hf"
       ],
       "hf_id": "deepseek-ai/DeepSeek-V4-Flash-DSpark",
-      "hf_downloads": 4446
+      "hf_downloads": 13038
     },
     {
       "base": "Qwen3-ForcedAligner-0.6B-hf",
@@ -191,7 +228,7 @@
         "hf"
       ],
       "hf_id": "Qwen/Qwen3-ForcedAligner-0.6B-hf",
-      "hf_downloads": 914
+      "hf_downloads": 1051
     },
     {
       "base": "c-fast-foundationstereo",
@@ -215,7 +252,19 @@
         "hf"
       ],
       "hf_id": "nvidia/MiniMax-M3-NVFP4",
-      "hf_downloads": 32379
+      "hf_downloads": 37324
+    },
+    {
+      "base": "Kimi-K2.6-DFlash",
+      "creator": "NVIDIA",
+      "max_intel": null,
+      "release_date": "2026-06-23",
+      "newer_than_our": null,
+      "sources": [
+        "hf"
+      ],
+      "hf_id": "nvidia/Kimi-K2.6-DFlash",
+      "hf_downloads": 0
     },
     {
       "base": "GLM-5.2-NVFP4",
@@ -227,7 +276,7 @@
         "hf"
       ],
       "hf_id": "nvidia/GLM-5.2-NVFP4",
-      "hf_downloads": 104746
+      "hf_downloads": 136933
     },
     {
       "base": "Qwen3.6-27B-NVFP4",
@@ -239,54 +288,7 @@
         "hf"
       ],
       "hf_id": "nvidia/Qwen3.6-27B-NVFP4",
-      "hf_downloads": 58
-    },
-    {
-      "base": "GLM-5.2",
-      "creator": "Z AI",
-      "max_intel": 51.1,
-      "release_date": "2026-06-16",
-      "newer_than_our": "2026-04-07",
-      "sources": [
-        "aa",
-        "hf"
-      ],
-      "hf_id": "zai-org/GLM-5.2"
-    },
-    {
-      "base": "GLM-5.2-FP8",
-      "creator": "Z AI",
-      "max_intel": null,
-      "release_date": "2026-06-16",
-      "newer_than_our": null,
-      "sources": [
-        "hf"
-      ],
-      "hf_id": "zai-org/GLM-5.2-FP8",
-      "hf_downloads": 884226
-    },
-    {
-      "base": "dlesym-v0-isccp-era5",
-      "creator": "NVIDIA",
-      "max_intel": null,
-      "release_date": "2026-06-16",
-      "newer_than_our": null,
-      "sources": [
-        "hf"
-      ],
-      "hf_id": "nvidia/dlesym-v0-isccp-era5",
-      "hf_downloads": 32
-    },
-    {
-      "base": "GLM 5.2",
-      "creator": "Z AI",
-      "max_intel": null,
-      "release_date": "2026-06-16",
-      "newer_than_our": "2026-04-07",
-      "sources": [
-        "openrouter"
-      ],
-      "or_id": "z-ai/glm-5.2"
+      "hf_downloads": 2671
     }
   ]
 }
